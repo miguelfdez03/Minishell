@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/07/08 14:49:58 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/07/08 14:54:13 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// TODO >> recieve and separate the input in to tokens
-tokenizer ()
+int	is_space(char c)
 {
-	
+	if (c == 32)
+		return (EXIT_FAILURE);
+	else
+		return (EXIT_SUCCESS);
 }

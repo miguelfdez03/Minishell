@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/07/08 14:49:58 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/07/08 15:04:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-// TODO >> recieve and separate the input in to tokens
-tokenizer ()
+int	check_quotes(char *str)
 {
+	int i;
 	
+	i = 0;
+	while (str[i] != '\0')
+	{
+		
+	}
 }
