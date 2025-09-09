@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 11:29:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:02:18 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,23 @@
 
 typedef enum e_token_type
 {
-	STRING,
 	WORD,
+	STRING,
 	PIPE,
-	REDIR_INPUT,
-	REDIR_OUTPUT,
+	REDIR_IN,
+	REDIR_OUT,
 	REDIR_APPEND,
 	HEREDOC
-}			t_token_type;
+}	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	struct s_token	*next;
-}				t_token;
+}	t_token;
+
+//--PARSER CHECKING--
+int	check_quotes(char *str, int i);
 
 #endif

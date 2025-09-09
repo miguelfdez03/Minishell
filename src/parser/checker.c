@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_handler.c                                    :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 11:27:32 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:15:18 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//TODO : check for single quotes
+//! ---- NOT FINISHED ----
 int	check_for_closed(char *str, int i)
 {
 	i++;
@@ -22,9 +24,9 @@ int	check_for_closed(char *str, int i)
 	else
 		return (i);
 }
-int	check_quotes(char *str)
+
+int	check_quotes(char *str, int i)
 {
-	int i;
 	int new_pos;
 	
 	i = 0;
@@ -34,9 +36,20 @@ int	check_quotes(char *str)
 		{	
 			new_pos = check_for_closed(str, i);
 			if(new_pos == -1)
-			{
-			}
-			i = new_pos;
+				return(EXIT_FAILURE);
 		}
 	}
+}
+
+int	check_redir(char *str, int i)
+{
+	if (str[i] == "<" && str[i + 1] == "<")
+		//HEREDOC
+	if (str[i] == ">" && str[i + 1] == ">")
+		//rediur append
+	if (str[i] == ">" && str[i + 1] != ">")
+		//REDIR_output
+	if (str[i] == "<" && str[i + 1] != "<")
+		//REDIR_INPUT
+	return (EXIT_SUCCESS);
 }
