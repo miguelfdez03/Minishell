@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/07/08 16:48:52 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:29:30 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_INPUT,
-	TOKEN_REDIR_OUTPUT
-}				t_token_type;
+	STRING,
+	WORD,
+	PIPE,
+	REDIR_INPUT,
+	REDIR_OUTPUT,
+	REDIR_APPEND,
+	HEREDOC
+}			t_token_type;
 
 typedef struct s_token
 {
@@ -32,13 +35,5 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 }				t_token;
-
-// --COLOURS--
-# define RED     	"\x1b[31m"
-# define GREEN   	"\x1b[32m"
-# define BLUE    	"\x1b[34m"
-# define BOLD		"\033[1m"
-# define RESET   	"\x1b[0m"
-
 
 #endif

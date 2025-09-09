@@ -6,14 +6,14 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:04:22 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/07/08 16:33:59 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/09 09:26:26 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // check for empty
-// parse -> token 
+// lexer->token = parse 
 //Input user ➜ Tokenizer ➜ Expansión ➜ Crear lista de comandos ➜ Ejecutar
 // ?? history 
 int	main(int argc, char **argv, char **envp)
