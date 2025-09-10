@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 15:15:18 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/10 11:32:47 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,48 @@
 
 //TODO : check for single quotes
 //! ---- NOT FINISHED ----
-int	check_for_closed(char *str, int i)
+int	check_for_closed(char *line, int i)
 {
+	int cont;
+
+	cont = 0;
 	i++;
-	while ((str[i] != '\"' || str[i] != '\'') && str[i] != "\0")
+	while ((line[i] != '\"' || line[i] != '\'') && line[i] != "\0")
+	{
 		i++;
-	if (i == ft_strlen(str))
+		cont++;	
+	}
+	if (i == strlen(line))
 		return (-1);
 	else
 		return (i);
 }
 
-int	check_quotes(char *str, int i)
+int	handle_quotes(char *line, int i)
 {
-	int new_pos;
+	char	*str;
+	int		last;
 	
-	i = 0;
-	while (str[i] != '\0')
+	last = 0;
+	str = NULL;
+	while (line[i] != '\0')
 	{
-		if (str[i] == '\"' || str[i] == '\'')	
-		{	
-			new_pos = check_for_closed(str, i);
-			if(new_pos == -1)
-				return(EXIT_FAILURE);
-		}
+		last = check_for_closed(line, i);
+		str = ft_substr(line, i, last);
 	}
+	//add to token
+	return (EXIT_SUCCESS);
 }
 
-int	check_redir(char *str, int i)
+int	check_redir(char *line, int i)
 {
-	if (str[i] == "<" && str[i + 1] == "<")
+	if (line[i] == "<" && line[i + 1] == "<")
 		//HEREDOC
-	if (str[i] == ">" && str[i + 1] == ">")
+	if (line[i] == ">" && line[i + 1] == ">")
 		//rediur append
-	if (str[i] == ">" && str[i + 1] != ">")
+	if (line[i] == ">" && line[i + 1] != ">")
 		//REDIR_output
-	if (str[i] == "<" && str[i + 1] != "<")
+	if (line[i] == "<" && line[i + 1] != "<")
 		//REDIR_INPUT
 	return (EXIT_SUCCESS);
 }

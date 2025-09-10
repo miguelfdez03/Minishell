@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 15:02:18 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/10 11:20:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_token_type
 {
@@ -36,7 +39,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+//--UTILS--
+int	is_space(char c);
+int	is_quotes(char c);
+
 //--PARSER CHECKING--
-int	check_quotes(char *str, int i);
+int	handle_quotes(char *line, int i);
+int	check_for_closed(char *line, int i);
 
 #endif

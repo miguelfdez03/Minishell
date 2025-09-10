@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 12:19:47 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:16:31 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,10 @@ int	is_space(char c)
 		return (EXIT_SUCCESS);
 }
 
+int	is_quotes(char c)
+{
+	if (c == '\"' || c == '\'')
+		return (EXIT_FAILURE);
+	else
+		return (EXIT_SUCCESS);
+}
