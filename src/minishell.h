@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 11:20:56 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/10 12:13:02 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	is_space(char c);
 int	is_quotes(char c);
 
 //--PARSER CHECKING--
-int	handle_quotes(char *line, int i);
+int	handle_quotes(char *line, int i, t_token *tokens);
 int	check_for_closed(char *line, int i);
+int	check_redir(char *line, int i, t_token *tokens);
 
 #endif

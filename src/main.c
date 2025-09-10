@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:04:22 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/09 15:34:57 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:17:08 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	while (1)
 	{
-		line = readline(">spidershell: ");
+		line = readline(">spidershell$> ");
 		if(!line)
 		{
 			printf("exit\n");

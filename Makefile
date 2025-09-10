@@ -5,8 +5,8 @@ FLAGS = -Werror -Wextra -Wall
 LIBFT_PATH = libs/libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
-SOURCES = parser/checker.c\
-		parser/tokenizer.c\
-		utils/utils.c\
-		main.c\
+SOURCES = src/parser/checker.c\
+		src/parser/tokenizer.c\
+		src/utils/utils.c\
+		src/main.c\
 		

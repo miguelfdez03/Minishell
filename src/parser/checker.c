@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 11:32:47 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:21:08 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_for_closed(char *line, int i)
 		return (i);
 }
 
-int	handle_quotes(char *line, int i)
+int	handle_quotes(char *line, int i, t_token *tokens)
 {
 	char	*str;
 	int		last;
@@ -47,7 +47,7 @@ int	handle_quotes(char *line, int i)
 	return (EXIT_SUCCESS);
 }
 
-int	check_redir(char *line, int i)
+int	check_redir(char *line, int i, t_token *tokens)
 {
 	if (line[i] == "<" && line[i + 1] == "<")
 		//HEREDOC
