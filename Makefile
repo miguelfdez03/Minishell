@@ -6,7 +6,8 @@ LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
 SRCS = src/main.c \
-	src/executor/test_executor.c
+	src/executor/test_executor.c \
+	src/executor/path_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
