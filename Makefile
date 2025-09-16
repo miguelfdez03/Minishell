@@ -5,7 +5,8 @@ FLAGS = -Werror -Wextra -Wall
 LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
-SRCS = src/main.c
+SRCS = src/main.c \
+	src/executor/test_executor.c
 
 OBJS = $(SRCS:.c=.o)
 
