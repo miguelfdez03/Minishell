@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:04:22 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 18:17:08 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:05:13 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // check for empty
 // lexer->token = parse 
-//Input user ➜ Tokenizer ➜ Expansión ➜ Crear lista de comandos ➜ Ejecutar
+//Input user ➜ lexer ➜ Tokenizer ➜ Expansión ➜ Crear lista de comandos ➜ Ejecutar
 // ?? history 
 int	main(void)
 {
