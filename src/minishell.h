@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/16 14:25:21 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/16 17:38:22 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	lexer(char *line);
 
 //--EXECUTOR-- (empezamos aquí)
 int test_executor(void);
-
+int test_simple_command(char *cmd_path, char **args);
 #endif
