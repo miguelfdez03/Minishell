@@ -1,0 +1,24 @@
+# VS Code settings
+.vscode/
+
+# Object files
+*.o
+*.a
+
+# Executable
+minishell
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
