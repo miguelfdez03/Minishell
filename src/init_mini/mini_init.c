@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   mini_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 18:57:10 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/09/17 13:21:46 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/09/18 12:44:53 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// TODO >> recieve and separate the input in to tokens
-
-int lexer(char *line)
+int	main_loop(int argc, char **argv, char **env)
 {
-	t_token		*tokens;
-	int			i;
-
-	i = 0;
-	while (line[i] != "\0")
+	char *input;
+	
+	input = NULL;
+	while (1)
 	{
-		if (is_space(line[i]) == EXIT_SUCCESS)
-			i++;
-		if (is_quoutes(line[i]) == EXIT_SUCCESS)
-			if (check_for_closed == EXIT_SUCCESS)
-				handle_quotes(line, i, tokens);
-		if (line[i] == ">" || line[i] == "<")
-			check_redir(line, i, tokens);
+		input = readline("spidershell>");
+		if (!input)
+		{
+			ft_printf("EXIT");
+			break;
+		}
+		if (ft_strlen(input) > 0)
+		{
+			add_history(input);
+			lexer(input);
+		}
+		
 	}
 }

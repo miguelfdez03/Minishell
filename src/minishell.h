@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/16 11:54:51 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/18 12:45:25 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ typedef struct s_token
 //--UTILS--
 int	is_space(char c);
 int	is_quotes(char c);
-
 //--PARSER CHECKING--
 int	handle_quotes(char *line, int i, t_token *tokens);
-int	check_for_closed(char *line, int i);
+int	check_for_closed(char *line, int i, char quote);
 int	check_redir(char *line, int i, t_token *tokens);
+//--LEXER--
+int lexer(char *line);
+//--MINI_INIT--
+int	main_loop(int argc, char **argv, char **env);
 
 #endif

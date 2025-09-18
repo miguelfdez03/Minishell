@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:04:22 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/16 12:26:15 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/18 13:00:20 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,8 @@
 // check for empty
 // lexer->token = parse 
 //Input user ➜ lexer ➜ Tokenizer ➜ Expansión ➜ Crear lista de comandos ➜ Ejecutar
-// ?? history 
-int	main(void)
+// ?? history
+int	main(int argc, char **argv, char **env)
 {
-	char *line;
-
-	while (1)
-	{
-		line = readline(">spidershell$> ");
-		if(!line)
-		{
-			printf("exit\n");
-			break;
-		}
-		//lexer(line);
-	}
+	main_loop(argc, argv, env);
 }

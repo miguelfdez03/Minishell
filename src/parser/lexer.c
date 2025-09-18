@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/18 11:21:31 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/09/18 18:48:10 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_to_token(t_token *token, t_token_type type, char *value)
+int lexer(char *line)
 {
-	token->type = type;
-	token->value = value;
-	token = token->next;
-}
+	t_token		*tokens;
+	int			i;
 
-int	is_space(char c)
-{
-	if (c == 32)
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
-}
-
-int	is_quotes(char c)
-{
-	if (c == '\"' || c == '\'')
-		return (EXIT_FAILURE);
-	else
-		return (EXIT_SUCCESS);
+	i = 0;
+	while (i <= ft_strlen(line))
+	{
+		printf("%d\n", i);
+		if (is_space(line[i]) == EXIT_SUCCESS)
+			i++;
+		if (is_quotes(line[i]) == EXIT_SUCCESS)
+			if (check_for_closed == EXIT_SUCCESS)
+				handle_quotes(line, i, tokens);
+		if (line[i] == "\>" || line[i] == "\<")//TODO > add pipes to the if
+		
+			check_redir(line, i, tokens);
+		//TODO : add commands check
+			i++;
+	}
 }

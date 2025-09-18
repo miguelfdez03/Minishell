@@ -5,7 +5,11 @@ FLAGS = -Werror -Wextra -Wall
 LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
-SRCS = src/main.c
+SRCS = src/main.c\
+		src/parser/checker.c\
+		src/parser/lexer.c\
+		src/utils/utils.c\
+		src/init_mini/mini_init.c\
 
 OBJS = $(SRCS:.c=.o)
 
