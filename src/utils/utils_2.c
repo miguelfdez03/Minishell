@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handler_args.c                                     :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 12:41:27 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/09/22 11:30:25 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/09/22 12:30:46 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_words(char *line, int i, t_token *token)
+int	ft_word_length(char *line, int i)
 {
-	int last;
-	char *str;
-
-	last = 0;	
-	str = NULL;
-	while (is_space(line[i]) == EXIT_SUCCESS)
+	while ((ft_isalpha == 1 || line[i] == 46) && is_space != EXIT_SUCCESS)
 		i++;
-	last = ft_word_length(line, i);
-	str = ft_substr(line, i, last - i - 1);
-	add_to_token(token, WORD, str);
-	return (EXIT_SUCCESS);
+	return (i);
 }

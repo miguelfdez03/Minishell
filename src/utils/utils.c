@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/19 11:10:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:29:00 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	add_to_token(t_token *token, t_token_type type, char *value)
 {
 	token->type = type;
 	token->value = value;
-	token = token->next;
+	ft_printf("%d\n", token->type);
+	ft_printf("%s\n", token->value);
+	//token = token->next;
 }
 
 int	is_space(char c)
@@ -41,4 +43,19 @@ int	is_symbols(char c)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
+}
+
+int	ft_strcmp(char *str1, char *str2, int i)
+{
+	size_t	c;
+
+	c = 0;
+	while (str1[i] && str2[c])
+	{
+		if (str1[i] != str2[c])
+			return ((unsigned char)str1[i] - (unsigned char)str2[c]);
+		c++;
+		i++;
+	}
+	return (0);
 }
