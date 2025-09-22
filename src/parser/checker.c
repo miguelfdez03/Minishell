@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/18 11:21:00 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/19 09:28:16 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //! ---- NOT FINISHED ----
 int	check_for_closed(char *line, int i, char quote)
 {
-	while (line[i] != quote && line[i] != "\0")
+	while (line[i] != quote && line[i] != '\0')
 		i++;
 	if (i == strlen(line))
 		return (-1);
@@ -42,13 +42,15 @@ int	handle_quotes(char *line, int i, t_token *tokens)
 
 int	check_redir(char *line, int i, t_token *tokens)
 {
-	if (line[i] == "<" && line[i + 1] == "<")
+	if (line[i] == '\<' && line[i + 1] == '\<')
 		printf("HEREDOC");
-	if (line[i] == ">" && line[i + 1] == ">")
+	if (line[i] == '\>' && line[i + 1] == '\>')
 		printf("rediur append");
-	if (line[i] == ">" && line[i + 1] != ">")
+	if (line[i] == '\>' && line[i + 1] != '\>')
 		printf("REDIR_output");
-	if (line[i] == "<" && line[i + 1] != "<")
+	if (line[i] == '\<' && line[i + 1] != '\<')
 		printf("REDIR_INPUT");
+	if(line[i] == '\|')
+		printf("PIPE");
 	return (EXIT_SUCCESS);
 }
