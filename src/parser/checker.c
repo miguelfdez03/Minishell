@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 12:43:45 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 18:44:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 //TODO : check args
 int	check_for_closed(char *line, int i, char quote)
 {
-	while (line && line[i] != quote && i <= ft_strlen(line))
+	i++; 
+	while (line[i] && line[i] != quote)
 		i++;
-	if (i == ft_strlen(line))
+	if (!line[i])
 		return ( -1);
-	else
-		return (i);
+	printf("dentro: %d\n", i);
+	return (i);
 }
 
 int	handle_quotes(char *line, int i, t_token *tokens)
@@ -32,9 +33,14 @@ int	handle_quotes(char *line, int i, t_token *tokens)
 	last = 0;
 	str = NULL;
 	last = check_for_closed(line, i, line[i]);
-	str = ft_substr(line, i, last - i - 1);
+	if (last == -1)
+	{
+		printf("Error: quote not closed\n");
+		return (EXIT_FAILURE);
+	}
+	str = ft_substr(line, i, last - i + 1);
 	add_to_token(tokens, STRING, str);
-	return (EXIT_SUCCESS);
+	return (last + 1);
 }
 
 int	check_redir(char *line, int i, t_token *tokens)

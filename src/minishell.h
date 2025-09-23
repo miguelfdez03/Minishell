@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 11:44:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:43:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef enum e_token_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
-	HEREDOC
+	HEREDOC,
+	EMPTY,
 }	t_token_type;
 
 typedef struct s_token
@@ -54,5 +55,6 @@ int		handle_words(char *line, int i, t_token *tokens);
 
 //--MINI_INIT--
 int		main_loop(int argc, char **argv, char **env);
+void	init_tokens(t_token *token);
 
 #endif

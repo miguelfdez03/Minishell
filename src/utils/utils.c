@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 12:29:00 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:46:57 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	add_to_token(t_token *token, t_token_type type, char *value)
 {
+	token = malloc(sizeof(t_token));
+	init_tokens(token);
 	token->type = type;
 	token->value = value;
 	ft_printf("%d\n", token->type);
 	ft_printf("%s\n", token->value);
-	//token = token->next;
+	token = token->next;
 }
 
 int	is_space(char c)

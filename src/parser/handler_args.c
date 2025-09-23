@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 12:41:27 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:52:04 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	handle_words(char *line, int i, t_token *token)
 {
 	int last;
 	char *str;
-
+	
 	last = 0;	
 	str = NULL;
 	while (is_space(line[i]) == EXIT_SUCCESS)
 		i++;
 	last = ft_word_length(line, i);
-	str = ft_substr(line, i, last - i - 1);
+	str = ft_substr(line, i, last - i);
 	add_to_token(token, WORD, str);
-	return (EXIT_SUCCESS);
+	return (last);
 }

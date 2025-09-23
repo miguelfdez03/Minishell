@@ -6,11 +6,17 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:21:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 11:53:08 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:42:42 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	init_tokens(t_token *token)
+{
+	token->value = NULL;
+	token->type = EMPTY;	
+}
 
 int	main_loop(int argc, char **argv, char **env)
 {
@@ -27,8 +33,13 @@ int	main_loop(int argc, char **argv, char **env)
 		}
 		if (ft_strlen(input) > 0)
 		{
-			lexer(input);
-			add_history(input);
+			if(input[0] == '\>' || input[0] == '\<' || input[0] == '\|')
+				return (EXIT_FAILURE);
+			else
+			{
+				lexer(input);
+				add_history(input);
+			}
 		}
 	}
 }
