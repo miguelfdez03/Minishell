@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/18 17:36:42 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:51:40 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,47 @@
 // Tipos de tokens que puede reconocer nuestro Spider-Shell
 typedef enum e_token_type
 {
-	WORD,         // Comando o argumento normal (ej: "ls", "-la", "file.txt")
-	STRING,       // Cadena entre comillas (ej: "hello world", 'file name')
-	PIPE,         // Operador pipe "|" para conectar comandos
-	REDIR_IN,     // Redirección de entrada "<" (leer desde archivo)
-	REDIR_OUT,    // Redirección de salida ">" (escribir a archivo)
-	REDIR_APPEND, // Redirección append ">>" (añadir al final del archivo)
-	HEREDOC       // Here document "<<" (entrada multilínea hasta delimitador)
-}					t_token_type;
+	WORD,
+	STRING,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
+	EMPTY,
+}	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	struct s_token	*next;
-}					t_token;
+}	t_token;
+
+typedef struct s_data
+{
+	char **env;
+	char *input;
+
+} t_data;
 
 //--UTILS--
-int					is_space(char c);
-int					is_quotes(char c);
-
-//--PARSER CHECKING--
-int					handle_quotes(char *line, int i, t_token *tokens);
-int					check_for_closed(char *line, int i);
-int					check_redir(char *line, int i, t_token *tokens);
-
+int		is_space(char c);
+int		is_quotes(char c);
+int		is_symbols(char c);
+int		ft_strcmp(char *str1, char *str2, int i);
+void	add_to_token(t_token *token, t_token_type type, char *value);
+int		ft_word_length(char *line, int i);
 //--LEXER--
-int					lexer(char *line);
+int 	lexer(char *line);
+int		handle_quotes(char *line, int i, t_token *tokens);
+int		check_for_closed(char *line, int i, char quote);
+int		check_redir(char *line, int i, t_token *tokens);
+int		handle_words(char *line, int i, t_token *tokens);
+
+//--MINI_INIT--
+int		main_loop(int argc, char **argv, char **env);
+void	init_tokens(t_token *token);
 
 //--TEST EXECUTOR--
 int					test_executor(void);
@@ -61,4 +75,5 @@ char				*search_in_path_dirs(char *path_copy, char *cmd);
 char				*get_env_value(char *var_name, char **envp);
 char				*build_full_path(char *dir, char *cmd);
 void				free_string_array(char **array);
+
 #endif

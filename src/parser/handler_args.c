@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   handler_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 18:57:10 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/09/23 16:24:16 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// TODO >> recieve and separate the input in to tokens
-
-int lexer(char *line)
+int handle_redir(char *line, int i, t_token *token)
 {
-	t_token		*tokens;
-	int			i;
+	
+}
 
-	i = 0;
-	while (line[i] != "\0")
-	{
-		if (is_space(line[i]) == EXIT_SUCCESS)
-			i++;
-		if (is_quoutes(line[i]) == EXIT_SUCCESS)
-			if (check_for_closed == EXIT_SUCCESS)
-				handle_quotes(line, i, tokens);
-		if (line[i] == ">" || line[i] == "<")
-			check_redir(line, i, tokens);
-	}
+int	handle_words(char *line, int i, t_token *token)
+{
+	int last;
+	char *str;
+	
+	last = 0;	
+	str = NULL;
+	while (is_space(line[i]) == EXIT_SUCCESS)
+		i++;
+	last = ft_word_length(line, i);
+	str = ft_substr(line, i, last - i);
+	add_to_token(token, WORD, str);
+	return (last);
 }

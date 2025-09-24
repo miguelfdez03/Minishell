@@ -6,29 +6,23 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/10 18:21:08 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/22 18:44:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //TODO : check for single quotes
-//! ---- NOT FINISHED ----
-int	check_for_closed(char *line, int i)
+//TODO : check args
+int	check_for_closed(char *line, int i, char quote)
 {
-	int cont;
-
-	cont = 0;
-	i++;
-	while ((line[i] != '\"' || line[i] != '\'') && line[i] != "\0")
-	{
+	i++; 
+	while (line[i] && line[i] != quote)
 		i++;
-		cont++;	
-	}
-	if (i == strlen(line))
-		return (-1);
-	else
-		return (i);
+	if (!line[i])
+		return ( -1);
+	printf("dentro: %d\n", i);
+	return (i);
 }
 
 int	handle_quotes(char *line, int i, t_token *tokens)
@@ -38,24 +32,28 @@ int	handle_quotes(char *line, int i, t_token *tokens)
 	
 	last = 0;
 	str = NULL;
-	while (line[i] != '\0')
+	last = check_for_closed(line, i, line[i]);
+	if (last == -1)
 	{
-		last = check_for_closed(line, i);
-		str = ft_substr(line, i, last);
+		printf("Error: quote not closed\n");
+		return (EXIT_FAILURE);
 	}
-	//add to token
-	return (EXIT_SUCCESS);
+	str = ft_substr(line, i, last - i + 1);
+	add_to_token(tokens, STRING, str);
+	return (last + 1);
 }
 
 int	check_redir(char *line, int i, t_token *tokens)
 {
-	if (line[i] == "<" && line[i + 1] == "<")
-		//HEREDOC
-	if (line[i] == ">" && line[i + 1] == ">")
-		//rediur append
-	if (line[i] == ">" && line[i + 1] != ">")
-		//REDIR_output
-	if (line[i] == "<" && line[i + 1] != "<")
-		//REDIR_INPUT
+	if (line[i] == '\<' && line[i + 1] == '\<')
+		add_to_token(tokens, HEREDOC, "");
+	if (line[i] == '\>' && line[i + 1] == '\>')
+		printf("rediur append");
+	if (line[i] == '\>' && line[i + 1] != '\>')
+		printf("REDIR_output");
+	if (line[i] == '\<' && line[i + 1] != '\<')
+		printf("REDIR_INPUT");
+	if(line[i] == '\|')
+		printf("PIPE");
 	return (EXIT_SUCCESS);
 }
