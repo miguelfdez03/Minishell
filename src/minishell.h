@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/24 14:51:40 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/25 16:41:46 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,57 @@ typedef struct s_data
 
 } t_data;
 
+// Enum para tipos de comando
+typedef enum e_cmd_type
+{
+    CMD_EXTERNAL,    // Comando externo (ls, cat, etc.)
+    CMD_BUILTIN      // Built-in (cd, pwd, exit, etc.)
+}	t_cmd_type;
+
+// Enum específico para built-ins
+typedef enum e_builtin_type
+{
+    BUILTIN_NONE = -1,
+    BUILTIN_CD,
+    BUILTIN_PWD,
+    BUILTIN_EXIT,
+    BUILTIN_ECHO,
+    BUILTIN_ENV,
+    BUILTIN_EXPORT,
+    BUILTIN_UNSET
+}	t_builtin_type;
+
+// Estructura principal para comandos parseados
+typedef struct s_cmd
+{
+    char			*name;          // Nombre del comando ("ls", "cd", etc.)
+    char			**args;         // Array de argumentos [cmd, arg1, arg2, NULL]
+    t_cmd_type		type;           // CMD_EXTERNAL o CMD_BUILTIN
+    t_builtin_type	builtin_id;     // ID específico del built-in
+    char			*input_file;    // Para redirección < archivo
+    char			*output_file;   // Para redirección > archivo
+    int				append_mode;    // Para redirección >> 
+    struct s_cmd	*next;          // Para pipes (cmd1 | cmd2)
+}	t_cmd;
 //--UTILS--
 int		is_space(char c);
 int		is_quotes(char c);
 int		is_symbols(char c);
 int		ft_strcmp(char *str1, char *str2, int i);
+int		ft_strcmp2(char *str1, char *str2);
 void	add_to_token(t_token *token, t_token_type type, char *value);
 int		ft_word_length(char *line, int i);
+
+//--CMD UTILS--
+t_builtin_type	identify_builtin(char *cmd);
+t_cmd			*create_cmd(char *cmd_name);
+void			add_cmd_arg(t_cmd *cmd, char *arg);
+void			free_cmd(t_cmd *cmd);
+t_cmd			*parse_simple_input(char *input);
+
+//--BUILT-INS--
+int		execute_command(t_cmd *cmd, char **envp);
+int		execute_builtin_by_id(t_cmd *cmd, char **envp);
 //--LEXER--
 int 	lexer(char *line);
 int		handle_quotes(char *line, int i, t_token *tokens);
