@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:50:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/25 16:41:32 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:03:15 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_quotes(char c)
 
 int	is_symbols(char c)
 {
-	if (c == '\>' || c == '\<' || c == '\|')
+	if (c == '>' || c == '<' || c == '|')
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);

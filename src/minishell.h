@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/25 16:41:46 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:03:15 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,38 @@ typedef struct s_token
 
 typedef struct s_data
 {
-	char **env;
-	char *input;
+	char	**env;
+	char	*input;
+}	t_data;
 
-} t_data;
-
-// Enum para tipos de comando
 typedef enum e_cmd_type
 {
-    CMD_EXTERNAL,    // Comando externo (ls, cat, etc.)
-    CMD_BUILTIN      // Built-in (cd, pwd, exit, etc.)
+	CMD_EXTERNAL,
+	CMD_BUILTIN
 }	t_cmd_type;
 
-// Enum específico para built-ins
 typedef enum e_builtin_type
 {
-    BUILTIN_NONE = -1,
-    BUILTIN_CD,
-    BUILTIN_PWD,
-    BUILTIN_EXIT,
-    BUILTIN_ECHO,
-    BUILTIN_ENV,
-    BUILTIN_EXPORT,
-    BUILTIN_UNSET
+	BUILTIN_NONE = -1,
+	BUILTIN_CD,
+	BUILTIN_PWD,
+	BUILTIN_EXIT,
+	BUILTIN_ECHO,
+	BUILTIN_ENV,
+	BUILTIN_EXPORT,
+	BUILTIN_UNSET
 }	t_builtin_type;
 
-// Estructura principal para comandos parseados
 typedef struct s_cmd
 {
-    char			*name;          // Nombre del comando ("ls", "cd", etc.)
-    char			**args;         // Array de argumentos [cmd, arg1, arg2, NULL]
-    t_cmd_type		type;           // CMD_EXTERNAL o CMD_BUILTIN
-    t_builtin_type	builtin_id;     // ID específico del built-in
-    char			*input_file;    // Para redirección < archivo
-    char			*output_file;   // Para redirección > archivo
-    int				append_mode;    // Para redirección >> 
-    struct s_cmd	*next;          // Para pipes (cmd1 | cmd2)
+	char			*name;
+	char			**args;
+	t_cmd_type		type;
+	t_builtin_type	builtin_id;
+	char			*input_file;
+	char			*output_file;
+	int				append_mode;
+	struct s_cmd	*next;
 }	t_cmd;
 //--UTILS--
 int		is_space(char c);

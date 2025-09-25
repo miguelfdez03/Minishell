@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:29:57 by miguel            #+#    #+#             */
-/*   Updated: 2025/09/25 16:51:59 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:08:06 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,48 @@
 
 int	execute_command(t_cmd *cmd, char **envp)
 {
-    // Si es comando externo
-    if (cmd->type == CMD_EXTERNAL)
-         printf("external command \n");
-    else
-    {
-         printf("builtin command \n");
-         execute_builtin_by_id(cmd, envp);
-    }
+	if (cmd->type == CMD_EXTERNAL)
+		printf("external command \n");
+	else
+		execute_builtin_by_id(cmd, envp);
+	return (0);
 }
 
-// Ejecutar built-in usando switch
+// Ejecutar built-in
+static int	handle_basic_builtins(t_builtin_type type)
+{
+	if (type == BUILTIN_CD)
+		return (printf("\nbuiltin cd\n"), 0);
+	else if (type == BUILTIN_PWD)
+		return (printf("\nbuiltin pwd\n"), 0);
+	else if (type == BUILTIN_EXIT)
+		return (printf("\nbuiltin exit\n"), 0);
+	else if (type == BUILTIN_ECHO)
+		return (printf("\nbuiltin echo\n"), 0);
+	return (-1);
+}
+
+static int	handle_env_builtins(t_builtin_type type)
+{
+	if (type == BUILTIN_ENV)
+		return (printf("\nbuiltin env\n"), 0);
+	else if (type == BUILTIN_EXPORT)
+		return (printf("\nbuiltin export\n"), 0);
+	else if (type == BUILTIN_UNSET)
+		return (printf("\nbuiltin unset\n"), 0);
+	return (-1);
+}
+
 int	execute_builtin_by_id(t_cmd *cmd, char **envp)
 {
-    printf("enter here \n");
-    switch (cmd->builtin_id)
-    {
-        case BUILTIN_CD:
-            printf("\n builtin cd\n");
-            return (0);
-        case BUILTIN_PWD:
-            printf("\n builtin pwd\n");
-            return (0);
-        case BUILTIN_EXIT:
-            printf("\n builtin exit\n");
-            return (0);
-        case BUILTIN_ECHO:
-            printf("\n builtin echo\n");
-            return (0);
-        case BUILTIN_ENV:
-            printf("\n builtin env\n");
-            return (0);
-        case BUILTIN_EXPORT:
-            printf("\n builtin export\n");
-            return (0);
-        case BUILTIN_UNSET:
-            printf("\n builtin unset\n");
-            return (0);
-        default:
-            printf("\n Unknown builtin\n");
-            return (1);
-    }
+	int	result;
+
+	result = handle_basic_builtins(cmd->builtin_id);
+	if (result != -1)
+		return (result);
+	result = handle_env_builtins(cmd->builtin_id);
+	if (result != -1)
+		return (result);
+	printf("\nUnknown builtin\n");
+	return (1);
 }
