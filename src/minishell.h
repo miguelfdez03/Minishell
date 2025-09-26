@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/26 09:25:46 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:49:24 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
 typedef enum e_token_type
 {
 	WORD,
@@ -41,6 +42,12 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_env
+{
+	char *key;
+	char *value;
+}	t_env;
 
 typedef struct s_data
 {
@@ -77,6 +84,7 @@ typedef struct s_cmd
 	int				append_mode;
 	struct s_cmd	*next;
 }	t_cmd;
+
 //--UTILS--
 int		is_space(char c);
 int		is_quotes(char c);

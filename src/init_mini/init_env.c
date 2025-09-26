@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/24 19:58:27 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:54:55 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int	init_env(char **env, t_env *env_t)
 	i = 0;
 	while (env[i])
 	{
+		
 	}
 }
