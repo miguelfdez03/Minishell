@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/25 17:03:15 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/26 09:24:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <sys/wait.h>
-# include <unistd.h>
+#include <stdio.h>      // Necesario para FILE, printf, perror, etc.
+#include <stdlib.h>     // malloc, free, exit, getenv...
+#include <unistd.h>     // write, fork, execve, pipe...
+#include <fcntl.h>      // open, O_RDONLY, O_WRONLY...
+#include <sys/types.h>  // pid_t
+#include <sys/wait.h>   // wait, waitpid
+#include <signal.h>     // signal, sigaction
+#include <errno.h>      // errno, perror
 
+/* ---- Librerías externas ---- */
+#include <readline/readline.h>
+#include <readline/history.h>
 // Tipos de tokens que puede reconocer nuestro Spider-Shell
 typedef enum e_token_type
 {
@@ -91,29 +97,29 @@ void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
 
 //--BUILT-INS--
-int		execute_command(t_cmd *cmd, char **envp);
-int		execute_builtin_by_id(t_cmd *cmd, char **envp);
+int				execute_command(t_cmd *cmd, char **envp);
+int				execute_builtin_by_id(t_cmd *cmd, char **envp);
 //--LEXER--
-int 	lexer(char *line);
-int		handle_quotes(char *line, int i, t_token *tokens);
-int		check_for_closed(char *line, int i, char quote);
-int		check_redir(char *line, int i, t_token *tokens);
-int		handle_words(char *line, int i, t_token *tokens);
+int 			lexer(char *line);
+int				handle_quotes(char *line, int i, t_token *tokens);
+int				check_for_closed(char *line, int i, char quote);
+int				check_redir(char *line, int i, t_token *tokens);
+int				handle_words(char *line, int i, t_token *tokens);
 
 //--MINI_INIT--
-int		main_loop(int argc, char **argv, char **env);
-void	init_tokens(t_token *token);
+int				main_loop(int argc, char **argv, char **env);
+void			init_tokens(t_token *token);
 
 //--TEST EXECUTOR--
-int					test_executor(void);
-int					test_simple_command(char *cmd_path, char **args);
-int					test_simple_command_with_path(char *cmd, char **args);
+int				test_executor(void);
+int				test_simple_command(char *cmd_path, char **args);
+int				test_simple_command_with_path(char *cmd, char **args);
 
 //--PATH UTILS--
-char				*find_command_path(char *cmd, char **envp);
-char				*search_in_path_dirs(char *path_copy, char *cmd);
-char				*get_env_value(char *var_name, char **envp);
-char				*build_full_path(char *dir, char *cmd);
-void				free_string_array(char **array);
+char			*find_command_path(char *cmd, char **envp);
+char			*search_in_path_dirs(char *path_copy, char *cmd);
+char			*get_env_value(char *var_name, char **envp);
+char			*build_full_path(char *dir, char *cmd);
+void			free_string_array(char **array);
 
 #endif
