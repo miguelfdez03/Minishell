@@ -6,26 +6,23 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/26 09:24:19 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/26 09:25:46 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
-#include <stdio.h>      // Necesario para FILE, printf, perror, etc.
-#include <stdlib.h>     // malloc, free, exit, getenv...
-#include <unistd.h>     // write, fork, execve, pipe...
-#include <fcntl.h>      // open, O_RDONLY, O_WRONLY...
-#include <sys/types.h>  // pid_t
-#include <sys/wait.h>   // wait, waitpid
-#include <signal.h>     // signal, sigaction
-#include <errno.h>      // errno, perror
-
-/* ---- Librerías externas ---- */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-// Tipos de tokens que puede reconocer nuestro Spider-Shell
 typedef enum e_token_type
 {
 	WORD,
