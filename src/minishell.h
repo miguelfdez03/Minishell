@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/26 11:49:24 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:16:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char *key;
-	char *value;
+	char 	*key;
+	char 	*value;
+	t_env	*next;
 }	t_env;
 
 typedef struct s_data
