@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/27 18:16:51 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:35:24 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,18 @@ typedef struct s_env
 {
 	char 	*key;
 	char 	*value;
+	int		index;
 	t_env	*next;
 }	t_env;
 
 typedef struct s_data
 {
-	char	**env;
-	char	*input;
+	char		**path;
+	t_env		**env;
+	char		*input;
+	t_cmd		**cmd;
+	t_token		**t_lexer;
+	int			pipe_flag;
 }	t_data;
 
 typedef enum e_cmd_type
@@ -83,17 +88,18 @@ typedef struct s_cmd
 	char			*input_file;
 	char			*output_file;
 	int				append_mode;
+	int				heredoc;
 	struct s_cmd	*next;
 }	t_cmd;
 
 //--UTILS--
-int		is_space(char c);
-int		is_quotes(char c);
-int		is_symbols(char c);
-int		ft_strcmp(char *str1, char *str2, int i);
-int		ft_strcmp2(char *str1, char *str2);
-void	add_to_token(t_token *token, t_token_type type, char *value);
-int		ft_word_length(char *line, int i);
+int				is_space(char c);
+int				is_quotes(char c);
+int				is_symbols(char c);
+int				ft_strcmp(char *str1, char *str2, int i);
+int				ft_strcmp2(char *str1, char *str2);
+void			add_to_token(t_token *token, t_token_type type, char *value);
+int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--
 t_builtin_type	identify_builtin(char *cmd);
@@ -115,6 +121,10 @@ int				handle_words(char *line, int i, t_token *tokens);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, char **env);
 void			init_tokens(t_token *token);
+void 			init_data(t_data *data, char **env, t_env *env_t);
+
+//--ENV--
+int	init_env(char **env, t_env *env_t);
 
 //--TEST EXECUTOR--
 int				test_executor(void);
@@ -127,5 +137,6 @@ char			*search_in_path_dirs(char *path_copy, char *cmd);
 char			*get_env_value(char *var_name, char **envp);
 char			*build_full_path(char *dir, char *cmd);
 void			free_string_array(char **array);
+
 
 #endif
