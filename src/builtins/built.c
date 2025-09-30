@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:29:57 by miguel            #+#    #+#             */
-/*   Updated: 2025/09/30 17:22:23 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/30 18:37:09 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	execute_command(t_cmd *cmd, char **envp)
 }
 
 // Ejecutar built-in
-static int	handle_basic_builtins(t_builtin_type type,t_cmd *cmd)
+static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd)
 {
 	if (type == BUILTIN_CD)
 		return (printf("\nbuiltin cd\n"), 0);
 	else if (type == BUILTIN_PWD)
-		return (printf("\nbuiltin pwd\n"), 0);
+		return (builtin_pwd(cmd), 0);
 	else if (type == BUILTIN_EXIT)
 		return (builtin_exit(cmd), 0);
 	else if (type == BUILTIN_ECHO)
@@ -35,7 +35,7 @@ static int	handle_basic_builtins(t_builtin_type type,t_cmd *cmd)
 	return (-1);
 }
 
-static int	handle_env_builtins(t_builtin_type type,t_cmd *cmd)
+static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd)
 {
 	if (type == BUILTIN_ENV)
 		return (printf("\nbuiltin env\n"), 0);
@@ -58,4 +58,24 @@ int	execute_builtin_by_id(t_cmd *cmd, char **envp)
 		return (result);
 	printf("\nUnknown builtin\n");
 	return (1);
+}
+
+void	builtin_pwd(t_cmd *cmd)
+{
+	char	*pwd;
+
+	if (cmd->args && cmd->args[1])
+	{
+		ft_putendl_fd("pwd: too many arguments", 2);
+		return (1);
+	}
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+	{
+		ft_putendl_fd("pwd: error getting current directory", 2);
+		return (1);
+	}
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
+	return (0);
 }
