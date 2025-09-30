@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:21:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/25 16:28:50 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/30 17:33:49 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	main_loop(int argc, char **argv, char **env)
         input = readline("spidershell>");
         if (!input)
         {
-            ft_printf("exit\n");
-            break;
+          cmd = create_cmd("exit");
+          builtin_exit(cmd);
         }
         if (ft_strlen(input) > 0)
         {
