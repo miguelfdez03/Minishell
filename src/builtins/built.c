@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:29:57 by miguel            #+#    #+#             */
-/*   Updated: 2025/09/25 17:08:06 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/30 17:22:23 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	execute_command(t_cmd *cmd, char **envp)
 }
 
 // Ejecutar built-in
-static int	handle_basic_builtins(t_builtin_type type)
+static int	handle_basic_builtins(t_builtin_type type,t_cmd *cmd)
 {
 	if (type == BUILTIN_CD)
 		return (printf("\nbuiltin cd\n"), 0);
 	else if (type == BUILTIN_PWD)
 		return (printf("\nbuiltin pwd\n"), 0);
 	else if (type == BUILTIN_EXIT)
-		return (printf("\nbuiltin exit\n"), 0);
+		return (builtin_exit(cmd), 0);
 	else if (type == BUILTIN_ECHO)
 		return (printf("\nbuiltin echo\n"), 0);
 	return (-1);
 }
 
-static int	handle_env_builtins(t_builtin_type type)
+static int	handle_env_builtins(t_builtin_type type,t_cmd *cmd)
 {
 	if (type == BUILTIN_ENV)
 		return (printf("\nbuiltin env\n"), 0);
@@ -50,10 +50,10 @@ int	execute_builtin_by_id(t_cmd *cmd, char **envp)
 {
 	int	result;
 
-	result = handle_basic_builtins(cmd->builtin_id);
+	result = handle_basic_builtins(cmd->builtin_id, cmd);
 	if (result != -1)
 		return (result);
-	result = handle_env_builtins(cmd->builtin_id);
+	result = handle_env_builtins(cmd->builtin_id, cmd);
 	if (result != -1)
 		return (result);
 	printf("\nUnknown builtin\n");
