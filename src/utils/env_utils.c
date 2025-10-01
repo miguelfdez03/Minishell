@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handler_args.c                                     :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/29 20:07:38 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/09/26 13:07:08 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/09/27 18:09:01 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_words(char *line, int i, t_token *token)
+char *get_env_key(char *env)
 {
-	int last;
-	char *str;
-	
-	last = 0;	
-	str = NULL;
-	while (is_space(line[i]) == EXIT_SUCCESS)
+	int	i;
+
+	i = 0;
+	while(env[i] && env[i] != '=' && env[i] != ' ' )
 		i++;
-	last = ft_word_length(line, i);
-	str = ft_substr(line, i, last - i);
-	add_to_token(token, WORD, str);
-	return (last);
+	return(1);
 }

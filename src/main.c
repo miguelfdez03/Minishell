@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:04:22 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/25 17:04:13 by miguel           ###   ########.fr       */
+/*   Updated: 2025/09/30 17:35:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	t_env   *env_t;
+    t_data	**data;
+	
+	init_data(data, env, env_t);
 	main_loop(argc, argv, env);
 	return (0);
 }
