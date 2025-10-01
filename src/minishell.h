@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*                                                                           */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/01 19:34:33 by miguel           ###   ########.fr       */
+/*   Updated: 2025/10/01 19:37:15 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char 	*key;
-	char 	*value;
-	int		index;
-	t_env	*next;
+	char 			*key;
+	char 			*value;
+	int				index;
+	struct s_env	*next;
 }	t_env;
 
 typedef struct s_data
 {
-	char		**path;
-	t_env		**env;
-	char		*input;
-	t_cmd		**cmd;
-	t_token		**t_lexer;
-	int			pipe_flag;
+	char			**path;
+	t_env			**env;
+	char			*input;
+	struct s_cmd	**cmd;
+	t_token			**t_lexer;
+	int				pipe_flag;
 }	t_data;
 
 typedef enum e_cmd_type
@@ -122,7 +122,7 @@ int				check_redir(char *line, int i, t_token *tokens);
 int				handle_words(char *line, int i, t_token *tokens);
 
 //--MINI_INIT--
-int				main_loop(int argc, char **argv, char **env);
+int				main_loop(int argc, char **argv, t_data **data, char **env);
 void			init_tokens(t_token *token);
 void 			init_data(t_data *data, char **env, t_env *env_t);
 
