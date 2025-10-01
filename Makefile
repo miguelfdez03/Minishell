@@ -17,6 +17,7 @@ SRCS = src/main.c \
 		src/builtins/built.c\
 		src/builtins/builtin_exit.c\
 		src/utils/cmd_utils.c\
+		src/builtins/builtin_env.c\
 
 OBJS = $(SRCS:.c=.o)
 

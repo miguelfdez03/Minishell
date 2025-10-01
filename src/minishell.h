@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/29 19:15:38 by miguel           ###   ########.fr       */
+/*   Updated: 2025/10/01 19:29:30 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ t_cmd			*parse_simple_input(char *input);
 int		execute_command(t_cmd *cmd, char **envp);
 int		execute_builtin_by_id(t_cmd *cmd, char **envp);
 void	builtin_exit(t_cmd *cmd);
+int		builtin_pwd(t_cmd *cmd);
+int		builtin_env(char **envp);
 //--LEXER--
 int 	lexer(char *line);
 int		handle_quotes(char *line, int i, t_token *tokens);

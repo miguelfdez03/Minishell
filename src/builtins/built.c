@@ -6,7 +6,7 @@
 /*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:29:57 by miguel            #+#    #+#             */
-/*   Updated: 2025/09/30 18:37:09 by miguel           ###   ########.fr       */
+/*   Updated: 2025/10/01 19:28:58 by miguel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd)
 	return (-1);
 }
 
-static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd)
+static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd, char **envp)
 {
 	if (type == BUILTIN_ENV)
-		return (printf("\nbuiltin env\n"), 0);
+		return (builtin_env(envp), 0);
 	else if (type == BUILTIN_EXPORT)
 		return (printf("\nbuiltin export\n"), 0);
 	else if (type == BUILTIN_UNSET)
@@ -53,14 +53,14 @@ int	execute_builtin_by_id(t_cmd *cmd, char **envp)
 	result = handle_basic_builtins(cmd->builtin_id, cmd);
 	if (result != -1)
 		return (result);
-	result = handle_env_builtins(cmd->builtin_id, cmd);
+	result = handle_env_builtins(cmd->builtin_id, cmd, envp);
 	if (result != -1)
 		return (result);
 	printf("\nUnknown builtin\n");
 	return (1);
 }
 
-void	builtin_pwd(t_cmd *cmd)
+int	builtin_pwd(t_cmd *cmd)
 {
 	char	*pwd;
 
