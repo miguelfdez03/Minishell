@@ -51,34 +51,20 @@ SOURCES = ft_isalpha.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-BLUE = \033[0;34m
-RED = \033[0;31m
-RESET = \033[0m
-
-OK = ✅
-BUILD = 🔨
-CLEAN = 🧹
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME) 
 $(NAME): $(OBJECTS)
 	@$(AR) -r $@ $?
-	@echo "$(BLUE)$(OK) Library compiled: $(NAME)$(RESET)"
 
 %.o: %.c
 	@$(CC) -c $(CFLAGS) $<
-	@echo "$(GREEN)$(BUILD) Compiling $<$(RESET)"
 
 clean:
 	@rm -f $(OBJECTS)
-	@echo "$(YELLOW)$(CLEAN) Object files removed$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(RED)$(CLEAN) Binary removed: $(NAME)$(RESET)"
 
 re: fclean all
