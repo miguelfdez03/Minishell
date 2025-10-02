@@ -14,6 +14,7 @@ SRCS = src/main.c \
 		src/utils/utils.c\
 		src/utils/utils_2.c\
 		src/init_mini/mini_init.c\
+		src/init_mini/init_env.c\
 		src/builtins/built.c\
 		src/builtins/builtin_exit.c\
 		src/utils/cmd_utils.c\
