@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/02 13:06:59 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:32:54 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 char	*get_env_key(char **env, int i, int j)
 {
+	char *key;
+	
 	while(env[i][j] && env[i][j] != '=')
 		j++;
-	return(ft_substr(env[i], 0, j));	
+	key = ft_substr(env[i], 0, j);
+	return (key);
 }
 
 char	*get_env_value_2(char **env, int i, int j)
 {
 	int start = j;
+	char *value;
 	
 	while(env[i][j] && env[i][j] != '\0')
 		j++;
-	return(ft_substr(env[i], start, j - start));	
+	value = ft_substr(env[i], start, j - start);
+	return (value);
 }
 
 int	init_env(char **env, t_env *env_t)

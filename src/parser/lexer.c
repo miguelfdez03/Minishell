@@ -6,36 +6,45 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/22 17:52:06 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:56:21 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int lexer(char *line)
+int lexer(char *line, t_token **tokens)
 {
 	int			i;
-	t_token 	*token;
+	int			result;
 
 	i = 0;
+	*tokens = NULL;
 	while (line[i])
 	{
 		if (is_space(line[i]) == EXIT_SUCCESS)
 			i++;
 		else if (is_quotes(line[i]) == EXIT_SUCCESS)
 		{
-			i = handle_quotes(line, i, token);
-			if (i == EXIT_FAILURE)
+			result = handle_quotes(line, i, tokens);
+			if (result == -1)
 				return (EXIT_FAILURE);
-			printf("handle-quotes\n");
+			i = result;
 		}
 		else if (is_symbols(line[i]) == EXIT_SUCCESS)
 		{
-			check_redir(line, i, token);
-			i++;
+			result = check_redir(line, i, tokens);
+			if (result == 0)
+				i++;
+			else
+				i += result;
 		}
 		else if (ft_isalpha(line[i]) == 1)
-			i = handle_words(line, i, token);
+		{
+			result = handle_words(line, i, tokens);
+			if (result == -1)
+				return (EXIT_FAILURE);
+			i = result;
+		}
 		else
 			i++;
 	}

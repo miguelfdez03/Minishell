@@ -98,7 +98,7 @@ int				is_quotes(char c);
 int				is_symbols(char c);
 int				ft_strcmp(char *str1, char *str2, int i);
 int				ft_strcmp2(char *str1, char *str2);
-void			add_to_token(t_token *token, t_token_type type, char *value);
+void			add_to_token(t_token **tokens, t_token_type type, char *value);
 int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--
@@ -116,11 +116,11 @@ int				builtin_pwd(t_cmd *cmd);
 int				builtin_env(char **envp);
 int				builtin_echo(t_cmd *cmd);
 //--LEXER--
-int 			lexer(char *line);
-int				handle_quotes(char *line, int i, t_token *tokens);
+int 			lexer(char *line, t_token **tokens);
+int				handle_quotes(char *line, int i, t_token **tokens);
 int				check_for_closed(char *line, int i, char quote);
-int				check_redir(char *line, int i, t_token *tokens);
-int				handle_words(char *line, int i, t_token *tokens);
+int				check_redir(char *line, int i, t_token **tokens);
+int				handle_words(char *line, int i, t_token **tokens);
 
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data, char **env);
