@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   mini_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:21:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/01 19:38:08 by miguel           ###   ########.fr       */
+/*   Updated: 2025/10/02 12:52:07 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	init_tokens(t_token *token)
+void init_tokens(t_token *token)
 {
 	token->value = NULL;
-	token->type = EMPTY;	
+	token->type = EMPTY;
 }
 
-void init_data(t_data *data, char **env, t_env *env_t)
+void init_data(t_data **data, char **env, t_env *env_t)
 {
-    data->cmd = NULL;
-    data->env = init_env(env, env_t);
-    data->path = NULL;
-    data->pipe_flag = -1;
-    data->t_lexer = NULL;
+	(*data)->cmd = NULL;
+	(*data)->env = init_env(env, env_t);
+	(*data)->path = NULL;
+	(*data)->pipe_flag = -1;
+	(*data)->t_lexer = NULL;
 }
 
 /*int	main_loop(int argc, char **argv, char **env)
 {
 	char *input;
-	
+
 	input = NULL;
 	while (1)
 	{
@@ -43,22 +43,23 @@ void init_data(t_data *data, char **env, t_env *env_t)
 			if (ft_strlen(input) > 0)
 			{
 				if(input[0] == '\>' || input[0] == '\<' || input[0] == '\|')
-				return (EXIT_FAILURE);
+					return (EXIT_FAILURE);
 				else
 				{
 					lexer(input);
 					add_history(input);
-					}
-					}
-					}
-					}
-					*/
-				
-int	main_loop(int argc, char **argv, t_data **data, char **env)
+				}
+			}
+		}
+	}
+}
+*/
+
+int main_loop(int argc, char **argv, t_data **data, char **env)
 {
-	char	*input;
-	t_cmd	*cmd;
-	
+	char *input;
+	t_cmd *cmd;
+
 	input = NULL;
 	while (1)
 	{
@@ -74,16 +75,16 @@ int	main_loop(int argc, char **argv, t_data **data, char **env)
 			(*data)->input = input;
 			if (cmd)
 			{
-				printf("🕷️ Command: %s, Type: %s, Builtin ID: %d\n", 
-					cmd->name, 
-					(cmd->type == CMD_BUILTIN) ? "BUILTIN" : "EXTERNAL",
-					cmd->builtin_id);           
+				printf("🕷️ Command: %s, Type: %s, Builtin ID: %d\n",
+					   cmd->name,
+					   (cmd->type == CMD_BUILTIN) ? "BUILTIN" : "EXTERNAL",
+					   cmd->builtin_id);
 				execute_command(cmd, env);
 				free_cmd(cmd);
 				add_history(input);
 			}
 		}
-    	free(input);
+		free(input);
 	}
-    return (0);
+	return (0);
 }

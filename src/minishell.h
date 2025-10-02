@@ -111,9 +111,9 @@ t_cmd			*parse_simple_input(char *input);
 //--BUILT-INS--
 int				execute_command(t_cmd *cmd, char **envp);
 int				execute_builtin_by_id(t_cmd *cmd, char **envp);
-void	builtin_exit(t_cmd *cmd);
-int		builtin_pwd(t_cmd *cmd);
-int		builtin_env(char **envp);
+void			builtin_exit(t_cmd *cmd);
+int				builtin_pwd(t_cmd *cmd);
+int				builtin_env(char **envp);
 //--LEXER--
 int 			lexer(char *line);
 int				handle_quotes(char *line, int i, t_token *tokens);
@@ -124,7 +124,7 @@ int				handle_words(char *line, int i, t_token *tokens);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data, char **env);
 void			init_tokens(t_token *token);
-void 			init_data(t_data *data, char **env, t_env *env_t);
+void 			init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
 int	init_env(char **env, t_env *env_t);
