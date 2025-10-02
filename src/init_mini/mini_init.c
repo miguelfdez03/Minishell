@@ -5,16 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/10/02 14:14:55 by miguel-f         ###   ########.fr       */
+/*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
+/*   Updated: 2025/10/02 14:15:20 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-
-
-
 
 #include "../minishell.h"
 
