@@ -124,10 +124,10 @@ int				handle_words(char *line, int i, t_token *tokens);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data, char **env);
 void			init_tokens(t_token *token);
-void 			init_data(t_data **data, char **env, t_env *env_t);
+int 			init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
-int	init_env(char **env, t_env *env_t);
+int				init_env(char **env, t_env *env_t);
 
 //--TEST EXECUTOR--
 int				test_executor(void);
