@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 13:19:55 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/02 13:58:23 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int builtin_echo(t_cmd *cmd)
     {
         ft_putstr_fd(cmd->args[i], 1);
         if (cmd->args[i + 1])
-            ft_putstr_fd(" ", 1);
+            ft_putchar_fd(' ', 1);
         i++;
     }
     
     if (newline_flag)
     {
-        ft_putstr_fd("\n", 1);    
+        ft_putchar_fd('\n', 1);    
     }
     
     return (0);

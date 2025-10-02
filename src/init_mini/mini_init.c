@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:32 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 12:07:35 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/02 13:59:35 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,7 @@ int	main_loop(int argc, char **argv, char **env)
             cmd = parse_simple_input(input);
             if (cmd)
             {
-                // Debug info
-                printf("🕷️ Command: %s, Type: %s, Builtin ID: %d\n", 
-                       cmd->name, 
-                       (cmd->type == CMD_BUILTIN) ? "BUILTIN" : "EXTERNAL",
-                       cmd->builtin_id);
-                
-                // Ejecutar comando
                 execute_command(cmd, env);
-                
-                // Liberar memoria
                 free_cmd(cmd);
             }
             add_history(input);
