@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel <miguel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 19:13:17 by miguel            #+#    #+#             */
-/*   Updated: 2025/10/01 19:25:44 by miguel           ###   ########.fr       */
+/*   Created: 2025/10/02 12:06:17 by miguel-f          #+#    #+#             */
+/*   Updated: 2025/10/02 12:06:18 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
