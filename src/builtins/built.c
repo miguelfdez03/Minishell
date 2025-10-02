@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 12:06:32 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/02 13:20:24 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd)
 	else if (type == BUILTIN_EXIT)
 		return (builtin_exit(cmd), 0);
 	else if (type == BUILTIN_ECHO)
-		return (printf("\nbuiltin echo\n"), 0);
+		return (builtin_echo(cmd), 0);
 	return (-1);
 }
 
