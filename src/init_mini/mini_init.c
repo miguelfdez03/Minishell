@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 14:15:20 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/02 14:20:20 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,6 @@ int main_loop(int argc, char **argv, t_data **data, char **env)
 			(*data)->input = input;
 			if (cmd)
 			{
-				printf("🕷️ Command: %s, Type: %s, Builtin ID: %d\n",
-					   cmd->name,
-					   (cmd->type == CMD_BUILTIN) ? "BUILTIN" : "EXTERNAL",
-					   cmd->builtin_id);
 				execute_command(cmd, env);
 				free_cmd(cmd);
 				add_history(input);
