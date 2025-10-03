@@ -3,33 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/02 15:32:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:25:59 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_env_key(char **env, int i, int j)
+char	*get_env_key(char **env, int i)
 {
 	char *key;
+	int j;
 	
+	j = 0;
 	while(env[i][j] && env[i][j] != '=')
 		j++;
 	key = ft_substr(env[i], 0, j);
 	return (key);
 }
 
-char	*get_env_value_2(char **env, int i, int j)
+char	*get_env_value_2(char **env, int i)
 {
-	int start = j;
 	char *value;
+	int j;
+	int len;
 	
-	while(env[i][j] && env[i][j] != '\0')
+	j = 0;
+	while(env[i][j] && env[i][j] != '=')
 		j++;
-	value = ft_substr(env[i], start, j - start);
+	if (env[i][j] == '=')
+	{
+		j++;
+		len = ft_strlen(env[i]) - j;
+		value = ft_substr(env[i], j, len);
+	}
+	else
+		value = NULL;
 	return (value);
 }
 
@@ -41,13 +52,8 @@ int	init_env(char **env, t_env *env_t)
 	i = 0;
 	while (env[i])
 	{
-		j = 0;
-		env_t->key = get_env_key(env, i, j);
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		if (env[i][j] == '=')
-			j++;
-		env_t->value = get_env_value_2(env, i, j);
+		env_t->key = get_env_key(env, i);
+		env_t->value = get_env_value_2(env, i);
 		env_t->index = i;
 		i++;
 		if (env[i])

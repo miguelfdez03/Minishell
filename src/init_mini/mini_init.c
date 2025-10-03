@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:10 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:25:59 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int init_data(t_data **data, char **env, t_env *env_t)
 		free(*data);
 		return (-1);
 	}
-	(*data)->env = &env_t;
+	(*data)->env = env_t;
 	if (init_env(env, env_t) == -1)
 	{
 		ft_printf("Error: Failed to initialize environment\n");
@@ -81,7 +81,6 @@ int init_data(t_data **data, char **env, t_env *env_t)
 int main_loop(int argc, char **argv, t_data **data, char **env)
 {
 	char *input;
-	t_cmd *cmd;
 
 	input = NULL;
 	while (1)
@@ -94,12 +93,12 @@ int main_loop(int argc, char **argv, t_data **data, char **env)
 		}
 		else
 		{
-			cmd = parse_simple_input(input);
+			(*data)->cmd  = parse_simple_input(input);
 			(*data)->input = input;
-			if (cmd)
+			if ((*data)->cmd )
 			{
-				execute_command(cmd, *data);
-				free_cmd(cmd);
+				execute_command((*data)->cmd , *data);
+				free_cmd((*data)->cmd);
 				add_history(input);
 			}
 		}

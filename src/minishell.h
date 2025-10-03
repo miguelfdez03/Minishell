@@ -54,9 +54,9 @@ typedef struct s_env
 typedef struct s_data
 {
 	char			**path;
-	t_env			**env;
+	t_env			*env;
 	char			*input;
-	struct s_cmd	**cmd;
+	struct s_cmd	*cmd;
 	t_token			**t_lexer;
 	int				pipe_flag;
 }	t_data;
@@ -112,8 +112,8 @@ t_cmd			*parse_simple_input(char *input);
 int				execute_command(t_cmd *cmd, t_data *data);
 int				execute_builtin_by_id(t_cmd *cmd, t_data *data);
 int				builtin_exit(t_cmd *cmd, t_data *data);
-int				builtin_pwd(t_cmd *cmd, t_data *data);
-int				builtin_env(t_cmd *cmd, t_data *data);
+int				builtin_pwd(t_data *data);
+int				builtin_env(t_data *data);
 int				builtin_echo(t_cmd *cmd, t_data *data);
 int				builtin_cd(t_cmd *cmd, t_data *data);
 //--LEXER--

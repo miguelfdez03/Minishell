@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:28:31 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd, t_data *data)
 	if (type == BUILTIN_CD)
 		return (builtin_cd(cmd, data));
 	else if (type == BUILTIN_PWD)
-		return (builtin_pwd(cmd, data));
+		return (builtin_pwd(data));
 	else if (type == BUILTIN_EXIT)
 		return (builtin_exit(cmd, data));
 	else if (type == BUILTIN_ECHO)
@@ -38,7 +38,7 @@ static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd, t_data *data)
 static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd, t_data *data)
 {
 	if (type == BUILTIN_ENV)
-		return (builtin_env(cmd, data));
+		return (builtin_env(data));
 	else if (type == BUILTIN_EXPORT)
 		return (printf("\nbuiltin export\n"), 0);
 	else if (type == BUILTIN_UNSET)
@@ -59,10 +59,9 @@ int	execute_builtin_by_id(t_cmd *cmd, t_data *data)
 	printf("\nUnknown builtin\n");
 	return (1);
 }
-
-int	builtin_pwd(t_cmd *cmd, t_data *data)
+int	builtin_pwd(t_data *data)
 {
-	(void)data; // Por ahora no usamos data
+	t_cmd	*cmd = data->cmd;
 	char	*pwd;
 
 	if (cmd->args && cmd->args[1])
