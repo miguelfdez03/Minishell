@@ -6,39 +6,39 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 13:20:24 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute_command(t_cmd *cmd, char **envp)
+int	execute_command(t_cmd *cmd, t_data *data)
 {
 	if (cmd->type == CMD_EXTERNAL)
 		printf("external command \n");
 	else
-		execute_builtin_by_id(cmd, envp);
+		execute_builtin_by_id(cmd, data);
 	return (0);
 }
 
 // Ejecutar built-in
-static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd)
+static int	handle_basic_builtins(t_builtin_type type, t_cmd *cmd, t_data *data)
 {
 	if (type == BUILTIN_CD)
-		return (printf("\nbuiltin cd\n"), 0);
+		return (builtin_cd(cmd, data));
 	else if (type == BUILTIN_PWD)
-		return (builtin_pwd(cmd), 0);
+		return (builtin_pwd(cmd, data));
 	else if (type == BUILTIN_EXIT)
-		return (builtin_exit(cmd), 0);
+		return (builtin_exit(cmd, data));
 	else if (type == BUILTIN_ECHO)
-		return (builtin_echo(cmd), 0);
+		return (builtin_echo(cmd, data));
 	return (-1);
 }
 
-static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd, char **envp)
+static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd, t_data *data)
 {
 	if (type == BUILTIN_ENV)
-		return (builtin_env(envp), 0);
+		return (builtin_env(cmd, data));
 	else if (type == BUILTIN_EXPORT)
 		return (printf("\nbuiltin export\n"), 0);
 	else if (type == BUILTIN_UNSET)
@@ -46,22 +46,23 @@ static int	handle_env_builtins(t_builtin_type type, t_cmd *cmd, char **envp)
 	return (-1);
 }
 
-int	execute_builtin_by_id(t_cmd *cmd, char **envp)
+int	execute_builtin_by_id(t_cmd *cmd, t_data *data)
 {
 	int	result;
 
-	result = handle_basic_builtins(cmd->builtin_id, cmd);
+	result = handle_basic_builtins(cmd->builtin_id, cmd, data);
 	if (result != -1)
 		return (result);
-	result = handle_env_builtins(cmd->builtin_id, cmd, envp);
+	result = handle_env_builtins(cmd->builtin_id, cmd, data);
 	if (result != -1)
 		return (result);
 	printf("\nUnknown builtin\n");
 	return (1);
 }
 
-int	builtin_pwd(t_cmd *cmd)
+int	builtin_pwd(t_cmd *cmd, t_data *data)
 {
+	(void)data; // Por ahora no usamos data
 	char	*pwd;
 
 	if (cmd->args && cmd->args[1])

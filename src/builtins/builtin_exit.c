@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 12:07:01 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static int	check_exit_args(t_cmd *cmd);
  *
  * @param cmd Estructura de comando con argumentos
  */
-void	builtin_exit(t_cmd *cmd)
+int	builtin_exit(t_cmd *cmd, t_data *data)
 {
+	(void)data; // Por ahora no usamos data
 	int	exit_status;
 
 	ft_putendl_fd("exit", 2);
@@ -32,7 +33,7 @@ void	builtin_exit(t_cmd *cmd)
 	if (exit_status == -1) // Error de demasiados argumentos
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		return ; // No sale, solo retorna error
+		return (1); // No sale, solo retorna error
 	}
 	
 	// Salir con el código correspondiente
