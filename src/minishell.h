@@ -109,13 +109,13 @@ void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
 
 //--BUILT-INS--
-int				execute_command(t_cmd *cmd, t_data *data);
-int				execute_builtin_by_id(t_cmd *cmd, t_data *data);
-int				builtin_exit(t_cmd *cmd, t_data *data);
+int				execute_command(t_data *data);
+int				execute_builtin_by_id(t_data *data);
+int				builtin_exit(t_data *data);
 int				builtin_pwd(t_data *data);
 int				builtin_env(t_data *data);
-int				builtin_echo(t_cmd *cmd, t_data *data);
-int				builtin_cd(t_cmd *cmd, t_data *data);
+int				builtin_echo(t_data *data);
+int				builtin_cd(t_data *data);
 //--LEXER--
 int 			lexer(char *line, t_token **tokens);
 int				handle_quotes(char *line, int i, t_token **tokens);

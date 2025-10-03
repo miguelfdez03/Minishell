@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:37:18 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ static char *get_env_value_from_list(t_env *env, char *key)
     return (NULL);
 }
 
-int builtin_cd(t_cmd *cmd, t_data *data)
+int builtin_cd(t_data *data)
 {
-    (void)data; // Por ahora no usamos data
+    t_cmd *cmd;
     char *path;
     int argc;
 
+    cmd = data->cmd;
     path = NULL;
     argc = count_args(cmd->args);
     if (argc > 2)

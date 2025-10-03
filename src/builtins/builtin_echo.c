@@ -6,18 +6,19 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:33:52 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int builtin_echo(t_cmd *cmd, t_data *data)
+int builtin_echo(t_data *data)
 {
-    (void)data; // Por ahora no usamos data
+    t_cmd *cmd;
     int i;
     int newline_flag;
 
+    cmd = (data->cmd);
     newline_flag = 1;
     i = 1;
 

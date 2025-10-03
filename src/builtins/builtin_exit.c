@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:11 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:36:10 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static int	check_exit_args(t_cmd *cmd);
  *
  * @param cmd Estructura de comando con argumentos
  */
-int	builtin_exit(t_cmd *cmd, t_data *data)
+int	builtin_exit(t_data *data)
 {
-	(void)data; // Por ahora no usamos data
+	t_cmd *cmd;
 	int	exit_status;
 
+	cmd = data->cmd;
 	ft_putendl_fd("exit", 2);
 	exit_status = check_exit_args(cmd);
 	

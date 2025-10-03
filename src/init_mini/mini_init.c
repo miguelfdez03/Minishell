@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 13:25:59 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:39:54 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int main_loop(int argc, char **argv, t_data **data, char **env)
 			(*data)->input = input;
 			if ((*data)->cmd )
 			{
-				execute_command((*data)->cmd , *data);
+				execute_command(*data);
 				free_cmd((*data)->cmd);
 				add_history(input);
 			}
