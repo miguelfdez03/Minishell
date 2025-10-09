@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 15:29:09 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:41:24 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_cmd	*parse_simple_input(char *input)
     char	**tokens;
     t_cmd	*cmd;
     int		i;
-    
-    // Split simple por espacios
+
     tokens = ft_split(input, ' ');
     if (!tokens || !tokens[0])
         return (NULL);

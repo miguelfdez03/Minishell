@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 12:04:31 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:20:49 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// Initialize a command structure with default values
+void	init_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	cmd->name = NULL;
+	cmd->args = NULL;
+	cmd->type = CMD_EXTERNAL;
+	cmd->builtin_id = BUILTIN_NONE;
+	cmd->input_file = NULL;
+	cmd->output_file = NULL;
+	cmd->append_mode = 0;
+	cmd->heredoc = 0;
+	cmd->next = NULL;
+}
 
 t_builtin_type	identify_builtin(char *cmd)
 {
@@ -42,24 +58,21 @@ t_cmd	*create_cmd(char *cmd_name)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	// Inicializar estructura
+	// Inicializar estructura con valores por defecto
+	init_cmd(cmd);
+	// Asignar nombre del comando
 	cmd->name = ft_strdup(cmd_name);
-	cmd->args = NULL; // Se llenará después
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->append_mode = 0;
-	cmd->next = NULL;
+	if (!cmd->name)
+	{
+		free(cmd);
+		return (NULL);
+	}
 	// Identificar si es built-in
 	builtin_id = identify_builtin(cmd_name);
 	if (builtin_id != BUILTIN_NONE)
 	{
 		cmd->type = CMD_BUILTIN;
 		cmd->builtin_id = builtin_id;
-	}
-	else
-	{
-		cmd->type = CMD_EXTERNAL;
-		cmd->builtin_id = BUILTIN_NONE;
 	}
 	return (cmd);
 }

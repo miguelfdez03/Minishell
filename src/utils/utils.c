@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 15:55:23 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:27:02 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 
 int	is_space(char c)
 {
-	if (c == 32)
+	if (c == 32 || c == '\t')
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);

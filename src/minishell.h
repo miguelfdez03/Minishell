@@ -57,7 +57,7 @@ typedef struct s_data
 	t_env			*env;
 	char			*input;
 	struct s_cmd	*cmd;
-	t_token			**t_lexer;
+	t_token			**tokens;
 	int				pipe_flag;
 }	t_data;
 
@@ -102,6 +102,7 @@ void			add_to_token(t_token **tokens, t_token_type type, char *value);
 int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--
+void			init_cmd(t_cmd *cmd);
 t_builtin_type	identify_builtin(char *cmd);
 t_cmd			*create_cmd(char *cmd_name);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
@@ -117,11 +118,11 @@ int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
 //--LEXER--
-int 			lexer(char *line, t_token **tokens);
-int				handle_quotes(char *line, int i, t_token **tokens);
+int 			lexer(char *line, t_data **data);
+int				handle_quotes(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
-int				check_redir(char *line, int i, t_token **tokens);
-int				handle_words(char *line, int i, t_token **tokens);
+int				check_redir(char *line, int i, t_data **data);
+int				handle_words(char *line, int i, t_data **data);
 
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data, char **env);
@@ -142,6 +143,5 @@ char			*search_in_path_dirs(char *path_copy, char *cmd);
 char			*get_env_value(char *var_name, char **envp);
 char			*build_full_path(char *dir, char *cmd);
 void			free_string_array(char **array);
-
 
 #endif

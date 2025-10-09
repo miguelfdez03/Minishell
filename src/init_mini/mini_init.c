@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 13:39:54 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:40:54 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int init_data(t_data **data, char **env, t_env *env_t)
 	}
 	(*data)->input = NULL;
 	(*data)->cmd = NULL;
+	(*data)->tokens = NULL;
 	env_t = malloc(sizeof(t_env));
 	if (!env_t)
 	{
@@ -45,7 +46,6 @@ int init_data(t_data **data, char **env, t_env *env_t)
 	}
 	(*data)->path = NULL;
 	(*data)->pipe_flag = -1;
-	(*data)->t_lexer = NULL;
 	ft_printf("Data initialized\n");
 	return (0);
 }
@@ -93,9 +93,9 @@ int main_loop(int argc, char **argv, t_data **data, char **env)
 		}
 		else
 		{
-			(*data)->cmd  = parse_simple_input(input);
+			(*data)->cmd = parse_simple_input(input);
 			(*data)->input = input;
-			if ((*data)->cmd )
+			if ((*data)->cmd)
 			{
 				execute_command(*data);
 				free_cmd((*data)->cmd);

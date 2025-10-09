@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/10/02 14:16:25 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:45:58 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_env   *env_t;
-    t_data	*data;
+	t_data	*data;
 	
 	env_t = NULL;
 	data = NULL;
