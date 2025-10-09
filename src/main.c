@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/10/09 15:45:58 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:01:26 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int	main(int argc, char **argv, char **env)
 		ft_printf("Error: Failed to initialize data\n");
 		return (-1);
 	}
-	main_loop(argc, argv, &data, env);
+	main_loop(argc, argv, &data);
 	return (0);
 }

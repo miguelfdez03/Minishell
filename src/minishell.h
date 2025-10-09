@@ -125,7 +125,7 @@ int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
 
 //--MINI_INIT--
-int				main_loop(int argc, char **argv, t_data **data, char **env);
+int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
 int 			init_data(t_data **data, char **env, t_env *env_t);
 
