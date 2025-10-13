@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/03 13:50:10 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:22:45 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	execute_builtin_by_id(t_data *data)
 	printf("\nUnknown builtin\n");
 	return (1);
 }
+
 int	builtin_pwd(t_data *data)
 {
 	t_cmd	*cmd = data->cmd;

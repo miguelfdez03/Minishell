@@ -33,8 +33,8 @@ typedef enum e_token_type
 	REDIR_OUT,
 	REDIR_APPEND,
 	HEREDOC,
-	CMD,
 	EMPTY,
+	CMD,
 }	t_token_type;
 
 typedef struct s_token
@@ -59,6 +59,8 @@ typedef struct s_data
 	char			*input;
 	struct s_cmd	*cmd;
 	t_token			*tokens;
+	char			*str_in;
+	char			*str_out;
 	int				pipe_flag;
 }	t_data;
 

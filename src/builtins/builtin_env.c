@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/13 12:12:15 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:12:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	builtin_env(t_data *data)
 		return (1);
 	}
 
-	// Recorrer la lista enlazada de variables de entorno
 	current = data->env;
 	while (current)
 	{

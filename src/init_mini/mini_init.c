@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/13 10:40:46 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:28:37 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	main_loop(int argc, char **argv, t_data **data)
 {
 	char	*input;
 
-	(void)argc;
-	(void)argv;
 	input = NULL;
 	while (1)
 	{
@@ -67,25 +65,17 @@ int	main_loop(int argc, char **argv, t_data **data)
 		}
 		if (ft_strlen(input) > 0)
 		{
-			if (input[0] == '>' || input[0] == '<' || input[0] == '|')
-			{
-				ft_printf("Error: syntax error near unexpected token\n");
-				free(input);
-				continue;
-			}
+			//if (input[0] == '>' || input[0] == '<' || input[0] == '|')
+			//{
+			//	ft_printf("Error: syntax error near unexpected token\n");
+			//	free(input);
+			//	continue;
+			//}
 			(*data)->input = input;
 			if (lexer(input, data) == EXIT_SUCCESS)
 			{
 				add_history(input);
-				// Now you can access the tokens from data
-				if ((*data)->tokens)
-				{
-					print_tokens((*data)->tokens);
-					// TODO: Process tokens and execute commands
-					// Free tokens after processing
-					free_tokens((*data)->tokens);
-					(*data)->tokens = NULL;
-				}
+				//call to the executor
 			}
 		}
 		free(input);
