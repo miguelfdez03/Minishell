@@ -57,7 +57,7 @@ typedef struct s_data
 	t_env			*env;
 	char			*input;
 	struct s_cmd	*cmd;
-	t_token			**tokens;
+	t_token			*tokens;
 	int				pipe_flag;
 }	t_data;
 

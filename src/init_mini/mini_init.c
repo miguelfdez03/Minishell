@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/09 18:02:10 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 10:27:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,35 +49,42 @@ int init_data(t_data **data, char **env, t_env *env_t)
 	ft_printf("Data initialized\n");
 	return (0);
 }
-/*
+
 int	main_loop(int argc, char **argv, t_data **data)
 {
-	char *input;
+	char	*input;
 
+	(void)argc;
+	(void)argv;
 	input = NULL;
 	while (1)
 	{
-		input = readline("spidershell>");
+		input = readline("spidershell> ");
 		if (!input)
 		{
-			ft_printf("exit");
+			ft_printf("exit\n");
 			break;
-			}
-			if (ft_strlen(input) > 0)
+		}
+		if (ft_strlen(input) > 0)
+		{
+			if (input[0] == '>' || input[0] == '<' || input[0] == '|')
 			{
-				if(input[0] == '\>' || input[0] == '\<' || input[0] == '\|')
-					return (EXIT_FAILURE);
-				else
-				{
-					lexer(input, data);
-					add_history(input);
-				}
+				ft_printf("Error: syntax error near unexpected token\n");
+				free(input);
+				continue;
 			}
+			(*data)->input = input;
+			if (lexer(input, data) == EXIT_SUCCESS)
+			{
+				add_history(input);
+			}
+		}
+		free(input);
 	}
+	return (0);
 }
-*/
 
-
+/* 
 int main_loop(int argc, char **argv, t_data **data, char **env)
 {
 	char *input;
@@ -106,3 +113,4 @@ int main_loop(int argc, char **argv, t_data **data, char **env)
 	}
 	return (0);
 }
+*/
