@@ -33,6 +33,7 @@ typedef enum e_token_type
 	REDIR_OUT,
 	REDIR_APPEND,
 	HEREDOC,
+	CMD,
 	EMPTY,
 }	t_token_type;
 
@@ -99,6 +100,10 @@ int				is_symbols(char c);
 int				ft_strcmp(char *str1, char *str2, int i);
 int				ft_strcmp2(char *str1, char *str2);
 void			add_to_token(t_token **tokens, t_token_type type, char *value);
+void			print_tokens(t_token *tokens);
+void			free_tokens(t_token *tokens);
+int				count_tokens(t_token *tokens);
+t_token			*get_token_at(t_token *tokens, int index);
 int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--

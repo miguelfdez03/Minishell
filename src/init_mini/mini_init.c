@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/13 10:27:22 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 10:40:46 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ int	main_loop(int argc, char **argv, t_data **data)
 			if (lexer(input, data) == EXIT_SUCCESS)
 			{
 				add_history(input);
+				// Now you can access the tokens from data
+				if ((*data)->tokens)
+				{
+					print_tokens((*data)->tokens);
+					// TODO: Process tokens and execute commands
+					// Free tokens after processing
+					free_tokens((*data)->tokens);
+					(*data)->tokens = NULL;
+				}
 			}
 		}
 		free(input);

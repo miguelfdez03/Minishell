@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/09 12:27:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 10:42:09 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return ;
-	init_tokens(new_token);
 	new_token->type = type;
 	new_token->value = value;
 	new_token->next = NULL;
