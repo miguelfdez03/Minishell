@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/13 15:46:52 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:37:53 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	handle_quotes(char *line, int i, t_data **data)
 {
 	char	*str;
 	int		last;
-	
 	last = check_for_closed(line, i, line[i]);
 	if (last == -1)
 	{
@@ -36,6 +35,7 @@ int	handle_quotes(char *line, int i, t_data **data)
 		return (-1);
 	}
 	str = ft_substr(line, i + 1, last - i - 1);
+	ft_printf("STR: %s\n", str);
 	if (!str)
 	{
 		printf("Error: memory allocation failed\n");

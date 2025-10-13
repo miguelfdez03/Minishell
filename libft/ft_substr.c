@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 20:05:03 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/13 15:19:07 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:36:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);
-	temp = ft_calloc(len + 1, sizeof(char)); 
+	temp = ft_calloc(len + 1, sizeof(char));
+	if (!temp)
 		return (NULL);
 	cont = 0;
 	while (cont < len)
