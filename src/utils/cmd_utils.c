@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/09 15:20:49 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:49:02 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	init_cmd(t_cmd *cmd)
 	cmd->args = NULL;
 	cmd->type = CMD_EXTERNAL;
 	cmd->builtin_id = BUILTIN_NONE;
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->append_mode = 0;
-	cmd->heredoc = 0;
+	cmd->redirections = NULL;
 	cmd->next = NULL;
 }
 
@@ -133,9 +130,7 @@ void	free_cmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 	}
-	if (cmd->input_file)
-		free(cmd->input_file);
-	if (cmd->output_file)
-		free(cmd->output_file);
+//	if (cmd->redirections)
+//		free_redirs(cmd->redirections);
 	free(cmd);
 }

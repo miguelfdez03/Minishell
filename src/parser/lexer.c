@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/13 16:28:34 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:36:50 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int lexer(char *line, t_data **data)
 {
-	int			i;
-	int			result;
-	
-	ft_printf("Starting lexer on line: %s\n", line);
+	int i;
+	int result;
+
 	i = 0;
 	while (line[i])
 	{
@@ -33,10 +32,7 @@ int lexer(char *line, t_data **data)
 		else if (is_symbols(line[i]) == EXIT_SUCCESS)
 		{
 			result = check_redir(line, i, data);
-			if (result == 0)
-				i++;
-			else
-				i += result;
+			i += result;
 		}
 		else if (ft_isalpha(line[i]) == 1)
 		{

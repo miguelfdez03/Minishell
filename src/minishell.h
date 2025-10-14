@@ -59,8 +59,6 @@ typedef struct s_data
 	char			*input;
 	struct s_cmd	*cmd;
 	t_token			*tokens;
-	char			*str_in;
-	char			*str_out;
 	int				pipe_flag;
 }	t_data;
 
@@ -82,16 +80,21 @@ typedef enum e_builtin_type
 	BUILTIN_UNSET
 }	t_builtin_type;
 
+// Estructura para manejar múltiples redirecciones
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char			*name;
 	char			**args;
 	t_cmd_type		type;
 	t_builtin_type	builtin_id;
-	char			*input_file;
-	char			*output_file;
-	int				append_mode;
-	int				heredoc;
+	t_redir			*redirections;	// Lista de redirecciones
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -102,10 +105,6 @@ int				is_symbols(char c);
 int				ft_strcmp(char *str1, char *str2, int i);
 int				ft_strcmp2(char *str1, char *str2);
 void			add_to_token(t_token **tokens, t_token_type type, char *value);
-void			print_tokens(t_token *tokens);
-void			free_tokens(t_token *tokens);
-int				count_tokens(t_token *tokens);
-t_token			*get_token_at(t_token *tokens, int index);
 int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--
@@ -115,6 +114,12 @@ t_cmd			*create_cmd(char *cmd_name);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
+
+//--REDIR UTILS--
+t_redir			*create_redir(t_token_type type, char *file);
+void			add_redir(t_cmd *cmd, t_token_type type, char *file);
+void			free_redirs(t_redir *redir);
+int				apply_redirections(t_cmd *cmd);
 
 //--BUILT-INS--
 int				execute_command(t_data *data);
