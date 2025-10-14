@@ -13,16 +13,16 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <errno.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_token_type
 {
@@ -46,8 +46,8 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char 			*key;
-	char 			*value;
+	char			*key;
+	char			*value;
 	int				index;
 	struct s_env	*next;
 }	t_env;
@@ -129,7 +129,7 @@ int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
 //--LEXER--
-int 			lexer(char *line, t_data **data);
+int				lexer(char *line, t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
 int				check_redir(char *line, int i, t_data **data);
@@ -138,7 +138,7 @@ int				handle_words(char *line, int i, t_data **data);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
-int 			init_data(t_data **data, char **env, t_env *env_t);
+int				init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
 int				init_env(char **env, t_env *env_t);

@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 13:11:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/14 15:43:44 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:01:57 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	ft_redir_length(char *line, int i, t_token_type type)
 		i = i + 2;
 	else
 		return (-1);
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
+	while ((ft_isalpha(line[i]) == 1
+			||line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
 		i++;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/14 19:34:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:13:01 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	handle_quotes(char *line, int i, t_data **data)
 {
 	char	*str;
 	int		last;
+
 	last = check_for_closed(line, i, line[i]);
 	if (last == -1)
 	{
@@ -48,13 +49,13 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 {
 	int	start;
 	int	len;
-	
+
 	i++;
 	while (is_space(line[i]) == EXIT_SUCCESS)
 		i++;
 	start = i;
 	len = 0;
-	while (line[i] && is_space(line[i]) == EXIT_FAILURE 
+	while (line[i] && is_space(line[i]) == EXIT_FAILURE
 		&& is_symbols(line[i]) == EXIT_FAILURE)
 	{
 		len++;

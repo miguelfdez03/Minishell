@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/10/09 18:01:26 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/10/14 19:57:20 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/10/14 19:58:14 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env   *env_t;
+	t_env	*env_t;
 	t_data	*data;
-	
+
 	env_t = NULL;
 	data = NULL;
 	if (init_data(&data, env, env_t) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/03 13:25:59 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:07:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*get_env_key(char **env, int i)
 {
-	char *key;
-	int j;
-	
+	char	*key;
+	int		j;
+
 	j = 0;
-	while(env[i][j] && env[i][j] != '=')
+	while (env[i][j] && env[i][j] != '=')
 		j++;
 	key = ft_substr(env[i], 0, j);
 	return (key);
@@ -26,12 +26,12 @@ char	*get_env_key(char **env, int i)
 
 char	*get_env_value_2(char **env, int i)
 {
-	char *value;
-	int j;
-	int len;
-	
+	char	*value;
+	int		j;
+	int		len;
+
 	j = 0;
-	while(env[i][j] && env[i][j] != '=')
+	while (env[i][j] && env[i][j] != '=')
 		j++;
 	if (env[i][j] == '=')
 	{
@@ -47,8 +47,8 @@ char	*get_env_value_2(char **env, int i)
 int	init_env(char **env, t_env *env_t)
 {
 	int	i;
-	int j;
-	
+	int	j;
+
 	i = 0;
 	while (env[i])
 	{

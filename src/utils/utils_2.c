@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/14 13:11:46 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:06:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	ft_word_length(char *line, int i)
 {
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
+	while ((ft_isalpha(line[i]) == 1 || line[i] == 46))
 		i++;
 	return (i);
 }
 
-// Función auxiliar ft_strcmp2 (alias de ft_strcmp estándar)
 int	ft_strcmp2(char *str1, char *str2)
 {
 	int	i;
@@ -34,27 +33,25 @@ int	ft_strcmp2(char *str1, char *str2)
 
 t_cmd	*parse_simple_input(char *input)
 {
-    char	**tokens;
-    t_cmd	*cmd;
-    int		i;
+	char	**tokens;
+	t_cmd	*cmd;
+	int		i;
 
-    tokens = ft_split(input, ' ');
-    if (!tokens || !tokens[0])
-        return (NULL);
-    // Crear comando con el primer token
-    cmd = create_cmd(tokens[0]);
-    if (!cmd)
-    {
-        free_string_array(tokens);
-        return (NULL);
-    }
-    // Añadir argumentos
-    i = 0;
-    while (tokens[i])
-    {
-        add_cmd_arg(cmd, tokens[i]);
-        i++;
-    }
-    free_string_array(tokens);
-    return (cmd);
+	tokens = ft_split(input, ' ');
+	if (!tokens || !tokens[0])
+		return (NULL);
+	cmd = create_cmd(tokens[0]);
+	if (!cmd)
+	{
+		free_string_array(tokens);
+		return (NULL);
+	}
+	i = 0;
+	while (tokens[i])
+	{
+		add_cmd_arg(cmd, tokens[i]);
+		i++;
+	}
+	free_string_array(tokens);
+	return (cmd);
 }

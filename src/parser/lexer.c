@@ -6,16 +6,16 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/14 09:36:50 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:12:11 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int lexer(char *line, t_data **data)
+//!!more than 25 lines
+int	lexer(char *line, t_data **data)
 {
-	int i;
-	int result;
+	int	i;
+	int	result;
 
 	i = 0;
 	while (line[i])
