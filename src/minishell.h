@@ -80,7 +80,6 @@ typedef enum e_builtin_type
 	BUILTIN_UNSET
 }	t_builtin_type;
 
-// Estructura para manejar múltiples redirecciones
 typedef struct s_redir
 {
 	t_token_type	type;
@@ -94,7 +93,7 @@ typedef struct s_cmd
 	char			**args;
 	t_cmd_type		type;
 	t_builtin_type	builtin_id;
-	t_redir			*redirections;	// Lista de redirecciones
+	t_redir			*redirections;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -117,7 +116,7 @@ t_cmd			*parse_simple_input(char *input);
 
 //--REDIR UTILS--
 t_redir			*create_redir(t_token_type type, char *file);
-void			add_redir(t_cmd *cmd, t_token_type type, char *file);
+void			add_redir(t_redir **redir, t_token_type type, char *value);
 void			free_redirs(t_redir *redir);
 int				apply_redirections(t_cmd *cmd);
 
