@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/14 12:49:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:47:01 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init_cmd(t_cmd *cmd)
 		return ;
 	cmd->name = NULL;
 	cmd->args = NULL;
-	cmd->type = CMD_EXTERNAL;
 	cmd->builtin_id = BUILTIN_NONE;
 	cmd->redirections = NULL;
 	cmd->next = NULL;
@@ -67,10 +66,9 @@ t_cmd	*create_cmd(char *cmd_name)
 	// Identificar si es built-in
 	builtin_id = identify_builtin(cmd_name);
 	if (builtin_id != BUILTIN_NONE)
-	{
-		cmd->type = CMD_BUILTIN;
 		cmd->builtin_id = builtin_id;
-	}
+	else
+		cmd->builtin_id = BUILTIN_NONE;
 	return (cmd);
 }
 

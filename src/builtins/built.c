@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:27:02 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:47:19 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execute_command(t_data *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd;
-	if (cmd->type == CMD_EXTERNAL)
+	if (cmd->builtin_id == BUILTIN_NONE)
 		printf("external command \n");
 	else
 		execute_builtin_by_id(data);

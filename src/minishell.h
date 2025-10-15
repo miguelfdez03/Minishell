@@ -61,12 +61,6 @@ typedef struct s_data
 	int				pipe_flag;
 }	t_data;
 
-typedef enum e_cmd_type
-{
-	CMD_EXTERNAL,
-	CMD_BUILTIN
-}	t_cmd_type;
-
 typedef enum e_builtin_type
 {
 	BUILTIN_NONE = -1,
@@ -90,7 +84,6 @@ typedef struct s_cmd
 {
 	char			*name;
 	char			**args;
-	t_cmd_type		type;
 	t_builtin_type	builtin_id;
 	t_redir			*redirections;
 	struct s_cmd	*next;
