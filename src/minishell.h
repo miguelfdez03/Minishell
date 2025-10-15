@@ -34,7 +34,6 @@ typedef enum e_token_type
 	REDIR_APPEND,
 	HEREDOC,
 	EMPTY,
-	CMD,
 }	t_token_type;
 
 typedef struct s_token

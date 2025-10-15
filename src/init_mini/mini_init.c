@@ -6,19 +6,19 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/13 13:28:37 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:51:52 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void init_tokens(t_token *token)
+void	init_tokens(t_token *token)
 {
 	token->value = NULL;
 	token->type = EMPTY;
 }
 
-int init_data(t_data **data, char **env, t_env *env_t)
+int	init_data(t_data **data, char **env, t_env *env_t)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
@@ -50,6 +50,12 @@ int init_data(t_data **data, char **env, t_env *env_t)
 	return (0);
 }
 
+			//if (input[0] == '>' || input[0] == '<' || input[0] == '|')
+			//{
+			//	ft_printf("Error: syntax error near unexpected token\n");
+			//	free(input);
+			//	continue;
+			//}
 int	main_loop(int argc, char **argv, t_data **data)
 {
 	char	*input;
@@ -61,16 +67,10 @@ int	main_loop(int argc, char **argv, t_data **data)
 		if (!input)
 		{
 			ft_printf("exit\n");
-			break;
+			break ;
 		}
 		if (ft_strlen(input) > 0)
 		{
-			//if (input[0] == '>' || input[0] == '<' || input[0] == '|')
-			//{
-			//	ft_printf("Error: syntax error near unexpected token\n");
-			//	free(input);
-			//	continue;
-			//}
 			(*data)->input = input;
 			if (lexer(input, data) == EXIT_SUCCESS)
 			{
