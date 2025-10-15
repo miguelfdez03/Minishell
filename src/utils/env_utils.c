@@ -6,18 +6,18 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:07:08 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/15 13:51:47 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:00:47 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_env_key(char *env)
+char	*get_env_key( char *env)
 {
 	int	i;
 
 	i = 0;
-	while (env[i] && env[i] != '=' && env[i] != ' ')
+	while (env[i] && env[i] != '=' && env[i] != ' ' )
 		i++;
 	return (1);
 }

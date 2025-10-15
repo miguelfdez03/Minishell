@@ -13,16 +13,16 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <errno.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_token_type
 {
@@ -45,8 +45,8 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char 			*key;
-	char 			*value;
+	char			*key;
+	char			*value;
 	int				index;
 	struct s_env	*next;
 }	t_env;
@@ -57,7 +57,7 @@ typedef struct s_data
 	t_env			*env;
 	char			*input;
 	struct s_cmd	*cmd;
-	t_token			**t_lexer;
+	t_token			*tokens;
 	int				pipe_flag;
 }	t_data;
 
@@ -73,15 +73,19 @@ typedef enum e_builtin_type
 	BUILTIN_UNSET
 }	t_builtin_type;
 
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char			*name;
 	char			**args;
 	t_builtin_type	builtin_id;
-	char			*input_file;
-	char			*output_file;
-	int				append_mode;
-	int				heredoc;
+	t_redir			*redirections;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -95,11 +99,18 @@ void			add_to_token(t_token **tokens, t_token_type type, char *value);
 int				ft_word_length(char *line, int i);
 
 //--CMD UTILS--
+void			init_cmd(t_cmd *cmd);
 t_builtin_type	identify_builtin(char *cmd);
 t_cmd			*create_cmd(char *cmd_name);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
+
+//--REDIR UTILS--
+t_redir			*create_redir(t_token_type type, char *file);
+void			add_redir(t_redir **redir, t_token_type type, char *value);
+void			free_redirs(t_redir *redir);
+int				apply_redirections(t_cmd *cmd);
 
 //--BUILT-INS--
 int				execute_command(t_data *data);
@@ -110,16 +121,16 @@ int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
 //--LEXER--
-int 			lexer(char *line, t_token **tokens);
-int				handle_quotes(char *line, int i, t_token **tokens);
+int				lexer(char *line, t_data **data);
+int				handle_quotes(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
-int				check_redir(char *line, int i, t_token **tokens);
-int				handle_words(char *line, int i, t_token **tokens);
+int				check_redir(char *line, int i, t_data **data);
+int				handle_words(char *line, int i, t_data **data);
 
 //--MINI_INIT--
-int				main_loop(int argc, char **argv, t_data **data, char **env);
+int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
-int 			init_data(t_data **data, char **env, t_env *env_t);
+int				init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
 int				init_env(char **env, t_env *env_t);
@@ -135,6 +146,5 @@ char			*search_in_path_dirs(char *path_copy, char *cmd);
 char			*get_env_value(char *var_name, char **envp);
 char			*build_full_path(char *dir, char *cmd);
 void			free_string_array(char **array);
-
 
 #endif

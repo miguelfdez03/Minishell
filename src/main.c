@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/10/02 14:16:25 by miguel-f         ###   ########.fr       */
+/*   Created: 2025/10/14 19:57:20 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/10/14 19:58:14 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env   *env_t;
-    t_data	*data;
-	
+	t_env	*env_t;
+	t_data	*data;
+
 	env_t = NULL;
 	data = NULL;
 	if (init_data(&data, env, env_t) == -1)
@@ -29,6 +29,6 @@ int	main(int argc, char **argv, char **env)
 		ft_printf("Error: Failed to initialize data\n");
 		return (-1);
 	}
-	main_loop(argc, argv, &data, env);
+	main_loop(argc, argv, &data);
 	return (0);
 }

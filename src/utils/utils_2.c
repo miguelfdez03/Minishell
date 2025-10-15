@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 15:29:09 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:06:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,15 @@ t_cmd	*parse_simple_input(char *input)
 	t_cmd	*cmd;
 	int		i;
 
-	// Split simple por espacios
 	tokens = ft_split(input, ' ');
 	if (!tokens || !tokens[0])
 		return (NULL);
-	// Crear comando con el primer token
 	cmd = create_cmd(tokens[0]);
 	if (!cmd)
 	{
 		free_string_array(tokens);
 		return (NULL);
 	}
-	// Añadir argumentos
 	i = 0;
 	while (tokens[i])
 	{

@@ -6,11 +6,23 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:53:12 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:47:01 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// Initialize a command structure with default values
+void	init_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	cmd->name = NULL;
+	cmd->args = NULL;
+	cmd->builtin_id = BUILTIN_NONE;
+	cmd->redirections = NULL;
+	cmd->next = NULL;
+}
 
 t_builtin_type	identify_builtin(char *cmd)
 {
@@ -42,13 +54,15 @@ t_cmd	*create_cmd(char *cmd_name)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	// Inicializar estructura
+	// Inicializar estructura con valores por defecto
+	init_cmd(cmd);
+	// Asignar nombre del comando
 	cmd->name = ft_strdup(cmd_name);
-	cmd->args = NULL; // Se llenará después
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->append_mode = 0;
-	cmd->next = NULL;
+	if (!cmd->name)
+	{
+		free(cmd);
+		return (NULL);
+	}
 	// Identificar si es built-in
 	builtin_id = identify_builtin(cmd_name);
 	if (builtin_id != BUILTIN_NONE)
@@ -120,9 +134,7 @@ void	free_cmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 	}
-	if (cmd->input_file)
-		free(cmd->input_file);
-	if (cmd->output_file)
-		free(cmd->output_file);
+//	if (cmd->redirections)
+//		free_redirs(cmd->redirections);
 	free(cmd);
 }

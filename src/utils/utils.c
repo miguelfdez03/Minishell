@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 15:55:23 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:45:44 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return ;
-	init_tokens(new_token);
 	new_token->type = type;
 	new_token->value = value;
 	new_token->next = NULL;
+	ft_printf("Adding token: type=%d, value=%s\n", type, value);
 	if (!*tokens)
 	{
 		*tokens = new_token;
@@ -37,7 +37,7 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 
 int	is_space(char c)
 {
-	if (c == 32)
+	if (c == ' ' || c == '\t')
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
@@ -57,19 +57,4 @@ int	is_symbols(char c)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
-}
-
-int	ft_strcmp(char *str1, char *str2, int i)
-{
-	size_t	c;
-
-	c = 0;
-	while (str1[i] && str2[c])
-	{
-		if (str1[i] != str2[c])
-			return ((unsigned char)str1[i] - (unsigned char)str2[c]);
-		c++;
-		i++;
-	}
-	return (0);
 }
