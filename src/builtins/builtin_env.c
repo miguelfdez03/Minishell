@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 11:29:15 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:22:36 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
 int	builtin_env(t_data *data)
 {
-	t_env *current;
+	t_env	*current;
 
 	if (!data || !data->env)
 	{
@@ -30,6 +29,5 @@ int	builtin_env(t_data *data)
 			ft_printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
-
 	return (0);
 }
