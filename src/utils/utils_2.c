@@ -14,7 +14,8 @@
 
 int	ft_word_length(char *line, int i)
 {
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
+	while ((ft_isalpha(line[i]) == 1 || line[i] == 46)
+		&& is_space(line[i]) != EXIT_SUCCESS)
 		i++;
 	return (i);
 }
@@ -27,7 +28,8 @@ int	ft_redir_length(char *line, int i, t_token_type type)
 		i = i + 2;
 	else
 		return (-1);
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
+	while ((ft_isalpha(line[i]) == 1 || line[i] == 46)
+		&& is_space(line[i]) != EXIT_SUCCESS)
 		i++;
 	return (i);
 }
@@ -47,28 +49,28 @@ int	ft_strcmp2(char *str1, char *str2)
 
 t_cmd	*parse_simple_input(char *input)
 {
-    char	**tokens;
-    t_cmd	*cmd;
-    int		i;
-    
-    // Split simple por espacios
-    tokens = ft_split(input, ' ');
-    if (!tokens || !tokens[0])
-        return (NULL);
-    // Crear comando con el primer token
-    cmd = create_cmd(tokens[0]);
-    if (!cmd)
-    {
-        free_string_array(tokens);
-        return (NULL);
-    }
-    // Añadir argumentos
-    i = 0;
-    while (tokens[i])
-    {
-        add_cmd_arg(cmd, tokens[i]);
-        i++;
-    }
-    free_string_array(tokens);
-    return (cmd);
+	char	**tokens;
+	t_cmd	*cmd;
+	int		i;
+
+	// Split simple por espacios
+	tokens = ft_split(input, ' ');
+	if (!tokens || !tokens[0])
+		return (NULL);
+	// Crear comando con el primer token
+	cmd = create_cmd(tokens[0]);
+	if (!cmd)
+	{
+		free_string_array(tokens);
+		return (NULL);
+	}
+	// Añadir argumentos
+	i = 0;
+	while (tokens[i])
+	{
+		add_cmd_arg(cmd, tokens[i]);
+		i++;
+	}
+	free_string_array(tokens);
+	return (cmd);
 }

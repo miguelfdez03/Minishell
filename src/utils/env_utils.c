@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:07:08 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/09/27 18:09:01 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:51:47 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *get_env_key(char *env)
+char	*get_env_key(char *env)
 {
 	int	i;
 
 	i = 0;
-	while(env[i] && env[i] != '=' && env[i] != ' ' )
+	while (env[i] && env[i] != '=' && env[i] != ' ')
 		i++;
-	return(1);
+	return (1);
 }

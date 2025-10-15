@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:44:31 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:53:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,21 @@ t_cmd	*create_cmd(char *cmd_name)
 }
 
 // Añadir argumentos al comando
+// Cuenta los argumentos actuales en cmd->args
+int	count_cmd_args(t_cmd *cmd)
+{
+	int	count;
+
+	count = 0;
+	if (cmd && cmd->args)
+	{
+		while (cmd->args[count])
+			count++;
+	}
+	return (count);
+}
+
+// Añade un argumento al comando
 void	add_cmd_arg(t_cmd *cmd, char *arg)
 {
 	int		i;
@@ -67,18 +82,10 @@ void	add_cmd_arg(t_cmd *cmd, char *arg)
 
 	if (!cmd || !arg)
 		return ;
-	// Contar argumentos actuales
-	count = 0;
-	if (cmd->args)
-	{
-		while (cmd->args[count])
-			count++;
-	}
-	// Crear nuevo array con espacio para un argumento más + NULL
+	count = count_cmd_args(cmd);
 	new_args = malloc(sizeof(char *) * (count + 2));
 	if (!new_args)
 		return ;
-	// Copiar argumentos existentes
 	i = 0;
 	if (cmd->args)
 	{
@@ -89,7 +96,6 @@ void	add_cmd_arg(t_cmd *cmd, char *arg)
 		}
 		free(cmd->args);
 	}
-	// Añadir nuevo argumento
 	new_args[i] = ft_strdup(arg);
 	new_args[i + 1] = NULL;
 	cmd->args = new_args;
