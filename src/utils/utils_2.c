@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 15:35:43 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:37:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 
 int	ft_word_length(char *line, int i)
 {
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46)
-		&& is_space(line[i]) != EXIT_SUCCESS)
-		i++;
-	return (i);
-}
-
-int	ft_redir_length(char *line, int i, t_token_type type)
-{
-	if (type == 2 || type == 3 || type == 4)
-		i++;
-	else if (type == 5 || type == 6)
-		i = i + 2;
-	else
-		return (-1);
 	while ((ft_isalpha(line[i]) == 1 || line[i] == 46)
 		&& is_space(line[i]) != EXIT_SUCCESS)
 		i++;
