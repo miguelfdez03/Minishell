@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 15:56:17 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/16 10:50:08 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@ void	init_tokens(t_token *token)
 	token->type = EMPTY;
 }
 
+// Inicializa la estructura t_cmd en data
+int	init_cmd_data(t_data **data)
+{
+	(*data)->cmd = malloc(sizeof(t_cmd));
+	if (!(*data)->cmd)
+	{
+		ft_printf("Error: Failed to allocate memory for cmd structure\n");
+		return (-1);
+	}
+	(*data)->cmd->name = NULL;
+	(*data)->cmd->args = NULL;
+	(*data)->cmd->builtin_id = BUILTIN_NONE;
+	(*data)->cmd->redirections = NULL;
+	(*data)->cmd->next = NULL;
+	return (0);
+}
+
 int	init_data(t_data **data, char **env, t_env *env_t)
 {
 	*data = malloc(sizeof(t_data));
@@ -27,7 +44,6 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 		return (-1);
 	}
 	(*data)->input = NULL;
-	(*data)->cmd = NULL;
 	(*data)->tokens = NULL;
 	env_t = malloc(sizeof(t_env));
 	if (!env_t)
@@ -44,8 +60,16 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 		free(*data);
 		return (-1);
 	}
+	// Inicializar estructura cmd
+	if (init_cmd_data(data) == -1)
+	{
+		free(env_t);
+		free(*data);
+		return (-1);
+	}
 	(*data)->path = NULL;
 	(*data)->pipe_flag = -1;
+	(*data)->exit_status = 0;
 	ft_printf("Data initialized\n");
 	return (0);
 }

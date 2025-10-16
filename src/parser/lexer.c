@@ -6,12 +6,12 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/14 20:12:11 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:07:28 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//!!more than 25 lines
+
 int	lexer(char *line, t_data **data)
 {
 	int	i;
@@ -34,7 +34,7 @@ int	lexer(char *line, t_data **data)
 			result = check_redir(line, i, data);
 			i += result;
 		}
-		else if (ft_isalpha(line[i]) == 1)
+		else if (ft_isalpha(line[i]) == 1 || line[i] == '$')
 		{
 			result = handle_words(line, i, data);
 			if (result == -1)
@@ -43,6 +43,20 @@ int	lexer(char *line, t_data **data)
 		}
 		else
 			i++;
+	}
+	t_token *tmp = (*data)->tokens;
+	while (tmp)
+	{
+		ft_printf("Token: \"%s\"\n", tmp->value);
+		tmp = tmp->next;
+	}
+	ft_printf("Calling expand_variables...\n");
+	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
+	tmp = (*data)->tokens;
+	while (tmp)
+	{
+		ft_printf("Token: \"%s\"\n", tmp->value);
+		tmp = tmp->next;
 	}
 	return (EXIT_SUCCESS);
 }

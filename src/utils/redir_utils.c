@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 13:11:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/14 20:01:57 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:11:27 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	add_redir(t_redir **redir, t_token_type type, char *value)
 	new_redir->type = type;
 	new_redir->file = value;
 	new_redir->next = NULL;
-	ft_printf("Adding redir: type=%d, value=%s\n", type, value);
 	if (!*redir)
 	{
 		*redir = new_redir;

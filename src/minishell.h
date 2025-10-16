@@ -59,6 +59,7 @@ typedef struct s_data
 	struct s_cmd	*cmd;
 	t_token			*tokens;
 	int				pipe_flag;
+	int				exit_status;
 }	t_data;
 
 typedef enum e_builtin_type
@@ -98,6 +99,20 @@ int				ft_strcmp2(char *str1, char *str2);
 void			add_to_token(t_token **tokens, t_token_type type, char *value);
 int				ft_word_length(char *line, int i);
 
+//--EXPAND VARS--
+int				is_valid_var_char(char c, int is_first);
+char			*get_var_value(char *var_name, t_env *env);
+char			*extract_var_name(char *str, int start, int *len);
+char			*append_to_result(char *result, char *to_add);
+char			*append_char(char *result, char c);
+char			*expand_exit_status(char *result, int exit_status, int *i);
+char			*expand_pid(char *result, int *i);
+char			*expand_braced_var(char *str, int *i, t_env *env, char *result);
+char			*expand_simple_var(char *str, int *i, t_env *env, char *result);
+char			*handle_dollar(char *str, int *i, t_env *env, int exit_status);
+char			*expand_string(char *str, t_env *env, int exit_status);
+void			expand_variables(t_token *tokens, t_env *env, int exit_status);
+
 //--CMD UTILS--
 void			init_cmd(t_cmd *cmd);
 t_builtin_type	identify_builtin(char *cmd);
@@ -130,6 +145,7 @@ int				handle_words(char *line, int i, t_data **data);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
+int				init_cmd_data(t_data **data);
 int				init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
