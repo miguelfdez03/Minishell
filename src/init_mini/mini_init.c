@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/16 10:50:08 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/19 20:24:28 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	main_loop(int argc, char **argv, t_data **data)
 			(*data)->input = input;
 			if (lexer(input, data) == EXIT_SUCCESS)
 			{
+				execute_command(*data);
 				add_history(input);
 				//call to the executor
 			}

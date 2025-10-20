@@ -120,6 +120,7 @@ t_cmd			*create_cmd(char *cmd_name);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
+t_cmd			*tokens_to_cmd(t_token *tokens);
 
 //--REDIR UTILS--
 t_redir			*create_redir(t_token_type type, char *file);
