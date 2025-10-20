@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/19 20:08:42 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/20 09:37:25 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,44 +137,4 @@ void	free_cmd(t_cmd *cmd)
 /*	if (cmd->redirections)
 		free_redirs(cmd->redirections); */
 	free(cmd);
-}
-
-/* Procesa una redireccion y avanza el puntero */
-static t_token	*process_redir(t_token *current, t_cmd *cmd)
-{
-	t_token_type	redir_type;
-
-	if (!current || !current->next)
-		return (current);
-	redir_type = current->type;
-	current = current->next;
-	if (current->type == WORD || current->type == STRING)
-		add_redir(&(cmd->redirections), redir_type, ft_strdup(current->value));
-	return (current);
-}
-
-/* Convierte lista de tokens en comando */
-t_cmd	*tokens_to_cmd(t_token *tokens)
-{
-	t_cmd	*cmd;
-	t_token	*current;
-
-	if (!tokens)
-		return (NULL);
-	cmd = create_cmd(tokens->value);
-	if (!cmd)
-		return (NULL);
-	current = tokens->next;
-	while (current)
-	{
-		if (current->type == WORD || current->type == STRING)
-			add_cmd_arg(cmd, current->value);
-		else if (current->type == REDIR_IN || current->type == REDIR_OUT
-			|| current->type == REDIR_APPEND || current->type == HEREDOC)
-			current = process_redir(current, cmd);
-		else if (current->type == PIPE)
-			break ;
-		current = current->next;
-	}
-	return (cmd);
 }

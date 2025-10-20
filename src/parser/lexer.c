@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/19 20:21:29 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/20 09:30:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	lexer(char *line, t_data **data)
 {
 	int	i;
 	int	result;
-	t_token	token;
 
 	i = 0;
 	while (line[i])
@@ -46,8 +45,5 @@ int	lexer(char *line, t_data **data)
 			i++;
 	}
 	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
-	(*data)->cmd = tokens_to_cmd((*data)->tokens);
-	if (!(*data)->cmd)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
