@@ -137,6 +137,13 @@ int				builtin_pwd(t_data *data);
 int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
+
+//--CD UTILS--
+int				count_args(char **args);
+char			*get_cd_path(t_cmd *cmd, t_env *env);
+int				handle_cd_error(char *path, int argc, char **args);
+int				do_chdir(char *path, char *oldpwd);
+void			update_env_pwd(t_data *data, char *oldpwd, char *newpwd);
 //--LEXER--
 int				lexer(char *line, t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
@@ -152,6 +159,15 @@ int				init_data(t_data **data, char **env, t_env *env_t);
 
 //--ENV--
 int				init_env(char **env, t_env *env_t);
+t_env			*find_env(t_env *env, const char *key);
+char			*get_env_value_from_list(t_env *env, char *key);
+void			set_env_value(t_env **env_head, const char *key,
+					const char *value);
+void			init_first_env_node(t_env **env_head, char *dup_key,
+					char *dup_val);
+void			add_env_node(t_env *last, char *dup_key, char *dup_val);
+void			set_env_new_node(t_env **env_head, char *dup_key,
+					char *dup_val);
 
 //--TEST EXECUTOR--
 int				test_executor(void);

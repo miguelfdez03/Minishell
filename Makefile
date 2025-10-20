@@ -13,9 +13,9 @@ SRCS = src/main.c \
 		src/parser/handler_args.c\
 		src/utils/utils.c\
 		src/utils/utils_2.c\
-		src/utils/redir_utils.c\
-		src/expander/expand_vars.c\
-		src/expander/expand_vars_2.c\
+		src/utils/env_utils.c\
+		src/utils/env_utils2.c\
+		src/utils/builtin_cd_utils.c\
 		src/init_mini/mini_init.c\
 		src/init_mini/init_env.c\
 		src/builtins/built.c\
