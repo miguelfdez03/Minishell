@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/20 17:22:16 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:10:39 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,18 @@ int	is_symbols(char c)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens->next;
+		if (tokens->value)
+			free(tokens->value);
+		free(tokens);
+		tokens = tmp;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/19 20:24:28 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:48:54 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,21 @@ int	main_loop(int argc, char **argv, t_data **data)
 		}
 		if (ft_strlen(input) > 0)
 		{
-			(*data)->input = input;
 			if (lexer(input, data) == EXIT_SUCCESS)
 			{
 				execute_command(*data);
 				add_history(input);
-				//call to the executor
 			}
+			// Liberar tokens después de cada comando
+			if ((*data)->tokens)
+			{
+				free_tokens((*data)->tokens);
+				(*data)->tokens = NULL;
+			}
+			// Reinicializar cmd para el siguiente comando
+			if ((*data)->cmd)
+				free_cmd((*data)->cmd);
+			init_cmd_data(data);
 		}
 		free(input);
 	}

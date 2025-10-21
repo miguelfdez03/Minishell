@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/20 09:37:25 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:54:42 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,26 @@ t_builtin_type	identify_builtin(char *cmd)
 		return (BUILTIN_UNSET);
 	return (BUILTIN_NONE);
 }
-
+//TODO Change this function to work with t_cmd
 // Crear nueva estructura de comando
-t_cmd	*create_cmd(char *cmd_name)
+void	*create_cmd(char *cmd_name, t_cmd *cmd)
 {
-	t_cmd			*cmd;
 	t_builtin_type	builtin_id;
 
-	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	// Inicializar estructura con valores por defecto
 	init_cmd(cmd);
-	// Asignar nombre del comando
 	cmd->name = ft_strdup(cmd_name);
 	if (!cmd->name)
 	{
 		free(cmd);
 		return (NULL);
 	}
-	// Identificar si es built-in
 	builtin_id = identify_builtin(cmd_name);
 	if (builtin_id != BUILTIN_NONE)
-		cmd->builtin_id = builtin_id;
+	cmd->builtin_id = builtin_id;
 	else
-		cmd->builtin_id = BUILTIN_NONE;
-	return (cmd);
+	cmd->builtin_id = BUILTIN_NONE;
 }
 
 // Añadir argumentos al comando
@@ -134,7 +128,7 @@ void	free_cmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 	}
-/*	if (cmd->redirections)
-		free_redirs(cmd->redirections); */
+	if (cmd->redirections)
+		free_redirs(cmd->redirections);
 	free(cmd);
 }

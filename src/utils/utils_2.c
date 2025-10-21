@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/20 15:39:59 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:27:23 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*parse_simple_input(char *input)
 	if (!tokens || !tokens[0])
 		return (NULL);
 	// Crear comando con el primer token
-	cmd = create_cmd(tokens[0]);
+	cmd = create_cmd(tokens[0], cmd);
 	if (!cmd)
 	{
 		free_string_array(tokens);

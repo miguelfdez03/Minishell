@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 13:11:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/16 12:11:27 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:10:38 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,18 @@ void	add_redir(t_redir **redir, t_token_type type, char *value)
 	while (current->next)
 		current = current->next;
 	current->next = new_redir;
+}
+
+void	free_redirs(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	while (redir)
+	{
+		tmp = redir->next;
+		if (redir->file)
+			free(redir->file);
+		free(redir);
+		redir = tmp;
+	}
 }

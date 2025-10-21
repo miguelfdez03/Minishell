@@ -98,6 +98,7 @@ int				is_symbols(char c);
 int				ft_strcmp(char *str1, char *str2, int i);
 int				ft_strcmp2(char *str1, char *str2);
 void			add_to_token(t_token **tokens, t_token_type type, char *value);
+void			free_tokens(t_token *tokens);
 int				ft_word_length(char *line, int i);
 
 //--EXPAND VARS--
@@ -117,7 +118,7 @@ void			expand_variables(t_token *tokens, t_env *env, int exit_status);
 //--CMD UTILS--
 void			init_cmd(t_cmd *cmd);
 t_builtin_type	identify_builtin(char *cmd);
-t_cmd			*create_cmd(char *cmd_name);
+void			*create_cmd(char *cmd_name, t_cmd *cmd);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
 t_cmd			*parse_simple_input(char *input);
