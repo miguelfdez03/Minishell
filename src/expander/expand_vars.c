@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:32:09 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/16 12:10:03 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:16:01 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,28 +74,3 @@ char	*append_char(char *result, char c)
 	new_result = append_to_result(result, temp);
 	return (new_result);
 }
-
-char	*expand_exit_status(char *result, int exit_status, int *i)
-{
-	char	*status_str;
-	char	*new_result;
-
-	status_str = ft_itoa(exit_status);
-	new_result = append_to_result(result, status_str);
-	free(status_str);
-	*i += 2;
-	return (new_result);
-}
-
-char	*expand_pid(char *result, int *i)
-{
-	char	*pid_str;
-	char	*new_result;
-
-	pid_str = ft_itoa(getpid());
-	new_result = append_to_result(result, pid_str);
-	free(pid_str);
-	*i += 2;
-	return (new_result);
-}
-

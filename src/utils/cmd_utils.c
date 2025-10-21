@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 11:54:42 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:27:30 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,25 @@ t_builtin_type	identify_builtin(char *cmd)
 }
 //TODO Change this function to work with t_cmd
 // Crear nueva estructura de comando
-void	*create_cmd(char *cmd_name, t_cmd *cmd)
+int	create_cmd(char *cmd_name, t_cmd *cmd)
 {
 	t_builtin_type	builtin_id;
 
 	if (!cmd)
-		return (NULL);
+		return (0);
 	init_cmd(cmd);
 	cmd->name = ft_strdup(cmd_name);
 	if (!cmd->name)
 	{
 		free(cmd);
-		return (NULL);
+		return (0);
 	}
 	builtin_id = identify_builtin(cmd_name);
 	if (builtin_id != BUILTIN_NONE)
-	cmd->builtin_id = builtin_id;
+		cmd->builtin_id = builtin_id;
 	else
-	cmd->builtin_id = BUILTIN_NONE;
+		cmd->builtin_id = BUILTIN_NONE;
+	return (1);
 }
 
 // Añadir argumentos al comando

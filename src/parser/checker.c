@@ -6,14 +6,12 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/20 09:45:38 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:10:16 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//TODO : check for single quotes
-//TODO : check args
 int	check_for_closed(char *line, int i, char quote)
 {
 	i++;
@@ -44,27 +42,28 @@ int	handle_quotes(char *line, int i, t_data **data)
 
 int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 {
-    int	start;
-    int	len;
+	int	start;
+	int	len;
 
-    i++;
-    while (is_space(line[i]) == EXIT_SUCCESS)
-        i++;
-    start = i;
-    len = 0;
-    while (line[i] && is_space(line[i]) == EXIT_FAILURE
-        && is_symbols(line[i]) == EXIT_FAILURE)
-    {
-        len++;
-        i++;
-    }
-    if (len > 0)
-    {
-        if (!(*data)->cmd)
-            return (i);
-        add_redir(&((*data)->cmd->redirections), type, ft_substr(line, start, len));
-    }
-    return (i);
+	i++;
+	while (is_space(line[i]) == EXIT_SUCCESS)
+		i++;
+	start = i;
+	len = 0;
+	while (line[i] && is_space(line[i]) == EXIT_FAILURE
+		&& is_symbols(line[i]) == EXIT_FAILURE)
+	{
+		len++;
+		i++;
+	}
+	if (len > 0)
+	{
+		if (!(*data)->cmd)
+			return (i);
+		add_redir(&((*data)->cmd->redirections), type,
+			ft_substr(line, start, len));
+	}
+	return (i);
 }
 
 int	check_redir(char *line, int i, t_data **data)

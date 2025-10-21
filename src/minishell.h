@@ -118,10 +118,9 @@ void			expand_variables(t_token *tokens, t_env *env, int exit_status);
 //--CMD UTILS--
 void			init_cmd(t_cmd *cmd);
 t_builtin_type	identify_builtin(char *cmd);
-void			*create_cmd(char *cmd_name, t_cmd *cmd);
+int				create_cmd(char *cmd_name, t_cmd *cmd);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
-t_cmd			*parse_simple_input(char *input);
 t_cmd			*tokens_to_cmd(t_token *tokens);
 
 //--REDIR UTILS--

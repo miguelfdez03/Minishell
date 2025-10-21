@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 11:48:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:32:29 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_tokens(t_token *token)
 	token->type = EMPTY;
 }
 
-// Inicializa la estructura t_cmd en data
 int	init_cmd_data(t_data **data)
 {
 	(*data)->cmd = malloc(sizeof(t_cmd));
@@ -74,12 +73,6 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 	return (0);
 }
 
-			//if (input[0] == '>' || input[0] == '<' || input[0] == '|')
-			//{
-			//	ft_printf("Error: syntax error near unexpected token\n");
-			//	free(input);
-			//	continue;
-			//}
 int	main_loop(int argc, char **argv, t_data **data)
 {
 	char	*input;
@@ -106,7 +99,6 @@ int	main_loop(int argc, char **argv, t_data **data)
 				free_tokens((*data)->tokens);
 				(*data)->tokens = NULL;
 			}
-			// Reinicializar cmd para el siguiente comando
 			if ((*data)->cmd)
 				free_cmd((*data)->cmd);
 			init_cmd_data(data);

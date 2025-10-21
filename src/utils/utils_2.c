@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 11:27:23 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:22:43 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,4 @@ int	ft_strcmp2(char *str1, char *str2)
 	while (str1[i] && str2[i] && str1[i] == str2[i])
 		i++;
 	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
-}
-
-t_cmd	*parse_simple_input(char *input)
-{
-	char	**tokens;
-	t_cmd	*cmd;
-	int		i;
-
-	// Split simple por espacios
-	tokens = ft_split(input, ' ');
-	if (!tokens || !tokens[0])
-		return (NULL);
-	// Crear comando con el primer token
-	cmd = create_cmd(tokens[0], cmd);
-	if (!cmd)
-	{
-		free_string_array(tokens);
-		return (NULL);
-	}
-	// Añadir argumentos
-	i = 0;
-	while (tokens[i])
-	{
-		add_cmd_arg(cmd, tokens[i]);
-		i++;
-	}
-	free_string_array(tokens);
-	return (cmd);
 }

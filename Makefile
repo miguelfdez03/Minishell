@@ -18,6 +18,7 @@ SRCS = src/main.c \
 		src/utils/redir_utils.c\
 		src/expander/expand_vars.c\
 		src/expander/expand_vars_2.c\
+		src/expander/expand_vars_3.c\
 		src/utils/builtin_cd_utils.c\
 		src/init_mini/mini_init.c\
 		src/init_mini/init_env.c\

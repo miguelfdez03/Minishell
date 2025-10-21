@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:15:55 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/16 12:10:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:16:12 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	expand_variables(t_token *tokens, t_env *env, int exit_status)
 	current = tokens;
 	while (current)
 	{
-		if ((current->type == WORD || current->type == STRING) 
+		if ((current->type == WORD || current->type == STRING)
 			&& current->value)
 		{
 			expanded = expand_string(current->value, env, exit_status);
