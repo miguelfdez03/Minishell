@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:24:40 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:08:52 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//TODO : contemplar las redirs
 int	builtin_echo(t_data *data)
 {
 	t_cmd	*cmd;
@@ -20,13 +21,13 @@ int	builtin_echo(t_data *data)
 
 	cmd = data->cmd;
 	newline_flag = 1;
-	i = 1;
-	if (cmd->args[1] && ft_strcmp2(cmd->args[1], "-n") == 0)
+	i = 0;
+	if (cmd->args && cmd->args[0] && ft_strcmp2(cmd->args[0], "-n") == 0)
 	{
 		newline_flag = 0;
-		i = 2;
+		i = 1;
 	}
-	while (cmd->args[i])
+	while (cmd->args && cmd->args[i])
 	{
 		ft_putstr_fd(cmd->args[i], 1);
 		if (cmd->args[i + 1])

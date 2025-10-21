@@ -6,34 +6,37 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 16:43:21 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:08:30 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//int tokenizer()
-//{
-//	
-//}
-
 static	int	check_and_exp(t_data **data)
 {
-	if ((*data)->tokens)
-	{
-		expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
-		if ((*data)->tokens->value)
-		{
-			if ((*data)->cmd->name)
-				free((*data)->cmd->name);
-			(*data)->cmd->name = ft_strdup((*data)->tokens->value);
-			if (create_cmd((*data)->cmd->name, (*data)->cmd) == 0)
-				return(EXIT_FAILURE);
-			ft_printf("Command assigned: %s\n", (*data)->cmd->name);
-		}
-	}
-	else
+	t_token	*tmp;
+
+	if (!(*data)->tokens)
 		return (EXIT_FAILURE);
+	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);	
+	tmp = (*data)->tokens;
+	if (tmp && tmp->value)
+	{
+		if ((*data)->cmd->name)
+			free((*data)->cmd->name);
+		(*data)->cmd->name = ft_strdup(tmp->value);
+		if (create_cmd((*data)->cmd->name, (*data)->cmd) == 0)
+			return (EXIT_FAILURE);
+		
+		ft_printf("Command assigned: %s\n", (*data)->cmd->name);
+		tmp = tmp->next;
+	}
+	while (tmp)
+	{
+		if (tmp->value && (tmp->type == WORD || tmp->type == STRING))
+			add_cmd_arg((*data)->cmd, tmp->value);
+		tmp = tmp->next;
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -69,20 +72,6 @@ int	lexer(char *line, t_data **data)
 		else
 			i++;
 	}
-	ft_printf("--- Tokens before expansion ---\n");
-	t_token *tmp = (*data)->tokens;
-	while (tmp)
-	{
-		ft_printf("Token: type=%d, value=%s\n", tmp->type, tmp->value);
-		tmp = tmp->next;
-	}
 	check_and_exp(data);
-	ft_printf("--- Tokens after expansion ---\n");
-	tmp = (*data)->tokens;
-	while (tmp)
-	{
-		ft_printf("Token: type=%d, value=%s\n", tmp->type, tmp->value);
-		tmp = tmp->next;
-	}
 	return (EXIT_SUCCESS);
 }

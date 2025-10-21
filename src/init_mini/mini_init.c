@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 14:32:29 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:06:20 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 		free(*data);
 		return (-1);
 	}
-	// Inicializar estructura cmd
 	if (init_cmd_data(data) == -1)
 	{
 		free(env_t);
@@ -93,7 +92,6 @@ int	main_loop(int argc, char **argv, t_data **data)
 				execute_command(*data);
 				add_history(input);
 			}
-			// Liberar tokens después de cada comando
 			if ((*data)->tokens)
 			{
 				free_tokens((*data)->tokens);
