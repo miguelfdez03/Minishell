@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 12:10:16 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:14:17 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	handle_quotes(char *line, int i, t_data **data)
 		return (-1);
 	}
 	str = ft_substr(line, i + 1, last - i - 1);
+	ft_printf("%s\n", str);
 	if (!str)
 		return (-1);
 	add_to_token(&((*data)->tokens), STRING, str);
@@ -61,7 +62,7 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 		if (!(*data)->cmd)
 			return (i);
 		add_redir(&((*data)->cmd->redirections), type,
-			ft_substr(line, start, len));
+		ft_substr(line, start, len));
 	}
 	return (i);
 }
