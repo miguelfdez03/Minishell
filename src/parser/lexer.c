@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 20:08:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:29:00 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static	int	check_and_exp(t_data **data)
 		if (create_cmd((*data)->cmd->name, (*data)->cmd) == 0)
 			return (EXIT_FAILURE);
 		
-		ft_printf("Command assigned: %s\n", (*data)->cmd->name);
 		tmp = tmp->next;
 	}
 	while (tmp)
 	{
-		if (tmp->value && (tmp->type == WORD || tmp->type == STRING))
+		if (tmp->value && (tmp->type == WORD || tmp->type == STRING
+				|| tmp->type == ARGS))
 			add_cmd_arg((*data)->cmd, tmp->value);
 		tmp = tmp->next;
 	}
@@ -69,6 +69,9 @@ int	lexer(char *line, t_data **data)
 				return (EXIT_FAILURE);
 			i = result;
 		}
+		else if (line[i] ==  '-')
+			i = handle_args(line, i + 1, data);
+		//add error case
 		else
 			i++;
 	}

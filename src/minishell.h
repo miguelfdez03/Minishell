@@ -35,6 +35,7 @@ typedef enum e_token_type
 	HEREDOC,
 	EMPTY,
 	SIMPLE_Q,
+	ARGS,
 }	t_token_type;
 
 typedef struct s_token
@@ -147,6 +148,7 @@ void			update_env_pwd(t_data *data, char *oldpwd, char *newpwd);
 //--LEXER--
 int				lexer(char *line, t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
+int				handle_args(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);

@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 14:22:43 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:12:14 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_word_length(char *line, int i)
 		|| line[i] == '?' || line[i] == '{' || line[i] == '}')
 		&& is_space(line[i]) != EXIT_SUCCESS)
 		i++;
-	ft_printf("%d, numero",i);
 	return (i);
 }
 

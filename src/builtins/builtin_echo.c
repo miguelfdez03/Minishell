@@ -6,13 +6,15 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 20:08:52 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:31:45 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //TODO : contemplar las redirs
+//!! echo -nnnnnnnnnnnnnnnnnnnnnn a
+//!! aspidershell> "funciona igual con mil ns que con una"
 int	builtin_echo(t_data *data)
 {
 	t_cmd	*cmd;

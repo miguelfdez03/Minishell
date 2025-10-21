@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 19:27:17 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:12:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 		*tokens = new_token;
 		return ;
 	}
-	printf("%u\n%s\n", new_token->type, new_token->value);
 	current = *tokens;
 	while (current->next)
 		current = current->next;

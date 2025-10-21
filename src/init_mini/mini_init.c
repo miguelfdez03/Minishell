@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 20:06:20 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:12:05 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 	(*data)->path = NULL;
 	(*data)->pipe_flag = -1;
 	(*data)->exit_status = 0;
-	ft_printf("Data initialized\n");
 	return (0);
 }
 
