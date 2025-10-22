@@ -20,6 +20,7 @@ SRCS = src/main.c \
 		src/expander/expand_vars_2.c\
 		src/expander/expand_vars_3.c\
 		src/utils/builtin_cd_utils.c\
+		src/utils/builtin_export_utils.c\
 		src/init_mini/mini_init.c\
 		src/init_mini/init_env.c\
 		src/builtins/built.c\
@@ -28,6 +29,7 @@ SRCS = src/main.c \
 		src/builtins/builtin_env.c\
 		src/builtins/builtin_echo.c\
 		src/builtins/builtin_cd.c\
+		src/builtins/builtin_export.c\
 
 OBJS = $(SRCS:.c=.o)
 

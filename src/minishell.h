@@ -138,13 +138,17 @@ int				builtin_pwd(t_data *data);
 int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
+int				builtin_export(t_data *data);
 
 //--CD UTILS--
 int				count_args(char **args);
 char			*get_cd_path(t_cmd *cmd, t_env *env);
-int				handle_cd_error(char *path, int argc, char **args);
 int				do_chdir(char *path, char *oldpwd);
 void			update_env_pwd(t_data *data, char *oldpwd, char *newpwd);
+
+//--EXPORT UTILS--
+int				is_valid_identifier(char *name);
+void			parse_export_arg(char *arg, char **key, char **value);
 //--LEXER--
 int				lexer(char *line, t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);

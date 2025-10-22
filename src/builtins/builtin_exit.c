@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:14:48 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:12:22 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static int	check_exit_args(t_cmd *cmd)
 		while (cmd->args[arg_count])
 			arg_count++;
 	}
-	if (arg_count > 2)
+	if (arg_count > 1)
 		return (-1);
-	if (arg_count <= 1 || !cmd->args[1])
+	if (arg_count == 0 || !cmd->args[0])
 		return (0);
-	if (!is_numeric_argument(cmd->args[1]))
+	if (!is_numeric_argument(cmd->args[0]))
 	{
-		ft_printf("exit: %s: numeric argument required\n", cmd->args[1]);
+		ft_printf("exit: %s: numeric argument required\n", cmd->args[0]);
 		exit(2);
 	}
-	return (ft_atoi(cmd->args[1]) & 255);
+	return (ft_atoi(cmd->args[0]) & 255);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/20 17:26:55 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:47:40 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,33 @@
 
 int	builtin_cd(t_data *data)
 {
-	t_cmd	*cmd;
 	char	*path;
 	char	*oldpwd;
 	char	*newpwd;
-	int		argc;
 
-	cmd = data->cmd;
-	argc = count_args(cmd->args);
-	if (argc > 2)
+	if (!data || !data->cmd)
+		return (1);
+	path = get_cd_path(data->cmd, data->env);
+	if (!path)
 	{
-		ft_putendl_fd("cd: too many arguments", 2);
+		if (!data->cmd->args || count_args(data->cmd->args) <= 1)
+			ft_putendl_fd("cd: HOME not set", 2);
+		else if (ft_strcmp2(data->cmd->args[0], "-") == 0)
+			ft_putendl_fd("cd: OLDPWD not set", 2);
 		return (1);
 	}
-	path = get_cd_path(cmd, data->env);
-	if (handle_cd_error(path, argc, cmd->args))
-		return (1);
 	oldpwd = getcwd(NULL, 0);
-	if (do_chdir(path, oldpwd))
+	if (chdir(path) == -1)
+	{
+		perror("cd");
+		if (oldpwd)
+			free(oldpwd);
 		return (1);
+	}
 	newpwd = getcwd(NULL, 0);
 	update_env_pwd(data, oldpwd, newpwd);
-	if (argc == 2 && ft_strcmp2(cmd->args[1], "-") == 0)
+	if (data->cmd->args && data->cmd->args[0] 
+		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
 		ft_putendl_fd(get_env_value_from_list(data->env, "PWD"), 1);
 	return (0);
 }

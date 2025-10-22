@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 20:29:00 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:47:40 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	lexer(char *line, t_data **data)
 			result = check_redir(line, i, data);
 			i += result;
 		}
-		else if (ft_isalpha(line[i]) == 1 || line[i] == '$')
+		else if (ft_isalpha(line[i]) == 1 || line[i] == '$' || line[i] == '.' || line[i] == '/')
 		{
 			result = handle_words(line, i, data);
 			if (result == -1)

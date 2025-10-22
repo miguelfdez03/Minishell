@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 20:12:14 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:02:39 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	ft_word_length(char *line, int i)
 {
 	while ((ft_isalpha(line[i]) == 1 || line[i] == 46 
 		|| line[i] == '$' || line[i] == '_' || ft_isdigit(line[i]) == 1
-		|| line[i] == '?' || line[i] == '{' || line[i] == '}')
+		|| line[i] == '?' || line[i] == '{' || line[i] == '}' || line[i] == '/'
+		|| line[i] == '=')
 		&& is_space(line[i]) != EXIT_SUCCESS)
 		i++;
 	return (i);

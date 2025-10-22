@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 17:00:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 16:37:23 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:47:40 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,13 @@ int	count_args(char **args)
 
 char	*get_cd_path(t_cmd *cmd, t_env *env)
 {
-	int	argc;
-
-	argc = count_args(cmd->args);
-	if (argc == 1 || (argc == 2 && ft_strcmp2(cmd->args[1], "~") == 0))
+	if (!cmd->args || count_args(cmd->args) == 0)
 		return (get_env_value_from_list(env, "HOME"));
-	else if (argc == 2 && ft_strcmp2(cmd->args[1], "-") == 0)
+	if (ft_strcmp2(cmd->args[0], "~") == 0)
+		return (get_env_value_from_list(env, "HOME"));
+	if (ft_strcmp2(cmd->args[0], "-") == 0)
 		return (get_env_value_from_list(env, "OLDPWD"));
-	else if (argc == 2)
-		return (cmd->args[1]);
-	return (NULL);
-}
-
-int	handle_cd_error(char *path, int argc, char **args)
-{
-	if (!path)
-	{
-		if (argc == 2 && ft_strcmp2(args[1], "-") == 0)
-			ft_putendl_fd("cd: OLDPWD not set", 2);
-		else
-			ft_putendl_fd("cd: HOME not set", 2);
-		return (1);
-	}
-	return (0);
+	return (cmd->args[0]);
 }
 
 int	do_chdir(char *path, char *oldpwd)

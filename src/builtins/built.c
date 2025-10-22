@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/19 20:24:29 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/22 17:58:36 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	handle_env_builtins(t_data *data)
 	if (type == BUILTIN_ENV)
 		return (builtin_env(data));
 	if (type == BUILTIN_EXPORT)
-		return (printf("\nbuiltin export\n"), 0);
+		return (builtin_export(data));
 	if (type == BUILTIN_UNSET)
 		return (printf("\nbuiltin unset\n"), 0);
 	return (-1);
@@ -74,7 +74,7 @@ int	builtin_pwd(t_data *data)
 	char	*pwd;
 
 	cmd = data->cmd;
-	if (cmd->args && cmd->args[1])
+	if (cmd->args && cmd->args[0])
 	{
 		ft_putendl_fd("pwd: too many arguments", 2);
 		return (1);
