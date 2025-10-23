@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/23 15:40:16 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:33:55 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	lexer(char *line, t_data **data)
 			result = check_redir(line, i, data);
 			i += result;
 		}
-		else if (ft_isalpha(line[i]) == 1 || line[i] == '$' || line[i] == '.' || line[i] == '/')
+		else if (ft_isalpha(line[i]) == 1 || line[i] == '$'
+					|| line[i] == '.' || line[i] == '/')
 		{
 			result = handle_words(line, i, data);
 			if (result == -1)
@@ -74,7 +75,6 @@ int	lexer(char *line, t_data **data)
 		else
 			i++;
 	}
-	printf( "%d",i);
 	check_and_exp(data);
 	return (i);
 }

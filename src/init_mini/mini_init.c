@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/23 15:40:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:53:52 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,18 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
-	{
-		ft_printf("Error: Failed to allocate memory for data structure\n");
 		return (-1);
-	}
 	(*data)->input = NULL;
 	(*data)->tokens = NULL;
 	env_t = malloc(sizeof(t_env));
 	if (!env_t)
 	{
-		ft_printf("Error: Failed to allocate memory for environment\n");
 		free(*data);
 		return (-1);
 	}
 	(*data)->env = env_t;
 	if (init_env(env, env_t) == -1)
 	{
-		ft_printf("Error: Failed to initialize environment\n");
 		free(env_t);
 		free(*data);
 		return (-1);
