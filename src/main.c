@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:57:20 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/22 22:11:46 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:40:40 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ int	main(int argc, char **argv, char **env)
 		return (-1);
 	}
 	main_loop(argc, argv, &data);
-	// free everything
 	return (0);
 }

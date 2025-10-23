@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/22 22:11:25 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:40:30 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,33 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 int	main_loop(int argc, char **argv, t_data **data)
 {
 	char	*input;
+	char	*cont;
+	char	*temp;
 
 	input = NULL;
 	while (1)
 	{
 		input = readline("spidershell> ");
+		
 		if (!input)
 		{
 			ft_printf("exit\n");
 			break ;
 		}
+		add_history(input);
 		if (ft_strlen(input) > 0)
 		{
-			if (lexer(input, data) == EXIT_SUCCESS)
+			if (lexer(input, data) >= 0)
 			{
 				execute_command(*data);
-				add_history(input);
+				if ((*data)->tokens)
+				{
+					free_tokens((*data)->tokens);
+					(*data)->tokens = NULL;
+				}
+				if ((*data)->cmd)
+					free_cmd((*data)->cmd);
 			}
-			if ((*data)->tokens)
-			{
-				free_tokens((*data)->tokens);
-				(*data)->tokens = NULL;
-			}
-			if ((*data)->cmd)
-				free_cmd((*data)->cmd);
 			init_cmd_data(data);
 		}
 		free(input);
@@ -105,6 +108,15 @@ int	main_loop(int argc, char **argv, t_data **data)
 	return (0);
 }
 
+//			else
+//			{
+//				cont = readline("> ");
+//				temp = ft_strjoin(input, "\n");
+//				free(input);
+//				input = ft_strjoin(temp, cont);
+//				free(temp);
+//				free(cont);
+//			}
 /* 
 int main_loop(int argc, char **argv, t_data **data, char **env)
 {

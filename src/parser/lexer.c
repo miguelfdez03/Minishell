@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/22 21:47:40 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:40:16 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,15 @@ int	lexer(char *line, t_data **data)
 	int	result;
 
 	i = 0;
-	while (line[i])
+	while (line[i] && i >= 0)
 	{
 		if (is_space(line[i]) == EXIT_SUCCESS)
 			i++;
 		else if (is_quotes(line[i]) == EXIT_SUCCESS)
 		{
 			i = handle_quotes(line, i, data);
-			if (result == -1)
-				return (EXIT_FAILURE);
-			i = result;
+			if (i == -2)
+				break;
 		}
 		else if (is_symbols(line[i]) == EXIT_SUCCESS)
 		{
@@ -71,10 +70,11 @@ int	lexer(char *line, t_data **data)
 		}
 		else if (line[i] ==  '-')
 			i = handle_args(line, i + 1, data);
-		//add error case
+		//add error case to handle args
 		else
 			i++;
 	}
+	printf( "%d",i);
 	check_and_exp(data);
-	return (EXIT_SUCCESS);
+	return (i);
 }
