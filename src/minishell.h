@@ -154,6 +154,7 @@ int				lexer(char *line, t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
 int				handle_args(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
+char			check_unclosed_quotes(char *line);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
 

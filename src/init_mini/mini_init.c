@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/23 18:53:52 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:10:02 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,79 +66,69 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 	return (0);
 }
 
-int	main_loop(int argc, char **argv, t_data **data)
+static char	*read_multiline(char *input)
 {
-	char	*input;
+	char	quote;
 	char	*cont;
 	char	*temp;
 
-	input = NULL;
+	quote = check_unclosed_quotes(input);
+	while (quote != 0)
+	{
+		cont = readline("> ");
+		if (!cont)
+		{
+			ft_printf("syntax error: unexpected end of file\n");
+			free(input);
+			return (NULL);
+		}
+		temp = ft_strjoin(input, "\n");
+		free(input);
+		input = ft_strjoin(temp, cont);
+		free(temp);
+		free(cont);
+		quote = check_unclosed_quotes(input);
+	}
+	return (input);
+}
+
+static void	process_input(char *input, t_data **data)
+{
+	if (ft_strlen(input) > 0)
+	{
+		if (lexer(input, data) >= 0)
+		{
+			execute_command(*data);
+			if ((*data)->tokens)
+			{
+				free_tokens((*data)->tokens);
+				(*data)->tokens = NULL;
+			}
+			if ((*data)->cmd)
+				free_cmd((*data)->cmd);
+		}
+		init_cmd_data(data);
+	}
+}
+
+int	main_loop(int argc, char **argv, t_data **data)
+{
+	char	*input;
+
 	while (1)
 	{
 		input = readline("spidershell> ");
-		
 		if (!input)
 		{
 			ft_printf("exit\n");
 			break ;
 		}
-		add_history(input);
-		if (ft_strlen(input) > 0)
-		{
-			if (lexer(input, data) >= 0)
-			{
-				execute_command(*data);
-				if ((*data)->tokens)
-				{
-					free_tokens((*data)->tokens);
-					(*data)->tokens = NULL;
-				}
-				if ((*data)->cmd)
-					free_cmd((*data)->cmd);
-			}
-			init_cmd_data(data);
-		}
-		free(input);
-	}
-	return (0);
-}
-
-//			else
-//			{
-//				cont = readline("> ");
-//				temp = ft_strjoin(input, "\n");
-//				free(input);
-//				input = ft_strjoin(temp, cont);
-//				free(temp);
-//				free(cont);
-//			}
-/* 
-int main_loop(int argc, char **argv, t_data **data, char **env)
-{
-	char *input;
-
-	input = NULL;
-	while (1)
-	{
-		input = readline("spidershell>");
+		input = read_multiline(input);
 		if (!input)
-		{
-			ft_printf("exit\n");
-			break;
-		}
-		else
-		{
-			(*data)->cmd = parse_simple_input(input);
-			(*data)->input = input;
-			if ((*data)->cmd)
-			{
-				execute_command(*data);
-				free_cmd((*data)->cmd);
-				add_history(input);
-			}
-		}
+			continue ;
+		add_history(input);
+		process_input(input, data);
 		free(input);
 	}
 	return (0);
 }
-*/

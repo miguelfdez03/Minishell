@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:27:12 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/24 17:01:06 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:54:01 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,30 @@ int	check_for_closed(char *line, int i, char quote)
 	if (!line[i])
 		return (-1);
 	return (i);
+}
+
+char	check_unclosed_quotes(char *line)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '"')
+		{
+			quote = line[i];
+			i++;
+			while (line[i] && line[i] != quote)
+				i++;
+			if (!line[i])
+				return (quote);
+			i++;
+		}
+		else
+			i++;
+	}
+	return (0);
 }
 
 int	handle_quotes(char *line, int i, t_data **data)
