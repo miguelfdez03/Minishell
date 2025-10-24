@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:15:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/24 19:10:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:26:21 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 	return (0);
 }
 
+void	free_data(t_data *data)
+{
+	if (!data)
+		return ;
+	if (data->env)
+		free_env(data->env);
+	if (data->tokens)
+		free_tokens(data->tokens);
+	if (data->cmd)
+		free_cmd(data->cmd);
+	if (data->input)
+		free(data->input);
+	if (data->path)
+		free_string_array(data->path);
+	free(data);
+}
+
 static char	*read_multiline(char *input)
 {
 	char	quote;
@@ -104,8 +121,11 @@ static void	process_input(char *input, t_data **data)
 				free_tokens((*data)->tokens);
 				(*data)->tokens = NULL;
 			}
-			if ((*data)->cmd)
-				free_cmd((*data)->cmd);
+		}
+		if ((*data)->cmd)
+		{
+			free_cmd((*data)->cmd);
+			(*data)->cmd = NULL;
 		}
 		init_cmd_data(data);
 	}

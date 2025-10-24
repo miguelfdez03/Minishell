@@ -163,9 +163,11 @@ int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
 int				init_cmd_data(t_data **data);
 int				init_data(t_data **data, char **env, t_env *env_t);
+void			free_data(t_data *data);
 
 //--ENV--
 int				init_env(char **env, t_env *env_t);
+void			free_env(t_env *env);
 t_env			*find_env(t_env *env, const char *key);
 char			*get_env_value_from_list(t_env *env, char *key);
 void			set_env_value(t_env **env_head, const char *key,

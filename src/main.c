@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:57:20 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/23 15:40:40 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:22:28 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int	main(int argc, char **argv, char **env)
 		return (-1);
 	}
 	main_loop(argc, argv, &data);
+	free_data(data);
 	return (0);
 }

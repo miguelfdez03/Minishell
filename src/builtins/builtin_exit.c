@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/22 22:12:22 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:26:21 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	builtin_exit(t_data *data)
 		ft_putendl_fd("exit: too many arguments", 2);
 		return (1);
 	}
+	free_data(data);
 	exit(exit_status);
 }
 
@@ -64,7 +65,7 @@ static int	check_exit_args(t_cmd *cmd)
 	if (!is_numeric_argument(cmd->args[0]))
 	{
 		ft_printf("exit: %s: numeric argument required\n", cmd->args[0]);
-		exit(2);
+		return (2);
 	}
 	return (ft_atoi(cmd->args[0]) & 255);
 }

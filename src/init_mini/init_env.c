@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 21:06:53 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:21:58 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,20 @@ int	init_env(char **env, t_env *env_t)
 			env_t->next = NULL;
 	}
 	return (0);
+}
+
+void	free_env(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		if (env->key)
+			free(env->key);
+		if (env->value)
+			free(env->value);
+		free(env);
+		env = tmp;
+	}
 }
