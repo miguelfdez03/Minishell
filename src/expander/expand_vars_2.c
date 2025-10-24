@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -115,6 +116,11 @@ void	expand_variables(t_token *tokens, t_env *env, int exit_status)
 	current = tokens;
 	while (current)
 	{
+		if (current->type == SIMPLE_Q)
+		{
+			current = current->next;
+			continue ;
+		}
 		if ((current->type == WORD || current->type == STRING)
 			&& current->value)
 		{

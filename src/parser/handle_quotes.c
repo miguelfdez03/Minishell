@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:27:12 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/24 10:15:33 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:01:06 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	handle_quotes(char *line, int i, t_data **data)
 	str = ft_substr(line, i + 1, last - i - 1);
 	if (!str)
 		return (-1);
-	add_to_token(&((*data)->tokens), STRING, str);
+	if (line[i] == '\'')
+		add_to_token(&((*data)->tokens), SIMPLE_Q, str);
+	else
+		add_to_token(&((*data)->tokens), STRING, str);
 	return (last + 1);
 }

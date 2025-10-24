@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/23 16:33:55 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:09:46 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	int	check_and_exp(t_data **data)
 	while (tmp)
 	{
 		if (tmp->value && (tmp->type == WORD || tmp->type == STRING
-				|| tmp->type == ARGS))
+				|| tmp->type == ARGS || tmp->type == SIMPLE_Q))
 			add_cmd_arg((*data)->cmd, tmp->value);
 		tmp = tmp->next;
 	}
