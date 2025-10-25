@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 17:00:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 16:37:23 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/25 23:50:17 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	init_first_env_node(t_env **env_head, char *dup_key, char *dup_val)
 {

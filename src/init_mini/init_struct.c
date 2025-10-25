@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:38:21 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/25 19:39:21 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/26 00:16:18 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,26 @@ int	init_cmd_data(t_data **data)
 	return (0);
 }
 
-int	init_data(t_data **data, char **env, t_env *env_t)
+static int	init_env_struct(t_data **data, char **env, t_env **env_t)
 {
-	*data = malloc(sizeof(t_data));
-	if (!*data)
-		return (-1);
-	(*data)->input = NULL;
-	(*data)->tokens = NULL;
-	env_t = malloc(sizeof(t_env));
-	if (!env_t)
+	*env_t = malloc(sizeof(t_env));
+	if (!*env_t)
 	{
 		free(*data);
 		return (-1);
 	}
-	(*data)->env = env_t;
-	if (init_env(env, env_t) == -1)
+	(*data)->env = *env_t;
+	if (init_env(env, *env_t) == -1)
 	{
-		free(env_t);
+		free(*env_t);
 		free(*data);
 		return (-1);
 	}
+	return (0);
+}
+
+static int	init_cmd_and_data(t_data **data, t_env *env_t)
+{
 	if (init_cmd_data(data) == -1)
 	{
 		free(env_t);
@@ -63,5 +63,19 @@ int	init_data(t_data **data, char **env, t_env *env_t)
 	(*data)->path = NULL;
 	(*data)->pipe_flag = -1;
 	(*data)->exit_status = 0;
+	return (0);
+}
+
+int	init_data(t_data **data, char **env, t_env *env_t)
+{
+	*data = malloc(sizeof(t_data));
+	if (!*data)
+		return (-1);
+	(*data)->input = NULL;
+	(*data)->tokens = NULL;
+	if (init_env_struct(data, env, &env_t) == -1)
+		return (-1);
+	if (init_cmd_and_data(data, env_t) == -1)
+		return (-1);
 	return (0);
 }

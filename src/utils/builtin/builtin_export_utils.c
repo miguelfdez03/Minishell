@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 20:30:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 22:15:15 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/10/26 00:17:20 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	is_valid_identifier(char *name)
 {

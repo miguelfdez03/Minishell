@@ -6,11 +6,11 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:07:08 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/20 17:26:41 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/25 23:50:07 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_env	*find_env(t_env *env, const char *key)
 {
