@@ -179,7 +179,6 @@ void			set_env_new_node(t_env **env_head, char *dup_key,
 					char *dup_val);
 
 //--TEST EXECUTOR--
-int				test_executor(void);
 int				test_simple_command(char *cmd_path, char **args);
 int				test_simple_command_with_path(char *cmd, char **args);
 
