@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/21 14:27:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/25 19:35:50 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_builtin_type	identify_builtin(char *cmd)
 		return (BUILTIN_UNSET);
 	return (BUILTIN_NONE);
 }
+
 //TODO Change this function to work with t_cmd
 // Crear nueva estructura de comando
 int	create_cmd(char *cmd_name, t_cmd *cmd)

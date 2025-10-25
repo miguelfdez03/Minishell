@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/22 09:42:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/25 19:40:30 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 		if (!(*data)->cmd)
 			return (i);
 		add_redir(&((*data)->cmd->redirections), type,
-		ft_substr(line, start, len));
+			ft_substr(line, start, len));
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/21 20:24:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/25 19:39:52 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ int	handle_args(char *line, int i, t_data **data)
 	if (!str)
 		return (-1);
 	add_to_token(&((*data)->tokens), ARGS, str);
-	return (last);	
+	return (last);
 }
