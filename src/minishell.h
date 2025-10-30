@@ -102,6 +102,9 @@ void			add_to_token(t_token **tokens, t_token_type type, char *value);
 void			free_tokens(t_token *tokens);
 int				ft_word_length(char *line, int i);
 
+//--PIPES--
+int				handle_pipes(int i, t_data **data);
+
 //--EXPAND VARS--
 int				is_valid_var_char(char c, int is_first);
 char			*get_var_value(char *var_name, t_env *env);
