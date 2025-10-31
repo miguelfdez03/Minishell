@@ -6,22 +6,32 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/25 18:33:34 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 19:45:32 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	process_tokens(t_token *tmp, t_data **data)
+static int	init_first_cmd(t_data **data, t_token **tmp)
 {
-	while (tmp)
+	if (*tmp && (*tmp)->value)
 	{
-		if (tmp->value && (tmp->type == WORD || tmp->type == STRING
-				|| tmp->type == ARGS || tmp->type == SIMPLE_Q))
-			add_cmd_arg((*data)->cmd, tmp->value);
-		tmp = tmp->next;
+		if (create_cmd((*tmp)->value, (*data)->cmd) == 0)
+			return (EXIT_FAILURE);
+		*tmp = (*tmp)->next;
 	}
 	return (EXIT_SUCCESS);
+}
+
+static void	process_first_cmd_args(t_token **tmp, t_data **data)
+{
+	while (*tmp && (*tmp)->type != PIPE)
+	{
+		if ((*tmp)->value && ((*tmp)->type == WORD || (*tmp)->type == STRING
+				|| (*tmp)->type == ARGS || (*tmp)->type == SIMPLE_Q))
+			add_cmd_arg((*data)->cmd, (*tmp)->value);
+		*tmp = (*tmp)->next;
+	}
 }
 
 static int	check_and_exp(t_data **data)
@@ -32,16 +42,15 @@ static int	check_and_exp(t_data **data)
 		return (EXIT_FAILURE);
 	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
 	tmp = (*data)->tokens;
-	if (tmp && tmp->value)
+	if (init_first_cmd(data, &tmp) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	process_first_cmd_args(&tmp, data);
+	if (tmp && tmp->type == PIPE)
 	{
-		if ((*data)->cmd->name)
-			free((*data)->cmd->name);
-		(*data)->cmd->name = ft_strdup(tmp->value);
-		if (create_cmd((*data)->cmd->name, (*data)->cmd) == 0)
+		if (process_pipes(*data) == -1)
 			return (EXIT_FAILURE);
-		tmp = tmp->next;
 	}
-	return (process_tokens(tmp, data));
+	return (EXIT_SUCCESS);
 }
 
 static int	handle_lexer_char(char *line, int i, t_data **data)
@@ -54,7 +63,7 @@ static int	handle_lexer_char(char *line, int i, t_data **data)
 		return (handle_quotes(line, i, data));
 	else if (is_symbols(line[i]) == EXIT_SUCCESS)
 	{
-		result = check_redir(line, i, data);
+	result = check_redir(line, i, data);
 		return (i + result);
 	}
 	else if (ft_isalpha(line[i]) == 1 || line[i] == '$'

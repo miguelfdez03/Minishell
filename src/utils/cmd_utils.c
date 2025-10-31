@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/25 19:35:50 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 18:36:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,10 @@ void	add_cmd_arg(t_cmd *cmd, char *arg)
 	cmd->args = new_args;
 }
 
-// Liberar memoria de comando
-void	free_cmd(t_cmd *cmd)
+static void	free_cmd_content(t_cmd *cmd)
 {
 	int	i;
 
-	if (!cmd)
-		return ;
 	if (cmd->name)
 		free(cmd->name);
 	if (cmd->args)
@@ -132,5 +129,56 @@ void	free_cmd(t_cmd *cmd)
 	}
 	if (cmd->redirections)
 		free_redirs(cmd->redirections);
-	free(cmd);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	t_cmd	*next;
+
+	while (cmd)
+	{
+		next = cmd->next;
+		free_cmd_content(cmd);
+		free(cmd);
+		cmd = next;
+	}
+}
+
+static void	print_cmd_args(t_cmd *cmd)
+{
+	int	i;
+
+	if (cmd->args)
+	{
+		ft_printf("   Args: ");
+		i = 0;
+		while (cmd->args[i])
+		{
+			ft_printf("[%s] ", cmd->args[i]);
+			i++;
+		}
+		ft_printf("\n");
+	}
+}
+
+void	print_cmd_list(t_cmd *cmd)
+{
+	int	num;
+
+	num = 1;
+	ft_printf("\n=== LISTA DE COMANDOS ===\n");
+	while (cmd)
+	{
+		ft_printf("\n🔹 CMD %d: %s\n", num, cmd->name);
+		print_cmd_args(cmd);
+		if (cmd->redirections)
+			ft_printf("   ⚠️  Tiene redirecciones\n");
+		if (cmd->next)
+			ft_printf("   ➡️  Siguiente comando\n");
+		else
+			ft_printf("   🏁 Último comando\n");
+		cmd = cmd->next;
+		num++;
+	}
+	ft_printf("=========================\n\n");
 }

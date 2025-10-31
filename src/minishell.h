@@ -103,7 +103,8 @@ void			free_tokens(t_token *tokens);
 int				ft_word_length(char *line, int i);
 
 //--PIPES--
-int				handle_pipes(int i, t_data **data);
+int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
+int				process_pipes(t_data *data);
 
 //--EXPAND VARS--
 int				is_valid_var_char(char c, int is_first);
@@ -125,6 +126,7 @@ t_builtin_type	identify_builtin(char *cmd);
 int				create_cmd(char *cmd_name, t_cmd *cmd);
 void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
+void			print_cmd_list(t_cmd *cmd);
 t_cmd			*tokens_to_cmd(t_token *tokens);
 
 //--REDIR UTILS--
