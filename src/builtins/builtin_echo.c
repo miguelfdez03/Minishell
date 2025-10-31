@@ -6,51 +6,65 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/25 22:17:09 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 23:20:51 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//TODO : contemplar las redirs
-static int	has_new_line(t_data *data)
+
+static int	is_valid_n_flag(char *arg)
 {
 	int	i;
-	t_cmd	*cmd;
 
-	cmd = data->cmd;
-	i = 1;
-	if (cmd->args[0][0] == '-' && cmd->args[0][1] == 'n')
-		while (cmd->args[0][i] == 'n')
-			i++;
-	if (i == ft_strlen(cmd->args[0]))
+	if (!arg || arg[0] != '-')
 		return (0);
-	else
-		return (1);
+	if (arg[1] != 'n')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	print_tokens_echo(t_token *tok, int *first)
+{
+	while (tok && tok->type != PIPE)
+	{
+		if (tok->type == WORD || tok->type == STRING 
+			|| tok->type == ARGS || tok->type == SIMPLE_Q)
+		{
+			if (!(*first) && tok->space)
+				ft_putchar_fd(' ', 1);
+			ft_putstr_fd(tok->value, 1);
+			*first = 0;
+		}
+		tok = tok->next;
+	}
 }
 
 int	builtin_echo(t_data *data)
 {
-	t_cmd	*cmd;
-	int		i;
-	int		newline_flag;
+	t_token	*tok;
+	int		print_newline;
+	int		first;
 
-	cmd = data->cmd;
-	newline_flag = 1;
-	i = 0;
-	if (cmd->args && cmd->args[0] && cmd->args[0][0] == '-' && cmd->args[0][1] == 'n')
+	tok = data->tokens;
+	print_newline = 1;
+	first = 1;
+	if (tok && (ft_strcmp2(tok->value, "echo") == 0))
+		tok = tok->next;
+	while (tok && is_valid_n_flag(tok->value))
 	{
-		newline_flag = has_new_line(data);
-		i = 1;
+		print_newline = 0;
+		tok = tok->next;
 	}
-	while (cmd->args && cmd->args[i])
-	{
-		ft_putstr_fd(cmd->args[i], 1);
-		if (cmd->args[i + 1])
-			ft_putchar_fd(' ', 1);
-		i++;
-	}
-	if (newline_flag)
+	print_tokens_echo(tok, &first);
+	if (print_newline)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }

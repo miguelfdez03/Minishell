@@ -42,6 +42,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	int				space; //is there is space before, it needs to print it 0 = no space || 1 = space
 	struct s_token	*next;
 }	t_token;
 
@@ -99,6 +100,7 @@ int				is_symbols(char c);
 int				ft_strcmp(char *str1, char *str2, int i);
 int				ft_strcmp2(char *str1, char *str2);
 void			add_to_token(t_token **tokens, t_token_type type, char *value);
+void			set_token_space(t_token *tokens, int has_space);
 void			free_tokens(t_token *tokens);
 int				ft_word_length(char *line, int i);
 

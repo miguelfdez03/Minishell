@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:38:21 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/26 00:16:18 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 22:21:27 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_tokens(t_token *token)
 {
 	token->value = NULL;
+	token->space = 0;
 	token->type = EMPTY;
 }
 

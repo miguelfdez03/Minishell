@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:08:08 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/31 20:14:46 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 23:03:50 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 		return ;
 	new_token->type = type;
 	new_token->value = value;
+	new_token->space = 0;
 	new_token->next = NULL;
 	if (!*tokens)
 	{
@@ -32,6 +33,18 @@ void	add_to_token(t_token **tokens, t_token_type type, char *value)
 	while (current->next)
 		current = current->next;
 	current->next = new_token;
+}
+
+void	set_token_space(t_token *tokens, int has_space)
+{
+	t_token	*current;
+
+	if (!tokens)
+		return ;
+	current = tokens;
+	while (current->next)
+		current = current->next;
+	current->space = has_space;
 }
 
 int	is_space(char c)

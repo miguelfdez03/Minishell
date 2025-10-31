@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/31 19:45:32 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/10/31 23:52:54 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,74 @@ static int	check_and_exp(t_data **data)
 	return (EXIT_SUCCESS);
 }
 
-static int	handle_lexer_char(char *line, int i, t_data **data)
+static int	had_space_before(char *line, int i)
+{
+	if (i == 0)
+		return (0);
+	if (i > 0 && is_space(line[i - 1]) == EXIT_SUCCESS)
+		return (1);
+	return (0);
+}
+
+static int	handle_quotes_and_symbols(char *line, int i, t_data **data,
+	int has_space)
 {
 	int	result;
 
-	if (is_space(line[i]) == EXIT_SUCCESS)
-		return (i + 1);
-	else if (is_quotes(line[i]) == EXIT_SUCCESS)
-		return (handle_quotes(line, i, data));
+	if (is_quotes(line[i]) == EXIT_SUCCESS)
+	{
+		result = handle_quotes(line, i, data);
+		if (result > i)
+			set_token_space((*data)->tokens, has_space);
+		return (result);
+	}
 	else if (is_symbols(line[i]) == EXIT_SUCCESS)
 	{
-	result = check_redir(line, i, data);
+		result = check_redir(line, i, data);
+		if (result > 0)
+			set_token_space((*data)->tokens, has_space);
 		return (i + result);
 	}
-	else if (ft_isalpha(line[i]) == 1 || line[i] == '$'
+	return (-1);
+}
+
+static int	handle_words_and_args(char *line, int i, t_data **data,
+	int has_space)
+{
+	int	result;
+
+	if (ft_isalpha(line[i]) == 1 || line[i] == '$'
 		|| line[i] == '.' || line[i] == '/')
-		return (handle_words(line, i, data));
+	{
+		result = handle_words(line, i, data);
+		if (result > i)
+			set_token_space((*data)->tokens, has_space);
+		return (result);
+	}
 	else if (line[i] == '-')
-		return (handle_args(line, i + 1, data));
+	{
+		result = handle_args(line, i + 1, data);
+		if (result > i)
+			set_token_space((*data)->tokens, has_space);
+		return (result);
+	}
+	return (-1);
+}
+
+static int	handle_lexer_char(char *line, int i, t_data **data)
+{
+	int	result;
+	int	has_space;
+
+	if (is_space(line[i]) == EXIT_SUCCESS)
+		return (i + 1);
+	has_space = had_space_before(line, i);
+	result = handle_quotes_and_symbols(line, i, data, has_space);
+	if (result != -1)
+		return (result);
+	result = handle_words_and_args(line, i, data, has_space);
+	if (result != -1)
+		return (result);
 	return (i + 1);
 }
 
