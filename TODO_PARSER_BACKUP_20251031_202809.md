@@ -1,116 +1,86 @@
-# 📋 TODO - Parser de Minishell# 📋 TODO - Parser de Minishell (Estado Actualizado)# 📋 TODO - Parser de Minishell
+# 📋 TODO - Parser de Minishell (Estado Actualizado)
 
-
-
-> **Última actualización:** 29 de octubre de 2025  
-
-> **Estado:** Parser básico funcional, faltan pipes y validación  
-
-> **Tiempo estimado total:** 21-30 horas (3-4 días)## 📊 ESTADO ACTUAL DEL PARSER## ⚠️ TAREAS PRIORITARIAS (Hacer primero)
+> **Última actualización:** 31 de octubre de 2025  
+> **Estado:** Parser funcional con pipes implementados  
+> **Testing:** Completo (66 tests ejecutados, 0 memory leaks)  
+> **Siguiente fase:** Implementación de executor y validación de sintaxis
 
 
 
 ---
 
+## 📊 ESTADO ACTUAL DEL PROYECTO
 
+### ✅ COMPLETAMENTE IMPLEMENTADO
 
-## 📊 ESTADO ACTUAL### ✅ YA IMPLEMENTADO### 1. 🔴 VALIDACIÓN DE SINTAXIS
+#### 🎯 Parser y Tokenización
+- ✅ Tokenización completa (WORD, STRING, SIMPLE_Q, ARGS, PIPE, REDIR_*)
+- ✅ Manejo de comillas simples y dobles
+- ✅ Expansión de variables ($VAR, $?, $$, ${VAR})
+- ✅ Comillas simples NO expanden variables (correcto)
+- ✅ Detección de comillas sin cerrar + input multilinea
+- ✅ Detección de redirecciones (<, >, <<, >>)
+- ✅ Detección de pipes con creación de lista enlazada
 
+#### 🔗 Pipes (NUEVO - Implementado completamente)
+- ✅ **Lista enlazada de comandos** (`src/pipes/pipes.c`)
+  - `init_next_cmd()` - Crea siguiente comando en la lista
+  - `process_cmd_args()` - Añade argumentos hasta encontrar PIPE
+  - `handle_pipe()` - Procesa un solo pipe
+  - `process_pipes()` - Loop principal para múltiples pipes
+- ✅ **Estructura `t_cmd->next`** para linked list
+- ✅ **Memory management perfecto** (0 leaks con hasta 6 comandos en pipe)
+- ✅ **Bug fix crítico**: `ft_strdup("|")` en checker.c (antes causaba `free(): invalid pointer`)
+- ✅ **Documentación completa**: `PIPES_IMPLEMENTATION.md` (1552 líneas)
+- ✅ **Testing exhaustivo**: Probado con múltiples comandos en pipeline
 
+#### 🔨 Builtins
+- ✅ **EXIT**: 100% funcional (5/5 tests)
+- ✅ **CD**: 75% funcional (6/8 tests) - Solo formato de mensajes difiere
+  - HOME, OLDPWD, ~, - implementados
+  - Detección de permisos funcional
+- ✅ **ECHO**: 30% funcional (7/23 tests)
+  - Echo básico funciona
+  - ⚠️ Falta: flag -n, concatenación de quotes
+- ✅ **PWD**: Funcional (rechaza args cuando bash los ignora)
+- ✅ **ENV**: Funcional (lista variables correctamente)
+- ⚠️ **EXPORT**: 0% funcional - NO exporta al entorno real (setenv faltante)
+- ❌ **UNSET**: No implementado (solo stub)
 
-### ✅ Completado- ✅ Tokenización básica (WORD, STRING, SIMPLE_Q, ARGS)**Prioridad: CRÍTICA**  
+#### 🧠 Gestión de Memoria
+- ✅ **0 memory leaks en 66 tests** 🎉
+- ✅ `free_tokens()` funciona correctamente
+- ✅ `free_cmd()` libera lista enlazada completa
+- ✅ `free_data()` limpia toda la estructura
+- ✅ Valgrind reports clean en todos los tests
 
-- Tokenización (WORD, STRING, SIMPLE_Q, ARGS, PIPE, REDIR_*)
-
-- Comillas simples y dobles- ✅ Manejo de comillas simples y dobles**Archivos a crear/modificar:**
-
-- Expansión de variables ($VAR, $?, $$, ${VAR})
-
-- Comillas simples NO expanden variables- ✅ Expansión de variables ($VAR, $?, $$, ${VAR})- `src/parser/syntax_validator.c` (nuevo)
-
-- Input multilinea para comillas sin cerrar
-
-- Detección de redirecciones (<, >, <<, >>)- ✅ Respeto de comillas simples (no expanden variables)- `src/parser/lexer.c` (modificar)
-
-- Detección de pipes (solo flag, sin lista)
-
-- Identificación de builtins- ✅ Detección de comillas sin cerrar + multilinea
-
-- Gestión de memoria básica
-
-- ✅ Detección de redirecciones básicas (<, >, <<, >>)**Casos a validar:**
-
-### ⚠️ Incompleto
-
-- **Pipes:** Flag activado pero sin lista enlazada de comandos- ✅ Detección de pipes (flag activado)```bash
-
-- **Redirecciones:** Detectadas pero no aplicadas en ejecución
-
-- **Heredocs:** Token creado pero sin lectura de contenido- ✅ Creación de estructura t_cmd única# Pipes mal ubicadas
-
-
-
-### ❌ Pendiente- ✅ Identificación de builtins|                 # Error: pipe al inicio
-
-- Validación de sintaxis
-
-- Lista enlazada de comandos (cmd1 -> cmd2 -> cmd3)- ✅ Gestión de memoria (free_tokens, free_cmd, free_data)ls |              # Error: pipe al final (sin comando después)
-
-- Executor de pipelines con fork/pipe/dup2
-
-- Lectura funcional de heredocsls | | cat        # Error: pipes consecutivas
-
-- Aplicación completa de redirecciones
+#### 📝 Documentación y Testing
+- ✅ `PIPES_IMPLEMENTATION.md` - Guía completa de implementación
+- ✅ `ECHO_TEST_REPORT.md` - 23 tests analizados
+- ✅ `EXPORT_TEST_REPORT.md` - 20 tests con soluciones
+- ✅ `CD_TEST_REPORT.md` - 8 tests detallados
+- ✅ `OTHER_BUILTINS_TEST_REPORT.md` - ENV, PWD, UNSET, EXIT
+- ✅ `BUILTINS_TEST_REPORT.md` - Resumen general
+- ✅ Scripts de test automatizados:
+  - `test_echo_simple.sh`
+  - `test_export.sh`
+  - `test_cd.sh`
+  - `test_builtins.sh`
 
 ### ⚠️ PARCIALMENTE IMPLEMENTADO
 
----
+- ⚠️ **Redirecciones**: Detectadas pero no aplicadas en ejecución
+- ⚠️ **Heredocs**: Token HEREDOC creado pero sin lectura de contenido
+- ⚠️ **Execution de pipes**: Parsing completo pero executor no implementado
 
-- ⚠️ Redirecciones: Detectadas pero no aplicadas completamente# Redirecciones mal formadas
+### ❌ NO IMPLEMENTADO
 
-## 🎯 TAREAS PRIORITARIAS
-
-- ⚠️ Heredocs: Token HEREDOC creado pero sin lectura de contenidols >              # Error: redirección sin archivo
-
-### 1️⃣ Validación de Sintaxis (2-3 horas) 🔴 CRÍTICO
-
-- ⚠️ Pipes: Flag activado pero sin lista enlazada de comandoscat < >           # Error: redirección sin archivo
-
-**¿Por qué primero?** Evita crashes y comportamientos inesperados
-
-ls > > file       # Error: redirecciones consecutivas
-
-**Archivos:**
-
-- 📝 `src/parser/syntax_validator.c` (CREAR)### ❌ NO IMPLEMENTADOls > | cat        # Error: redirección seguida de pipe
-
-- ✏️ `src/parser/lexer.c` (MODIFICAR)
-
-- ✏️ `src/minishell.h` (AÑADIR prototipos)- ❌ Validación de sintaxis
-
-
-
-**Errores a detectar:**- ❌ Lista enlazada de comandos para pipes# Heredoc incompleto
-
-
-
-| Caso | Error |- ❌ Ejecución de pipelinescat <<            # Error: heredoc sin delimitador
-
-|------|-------|
-
-| `\|` | Pipe al inicio (sin comando antes) |- ❌ Lectura funcional de heredocscat << EOF        # Error: heredoc sin cerrar (debe terminar con EOF)
-
-| `ls \|` | Pipe al final (sin comando después) |
-
-| `ls \| \| cat` | Pipes consecutivas |- ❌ Wildcards (bonus)
-
-| `ls >` | Redirección sin archivo |
-
-| `cat < >` | Redirección sin archivo entre operadores |- ❌ Operadores lógicos && y || (bonus)# Comillas sin cerrar (ya lo tienes pero verificar)
-
-| `cat <<` | Heredoc sin delimitador |
-
-| `> file` | Comienza con redirección |echo "hello       # Ya manejado con multilinea
+- ❌ **Validación de sintaxis** (pipes al inicio/final, redirs mal formadas)
+- ❌ **Executor de pipelines** (fork/pipe/dup2)
+- ❌ **Lectura funcional de heredocs**
+- ❌ **Aplicación completa de redirecciones**
+- ❌ **Wildcards** (bonus)
+- ❌ **Operadores lógicos && y ||** (bonus)
 
 
 
