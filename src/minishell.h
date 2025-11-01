@@ -107,6 +107,8 @@ int				ft_word_length(char *line, int i);
 //--PIPES--
 int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
 int				process_pipes(t_data *data);
+//--CONCATENATE--
+void			concatenate_tokens(t_token **tokens);
 
 //--EXPAND VARS--
 int				is_valid_var_char(char c, int is_first);

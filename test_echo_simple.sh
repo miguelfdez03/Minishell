@@ -11,7 +11,12 @@ test_cmd() {
     local cmd="$2"
     
     bash_out=$(echo "$cmd" | bash 2>&1)
-    mini_out=$(echo "$cmd" | ./minishell 2>&1 | grep -v "spidershell>" | grep -v "^exit$" | grep -v "^$")
+    # Ejecutar comando y capturar output entre prompts
+    mini_full=$(echo -e "$cmd\nexit" | ./minishell 2>&1)
+    # Eliminar primera línea (primer prompt con comando)
+    # Luego eliminar todo desde el segundo "spidershell>" hasta el final
+    # Finalmente eliminar "exit" si aparece solo
+    mini_out=$(echo "$mini_full" | tail -n +2 | sed 's/spidershell>.*//g' | sed '/^exit$/d' | sed '/^$/d')
     
     if [ "$bash_out" = "$mini_out" ]; then
         result="✅ PASS"

@@ -33,6 +33,7 @@ SRCS = src/main.c \
 		src/builtins/builtin_cd.c\
 		src/builtins/builtin_export.c\
 		src/pipes/pipes.c\
+		src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
 

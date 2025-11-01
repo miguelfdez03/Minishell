@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/31 23:52:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:17:11 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	check_and_exp(t_data **data)
 	if (!(*data)->tokens)
 		return (EXIT_FAILURE);
 	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
+	concatenate_tokens(&(*data)->tokens);
 	tmp = (*data)->tokens;
 	if (init_first_cmd(data, &tmp) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -89,7 +90,7 @@ static int	handle_words_and_args(char *line, int i, t_data **data,
 {
 	int	result;
 
-	if (ft_isalpha(line[i]) == 1 || line[i] == '$'
+	if (ft_isalnum(line[i]) == 1 || line[i] == '$'
 		|| line[i] == '.' || line[i] == '/')
 	{
 		result = handle_words(line, i, data);
