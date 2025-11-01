@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 19:57:20 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 15:51:10 by lruiz-to         ###   ########.fr       */
+/*   Created: 2025/11/01 15:54:19 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/11/01 15:54:42 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	free_tokens(t_token *tokens)
 {
-	t_env	*env_t;
-	t_data	*data;
+	t_token	*tmp;
 
-	if (init_data(&data, env, env_t) == -1)
+	while (tokens)
 	{
-		ft_printf("Error: Failed to initialize data\n");
-		return (-1);
+		tmp = tokens->next;
+		if (tokens->value)
+			free(tokens->value);
+		free(tokens);
+		tokens = tmp;
 	}
-	main_loop(argc, argv, &data);
-	free_data(data);
-	return (0);
 }

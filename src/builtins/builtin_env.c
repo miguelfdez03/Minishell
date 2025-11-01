@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/15 13:22:36 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:54:54 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	builtin_env(t_data *data)
 		ft_putendl_fd("env: environment not initialized", 2);
 		return (1);
 	}
-
 	current = data->env;
 	while (current)
 	{

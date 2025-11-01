@@ -42,7 +42,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-	int				space; //is there is space before, it needs to print it 0 = no space || 1 = space
+	int				space;
 	struct s_token	*next;
 }	t_token;
 
