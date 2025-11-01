@@ -6,11 +6,11 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/31 18:36:19 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:04:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 // Initialize a command structure with default values
 void	init_cmd(t_cmd *cmd)
@@ -109,39 +109,6 @@ void	add_cmd_arg(t_cmd *cmd, char *arg)
 	new_args[i] = ft_strdup(arg);
 	new_args[i + 1] = NULL;
 	cmd->args = new_args;
-}
-
-static void	free_cmd_content(t_cmd *cmd)
-{
-	int	i;
-
-	if (cmd->name)
-		free(cmd->name);
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
-	if (cmd->redirections)
-		free_redirs(cmd->redirections);
-}
-
-void	free_cmd(t_cmd *cmd)
-{
-	t_cmd	*next;
-
-	while (cmd)
-	{
-		next = cmd->next;
-		free_cmd_content(cmd);
-		free(cmd);
-		cmd = next;
-	}
 }
 
 static void	print_cmd_args(t_cmd *cmd)

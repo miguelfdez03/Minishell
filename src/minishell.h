@@ -132,7 +132,7 @@ void			add_cmd_arg(t_cmd *cmd, char *arg);
 void			free_cmd(t_cmd *cmd);
 void			print_cmd_list(t_cmd *cmd);
 t_cmd			*tokens_to_cmd(t_token *tokens);
-
+int				init_first_cmd(t_data **data, t_token **tmp);
 //--REDIR UTILS--
 t_redir			*create_redir(t_token_type type, char *file);
 void			add_redir(t_redir **redir, t_token_type type, char *value);
@@ -166,7 +166,8 @@ int				check_for_closed(char *line, int i, char quote);
 char			check_unclosed_quotes(char *line);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
-
+int				handle_quotes_and_symbols(char *line, int i, t_data **data,
+	int has_space);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);

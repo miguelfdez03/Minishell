@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 15:54:19 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 15:54:42 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:03:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,38 @@ void	free_tokens(t_token *tokens)
 			free(tokens->value);
 		free(tokens);
 		tokens = tmp;
+	}
+}
+
+static void	free_cmd_content(t_cmd *cmd)
+{
+	int	i;
+
+	if (cmd->name)
+		free(cmd->name);
+	if (cmd->args)
+	{
+		i = 0;
+		while (cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+	}
+	if (cmd->redirections)
+		free_redirs(cmd->redirections);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	t_cmd	*next;
+
+	while (cmd)
+	{
+		next = cmd->next;
+		free_cmd_content(cmd);
+		free(cmd);
+		cmd = next;
 	}
 }
