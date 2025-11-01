@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:23:51 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 15:24:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 17:30:03 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	concatenate_tokens(t_token **tokens)
 	current = prev->next;
 	while (current)
 	{
-		if (current->space == 0 && should_concatenate(prev)
-			&& should_concatenate(current))
+		if (current->space == 0 && should_concatenate(prev) == 1
+			&& should_concatenate(current) == 1)
 		{
 			prev->value = join_free(prev->value, current->value);
 			temp = current->next;

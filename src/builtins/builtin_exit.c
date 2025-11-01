@@ -6,31 +6,12 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/24 19:26:21 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:43:34 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_exit_args(t_cmd *cmd);
-static int	is_numeric_argument(const char *arg);
-
-int	builtin_exit(t_data *data)
-{
-	t_cmd	*cmd;
-	int		exit_status;
-
-	cmd = data->cmd;
-	ft_putendl_fd("exit", 2);
-	exit_status = check_exit_args(cmd);
-	if (exit_status == -1)
-	{
-		ft_putendl_fd("exit: too many arguments", 2);
-		return (1);
-	}
-	free_data(data);
-	exit(exit_status);
-}
 
 static int	is_numeric_argument(const char *arg)
 {
@@ -68,4 +49,21 @@ static int	check_exit_args(t_cmd *cmd)
 		return (2);
 	}
 	return (ft_atoi(cmd->args[0]) & 255);
+}
+
+int	builtin_exit(t_data *data)
+{
+	t_cmd	*cmd;
+	int		exit_status;
+
+	cmd = data->cmd;
+	ft_putendl_fd("exit", 2);
+	exit_status = check_exit_args(cmd);
+	if (exit_status == -1)
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		return (1);
+	}
+	free_data(data);
+	exit(exit_status);
 }

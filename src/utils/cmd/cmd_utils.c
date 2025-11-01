@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:04:28 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/01 16:04:22 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:27:14 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_builtin_type	identify_builtin(char *cmd)
 	return (BUILTIN_NONE);
 }
 
-//TODO Change this function to work with t_cmd
 // Crear nueva estructura de comando
 int	create_cmd(char *cmd_name, t_cmd *cmd)
 {
@@ -109,43 +108,4 @@ void	add_cmd_arg(t_cmd *cmd, char *arg)
 	new_args[i] = ft_strdup(arg);
 	new_args[i + 1] = NULL;
 	cmd->args = new_args;
-}
-
-static void	print_cmd_args(t_cmd *cmd)
-{
-	int	i;
-
-	if (cmd->args)
-	{
-		ft_printf("   Args: ");
-		i = 0;
-		while (cmd->args[i])
-		{
-			ft_printf("[%s] ", cmd->args[i]);
-			i++;
-		}
-		ft_printf("\n");
-	}
-}
-
-void	print_cmd_list(t_cmd *cmd)
-{
-	int	num;
-
-	num = 1;
-	ft_printf("\n=== LISTA DE COMANDOS ===\n");
-	while (cmd)
-	{
-		ft_printf("\n🔹 CMD %d: %s\n", num, cmd->name);
-		print_cmd_args(cmd);
-		if (cmd->redirections)
-			ft_printf("   ⚠️  Tiene redirecciones\n");
-		if (cmd->next)
-			ft_printf("   ➡️  Siguiente comando\n");
-		else
-			ft_printf("   🏁 Último comando\n");
-		cmd = cmd->next;
-		num++;
-	}
-	ft_printf("=========================\n\n");
 }
