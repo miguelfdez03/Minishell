@@ -6,30 +6,27 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 20:50:32 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:14:58 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	builtin_cd(t_data *data)
+static int	handle_cd_error(t_data *data, char *path)
 {
-	char	*path;
+	if (data->cmd->args && data->cmd->args[0]
+		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+	else
+		ft_putendl_fd("cd: HOME not set", 2);
+	return (1);
+}
+
+static int	execute_cd(t_data *data, char *path)
+{
 	char	*oldpwd;
 	char	*newpwd;
 
-	if (!data || !data->cmd)
-		return (1);
-	path = get_cd_path(data->cmd, data->env);
-	if (!path)
-	{
-		if (data->cmd->args && data->cmd->args[0]
-			&& ft_strcmp2(data->cmd->args[0], "-") == 0)
-			ft_putendl_fd("cd: OLDPWD not set", 2);
-		else
-			ft_putendl_fd("cd: HOME not set", 2);
-		return (1);
-	}
 	if (data->cmd->args && data->cmd->args[0]
 		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
 		ft_putendl_fd(path, 1);
@@ -44,4 +41,16 @@ int	builtin_cd(t_data *data)
 	newpwd = getcwd(NULL, 0);
 	update_env_pwd(data, oldpwd, newpwd);
 	return (0);
+}
+
+int	builtin_cd(t_data *data)
+{
+	char	*path;
+
+	if (!data || !data->cmd)
+		return (1);
+	path = get_cd_path(data->cmd, data->env);
+	if (!path)
+		return (handle_cd_error(data, path));
+	return (execute_cd(data, path));
 }

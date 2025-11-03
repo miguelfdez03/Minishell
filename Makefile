@@ -8,6 +8,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 SRCS = src/main.c \
 	src/executor/path_utils.c\
 	src/executor/executor.c\
+	src/executor/executor_utils.c\
 		src/parser/checker.c\
 		src/parser/lexer.c\
 		src/parser/handler_args.c\
