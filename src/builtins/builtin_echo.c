@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 22:54:54 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:56:16 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	print_tokens_echo(t_token *tok, int *first)
 {
 	while (tok && tok->type != PIPE)
 	{
-		if (tok->type == WORD || tok->type == STRING
 		if (tok->type == WORD || tok->type == STRING
 			|| tok->type == ARGS || tok->type == SIMPLE_Q)
 		{
