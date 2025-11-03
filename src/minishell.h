@@ -192,7 +192,12 @@ void			set_env_new_node(t_env **env_head, char *dup_key,
 void			unset_env_var(t_env **env_head, const char *key);
 int				execute_external_command(t_data *data);
 
-//--PATH UTILS--
+int				count_env_vars(t_env *env);
+char			**env_list_to_array(t_env *env);
+char			**build_args_array(t_cmd *cmd);
+char			*check_absolute_path(char *cmd);
+char			*find_cmd_in_path(char *cmd, t_env *env);
+
 char			*find_command_path(char *cmd, char **envp);
 char			*search_in_path_dirs(char *path_copy, char *cmd);
 char			*get_env_value(char *var_name, char **envp);

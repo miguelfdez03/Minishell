@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/01 18:43:34 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:12:49 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static int	is_numeric_argument(const char *arg)
 {

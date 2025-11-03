@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 20:30:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/22 22:02:42 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:13:20 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	export_without_args(t_env *env)
 		if (current->key)
 		{
 			if (current->value)
-				ft_printf("declare -x %s=\"%s\"\n", current->key, current->value);
+				ft_printf("declare -x %s=\"%s\"\n",
+					current->key, current->value);
 			else
 				ft_printf("declare -x %s\n", current->key);
 		}
