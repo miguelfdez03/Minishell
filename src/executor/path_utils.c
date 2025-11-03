@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/02 12:07:14 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:02:06 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,18 @@ char	*find_command_path(char *cmd, char **envp)
 {
 	char	*path_env;
 	char	*path_copy;
-	char	*dir;
-	char	*full_path;
 
-	ft_printf("🔍 Searching for command: %s\n", cmd);
 	// Si el comando ya es una ruta absoluta o relativa
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 	{
 		if (access(cmd, X_OK) == 0)
-		{
-			ft_printf("✅ Command is already a full path: %s\n", cmd);
 			return (ft_strdup(cmd));
-		}
-		ft_printf("❌ Path not executable: %s\n", cmd);
 		return (NULL);
 	}
 	// Buscar PATH en las variables de entorno
 	path_env = get_env_value("PATH", envp);
 	if (!path_env)
-	{
-		ft_printf("❌ PATH not found in environment\n");
 		return (NULL);
-	}
-	ft_printf("🕸️ PATH found\n"); // Simplificado para evitar problemas con %.50s
 	path_copy = ft_strdup(path_env);
 	if (!path_copy)
 		return (NULL);
@@ -64,7 +53,6 @@ char	*search_in_path_dirs(char *path_copy, char *cmd)
 		full_path = build_full_path(path_dirs[i], cmd);
 		if (full_path && access(full_path, X_OK) == 0)
 		{
-			ft_printf("✅ Found command at: %s\n", full_path);
 			free_string_array(path_dirs);
 			return (full_path);
 		}
@@ -73,7 +61,6 @@ char	*search_in_path_dirs(char *path_copy, char *cmd)
 		i++;
 	}
 	free_string_array(path_dirs);
-	ft_printf("❌ Command not found in PATH: %s\n", cmd);
 	return (NULL);
 }
 
