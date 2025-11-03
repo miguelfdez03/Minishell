@@ -167,7 +167,7 @@ char			check_unclosed_quotes(char *line);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
 int				handle_quotes_and_symbols(char *line, int i, t_data **data,
-	int has_space);
+					int has_space);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
