@@ -148,6 +148,7 @@ int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
 int				builtin_export(t_data *data);
+int				builtin_unset(t_data *data);
 
 //--CD UTILS--
 int				count_args(char **args);
@@ -188,6 +189,7 @@ void			init_first_env_node(t_env **env_head, char *dup_key,
 void			add_env_node(t_env *last, char *dup_key, char *dup_val);
 void			set_env_new_node(t_env **env_head, char *dup_key,
 					char *dup_val);
+void			unset_env_var(t_env **env_head, const char *key);
 
 //--TEST EXECUTOR--
 int				test_simple_command(char *cmd_path, char **args);

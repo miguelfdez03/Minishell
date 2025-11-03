@@ -34,6 +34,7 @@ SRCS = src/main.c \
 		src/builtins/builtin_echo.c\
 		src/builtins/builtin_cd.c\
 		src/builtins/builtin_export.c\
+		src/builtins/builtin_unset.c\
 		src/pipes/pipes.c\
 		src/concatenate/concatenate.c\
 

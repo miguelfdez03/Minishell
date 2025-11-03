@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:17 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/01 15:54:54 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:36:04 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	builtin_env(t_data *data)
 	if (!data || !data->env)
 	{
 		ft_putendl_fd("env: environment not initialized", 2);
+		return (1);
+	}
+	if (data->cmd && data->cmd->args && data->cmd->args[0])
+	{
+		ft_putendl_fd("env: too many arguments", 2);
 		return (1);
 	}
 	current = data->env;
