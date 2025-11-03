@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/25 23:45:15 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:40:08 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtin_cd(t_data *data)
 	}
 	newpwd = getcwd(NULL, 0);
 	update_env_pwd(data, oldpwd, newpwd);
-	if (data->cmd->args && data->cmd->args[0] 
+	if (data->cmd->args && data->cmd->args[0]
 		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
 		ft_putendl_fd(get_env_value_from_list(data->env, "PWD"), 1);
 	return (0);
