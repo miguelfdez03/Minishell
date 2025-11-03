@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 18:49:06 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:02:06 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
+	int		exit_status;
 
 	cmd = data->cmd;
 	if (cmd->builtin_id == BUILTIN_NONE)
-		printf("external command \n");
+	{
+		exit_status = execute_external_command(data);
+		data->exit_status = exit_status;
+		return (exit_status);
+	}
 	else
-		execute_builtin_by_id(data);
-	return (0);
+	{
+		exit_status = execute_builtin_by_id(data);
+		data->exit_status = exit_status;
+		return (exit_status);
+	}
 }
 
 static int	handle_basic_builtins(t_data *data)
