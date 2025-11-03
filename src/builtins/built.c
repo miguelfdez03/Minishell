@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/22 17:58:36 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:49:06 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	handle_env_builtins(t_data *data)
 	if (type == BUILTIN_EXPORT)
 		return (builtin_export(data));
 	if (type == BUILTIN_UNSET)
-		return (printf("\nbuiltin unset\n"), 0);
+		return (builtin_unset(data));
 	return (-1);
 }
 

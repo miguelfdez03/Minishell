@@ -31,7 +31,7 @@ test_export() {
     
     # Minishell
     echo -e "${GREEN}MINISHELL:${NC}"
-    mini_output=$(echo -e "$cmd\nexport\nexit" | ./minishell 2>&1 | grep -v "spidershell>" | grep -v "^exit$" | grep -E '(^a=|^b=|^c=|^USER=|^HOME=)' | sort)
+    mini_output=$(echo -e "$cmd\nexport\nexit" | ./minishell 2>&1 | grep -v "spidershell>" | grep -v "^exit$" | grep -E '(^declare -x a=|^declare -x b=|^declare -x c=|^declare -x USER=|^declare -x HOME=)' | sort)
     echo "$mini_output"
     
     # Comparar (aproximado, solo verificar que las variables se setean)
