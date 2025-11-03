@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 16:01:32 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:29:41 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ static int	check_and_exp(t_data **data)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
-}
-
-static int	had_space_before(char *line, int i)
-{
-	if (i == 0)
-		return (0);
-	if (i > 0 && is_space(line[i - 1]) == EXIT_SUCCESS)
-		return (1);
-	return (0);
 }
 
 static int	handle_words_and_args(char *line, int i, t_data **data,

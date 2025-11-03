@@ -167,6 +167,7 @@ int				check_for_closed(char *line, int i, char quote);
 char			check_unclosed_quotes(char *line);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
+int				had_space_before(char *line, int i);
 int				handle_quotes_and_symbols(char *line, int i, t_data **data,
 					int has_space);
 //--MINI_INIT--
