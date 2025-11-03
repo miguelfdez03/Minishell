@@ -6,12 +6,11 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/31 23:20:51 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:19:59 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static int	is_valid_n_flag(char *arg)
 {
@@ -35,7 +34,7 @@ static void	print_tokens_echo(t_token *tok, int *first)
 {
 	while (tok && tok->type != PIPE)
 	{
-		if (tok->type == WORD || tok->type == STRING 
+		if (tok->type == WORD || tok->type == STRING
 			|| tok->type == ARGS || tok->type == SIMPLE_Q)
 		{
 			if (!(*first) && tok->space)
