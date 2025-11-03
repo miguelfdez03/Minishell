@@ -189,10 +189,7 @@ void			add_env_node(t_env *last, char *dup_key, char *dup_val);
 void			set_env_new_node(t_env **env_head, char *dup_key,
 					char *dup_val);
 void			unset_env_var(t_env **env_head, const char *key);
-
-//--TEST EXECUTOR--
-int				test_simple_command(char *cmd_path, char **args);
-int				test_simple_command_with_path(char *cmd, char **args);
+int				execute_external_command(t_data *data);
 
 //--PATH UTILS--
 char			*find_command_path(char *cmd, char **envp);
