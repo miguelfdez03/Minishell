@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 22:12:49 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:14:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,14 @@ static int	is_numeric_argument(const char *arg)
 	int	i;
 
 	i = 0;
+	if (!arg || !arg[0])
+		return (0);
 	if (arg[0] == '-' || arg[0] == '+')
+	{
 		i = 1;
+		if (!arg[i])
+			return (0);
+	}
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -44,7 +50,9 @@ static int	check_exit_args(t_cmd *cmd)
 		return (0);
 	if (!is_numeric_argument(cmd->args[0]))
 	{
-		ft_printf("exit: %s: numeric argument required\n", cmd->args[0]);
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": numeric argument required", 2);
 		return (2);
 	}
 	return (ft_atoi(cmd->args[0]) & 255);

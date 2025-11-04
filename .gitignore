@@ -23,4 +23,7 @@ minishell
 ehthumbs.db
 Thumbs.db
 
+# Minishell tester
+minishell-tester/
+
 tester_mini/

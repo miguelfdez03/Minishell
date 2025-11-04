@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/04 16:04:40 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:39:55 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	builtin_cd(t_data *data)
 
 	if (!data || !data->cmd)
 		return (1);
+	if (count_args(data->cmd->args) > 1)
+	{
+		ft_putendl_fd("cd: too many arguments", 2);
+		return (1);
+	}
 	path = get_cd_path(data->cmd, data->env);
 	if (!path)
 		return (handle_cd_error(data, path));

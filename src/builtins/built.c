@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 20:02:06 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:14:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,9 @@ int	execute_builtin_by_id(t_data *data)
 
 int	builtin_pwd(t_data *data)
 {
-	t_cmd	*cmd;
 	char	*pwd;
 
-	cmd = data->cmd;
-	if (cmd->args && cmd->args[0])
-	{
-		ft_putendl_fd("pwd: too many arguments", 2);
-		return (1);
-	}
+	(void)data;
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
