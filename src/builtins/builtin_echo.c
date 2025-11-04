@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:51:49 by miguel-f          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/03 22:56:16 by miguel-f         ###   ########.fr       */
-=======
-/*   Updated: 2025/11/03 22:13:45 by miguel-f         ###   ########.fr       */
->>>>>>> origin/executor
+/*   Updated: 2025/11/04 16:04:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
