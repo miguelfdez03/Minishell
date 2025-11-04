@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:01:15 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/04 16:02:47 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:09:17 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,3 @@ int	init_first_cmd(t_data **data, t_token **tmp)
 	}
 	return (EXIT_SUCCESS);
 }
-
