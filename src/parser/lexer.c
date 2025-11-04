@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/04 18:30:42 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:33:50 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ static int	handle_words_and_args(char *line, int i, t_data **data,
 {
 	int	result;
 
+	if (line[i] == '=' && (is_space(line[i + 1]) == EXIT_SUCCESS
+			|| line[i + 1] == '\0'))
+	{
+		add_to_token(&((*data)->tokens), WORD, ft_strdup("="));
+		set_token_space((*data)->tokens, has_space);
+		return (i + 1);
+	}
 	if (ft_isalnum(line[i]) == 1 || line[i] == '$'
 		|| line[i] == '.' || line[i] == '/')
 	{
