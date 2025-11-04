@@ -11,6 +11,7 @@ SRCS = src/main.c \
 	src/executor/executor_utils.c\
 		src/parser/checker.c\
 		src/parser/lexer.c\
+		src/parser/lexer_utils.c\
 		src/parser/handler_args.c\
 		src/parser/handle_quotes.c\
 		src/utils/utils.c\
@@ -37,6 +38,7 @@ SRCS = src/main.c \
 		src/builtins/builtin_export.c\
 		src/builtins/builtin_unset.c\
 		src/pipes/pipes.c\
+		src/pipes/pipes_utils.c\
 		src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
