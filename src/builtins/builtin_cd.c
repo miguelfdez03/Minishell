@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 22:54:37 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:13:43 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	builtin_cd(t_data *data)
 
 	if (!data || !data->cmd)
 		return (1);
+	if (count_args(data->cmd->args) > 1)
+	{
+		ft_putendl_fd("cd: too many arguments", 2);
+		return (1);
+	}
 	path = get_cd_path(data->cmd, data->env);
 	if (!path)
 		return (handle_cd_error(data, path));

@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/03 22:55:20 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:14:50 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,3 @@ int	handle_quotes_and_symbols(char *line, int i, t_data **data,
 	}
 	return (-1);
 }
-

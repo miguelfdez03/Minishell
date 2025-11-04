@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 17:11:51 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/03 22:55:31 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:15:40 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ int	check_syntax(t_data **data)
 	if (tokens->type == PIPE)
 		return (EXIT_FAILURE);
 }
-

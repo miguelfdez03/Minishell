@@ -1,0 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/04 22:50:00 by miguel-f          #+#    #+#             */
+/*   Updated: 2025/11/04 22:50:25 by miguel-f         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	process_first_cmd_args(t_token **tmp, t_data **data)
+{
+	while (*tmp && (*tmp)->type != PIPE)
+	{
+		if ((*tmp)->value && ((*tmp)->type == WORD || (*tmp)->type == STRING
+				|| (*tmp)->type == ARGS || (*tmp)->type == SIMPLE_Q))
+			add_cmd_arg((*data)->cmd, (*tmp)->value);
+		*tmp = (*tmp)->next;
+	}
+}
+
+int	check_and_exp(t_data **data)
+{
+	t_token	*tmp;
+
+	if (!(*data)->tokens)
+		return (EXIT_FAILURE);
+	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
+	concatenate_tokens(&(*data)->tokens);
+	tmp = (*data)->tokens;
+	if (init_first_cmd(data, &tmp) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	process_first_cmd_args(&tmp, data);
+	if (tmp && tmp->type == PIPE)
+	{
+		if (process_pipes(*data) == -1)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}

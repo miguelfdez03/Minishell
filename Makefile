@@ -11,6 +11,7 @@ SRCS = src/main.c \
 	src/executor/executor_utils.c\
 		src/parser/checker.c\
 		src/parser/lexer.c\
+		src/parser/lexer_utils.c\
 		src/parser/handler_args.c\
 		src/parser/handle_quotes.c\
 		src/utils/utils.c\
@@ -37,6 +38,7 @@ SRCS = src/main.c \
 		src/builtins/builtin_export.c\
 		src/builtins/builtin_unset.c\
 		src/pipes/pipes.c\
+		src/pipes/pipes_utils.c\
 		src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
@@ -152,18 +154,18 @@ head:
 	@sleep 0.3
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -s -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@$(MAKE) -s -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) -s -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
