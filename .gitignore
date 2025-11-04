@@ -25,5 +25,6 @@ Thumbs.db
 
 # Minishell tester
 minishell-tester/
+minishell_tester/
 
 tester_mini/
