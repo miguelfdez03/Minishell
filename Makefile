@@ -152,18 +152,18 @@ head:
 	@sleep 0.3
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -s -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@$(MAKE) -s -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) -s -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
