@@ -24,7 +24,7 @@ ehthumbs.db
 Thumbs.db
 
 # Minishell tester
-minishell-tester/
 minishell_tester/
+minishell-tester/
 
 tester_mini/
