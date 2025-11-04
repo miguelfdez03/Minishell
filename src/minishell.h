@@ -107,6 +107,9 @@ int				ft_word_length(char *line, int i);
 //--PIPES--
 int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
 int				process_pipes(t_data *data);
+int				execute_pipeline(t_data *data);
+int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
+					int output_fd);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
@@ -161,6 +164,8 @@ int				is_valid_identifier(char *name);
 void			parse_export_arg(char *arg, char **key, char **value);
 //--LEXER--
 int				lexer(char *line, t_data **data);
+void			process_first_cmd_args(t_token **tmp, t_data **data);
+int				check_and_exp(t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
 int				handle_args(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);

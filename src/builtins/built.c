@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/04 18:14:12 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 21:55:25 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	execute_command(t_data *data)
 	int		exit_status;
 
 	cmd = data->cmd;
+	if (cmd->next)
+		return (execute_pipeline(data));
 	if (cmd->builtin_id == BUILTIN_NONE)
 	{
 		exit_status = execute_external_command(data);

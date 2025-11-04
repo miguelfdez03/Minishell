@@ -6,73 +6,45 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/04 22:59:49 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:00:34 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	process_first_cmd_args(t_token **tmp, t_data **data)
+static int	had_space_before(char *line, int i)
 {
-	while (*tmp && (*tmp)->type != PIPE)
-	{
-		if ((*tmp)->value && ((*tmp)->type == WORD || (*tmp)->type == STRING
-				|| (*tmp)->type == ARGS || (*tmp)->type == SIMPLE_Q))
-			add_cmd_arg((*data)->cmd, (*tmp)->value);
-		*tmp = (*tmp)->next;
-	}
-}
-
-static int	check_and_exp(t_data **data)
-{
-	t_token	*tmp;
-
-	if (!(*data)->tokens)
-		return (EXIT_FAILURE);
-	expand_variables((*data)->tokens, (*data)->env, (*data)->exit_status);
-	concatenate_tokens(&(*data)->tokens);
-	tmp = (*data)->tokens;
-	if (init_first_cmd(data, &tmp) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	process_first_cmd_args(&tmp, data);
-	if (tmp && tmp->type == PIPE)
-	{
-		if (process_pipes(*data) == -1)
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	if (i == 0)
+		return (0);
+	if (i > 0 && is_space(line[i - 1]) == EXIT_SUCCESS)
+		return (1);
+	return (0);
 }
 
 static int	handle_words_and_args(char *line, int i, t_data **data,
-	int has_space)
+		int has_space)
 {
 	int	result;
 
-	if (line[i] == '=' && (is_space(line[i + 1]) == EXIT_SUCCESS
-			|| line[i + 1] == '\0'))
+	if (line[i] == '=' && (is_space(line[i + 1]) == EXIT_SUCCESS || line[i
+				+ 1] == '\0'))
 	{
 		add_to_token(&((*data)->tokens), WORD, ft_strdup("="));
 		set_token_space((*data)->tokens, has_space);
 		return (i + 1);
 	}
-	if (ft_isalnum(line[i]) == 1 || line[i] == '$'
-		|| line[i] == '.' || line[i] == '/')
-	{
-		result = handle_words(line, i, data);
-		if (result > i)
-			set_token_space((*data)->tokens, has_space);
-		return (result);
-	}
-	else if (line[i] == '-' || (line[i] == '+' 
-		&& (ft_isdigit(line[i + 1]) || line[i + 1] == '"' 
-		|| line[i + 1] == '\'')))
+	if (line[i] == '-' || (line[i] == '+' && (ft_isdigit(line[i + 1]) || line[i
+					+ 1] == '"' || line[i + 1] == '\'')))
 	{
 		result = handle_args(line, i + 1, data);
 		if (result > i)
 			set_token_space((*data)->tokens, has_space);
 		return (result);
 	}
-	return (-1);
+	result = handle_words(line, i, data);
+	if (result > i)
+		set_token_space((*data)->tokens, has_space);
+	return (result);
 }
 
 static int	handle_lexer_char(char *line, int i, t_data **data)
