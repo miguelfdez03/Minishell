@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 16:01:32 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:30:42 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ static int	handle_words_and_args(char *line, int i, t_data **data,
 			set_token_space((*data)->tokens, has_space);
 		return (result);
 	}
-	else if (line[i] == '-')
+	else if (line[i] == '-' || (line[i] == '+' 
+		&& (ft_isdigit(line[i + 1]) || line[i + 1] == '"' 
+		|| line[i + 1] == '\'')))
 	{
 		result = handle_args(line, i + 1, data);
 		if (result > i)

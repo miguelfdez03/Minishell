@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 20:30:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/03 22:13:20 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:14:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ static int	process_export_arg(t_data *data, char *arg)
 	char	*value;
 	int		status;
 
+	if (!arg || arg[0] == '=')
+	{
+		ft_putstr_fd("export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return (1);
+	}
 	parse_export_arg(arg, &key, &value);
 	if (!key)
 		return (1);
