@@ -22,8 +22,7 @@ minishell
 .Trashes
 ehthumbs.db
 Thumbs.db
+
 # Minishell tester
 minishell_tester/
-minishell-tester/
-
 tester_mini/
