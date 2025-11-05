@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/24 19:21:58 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:23:20 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,42 @@ char	*get_env_value_2(char **env, int i)
 	return (value);
 }
 
+static void	no_env_init(t_env *env_t, int i)
+{
+	env_t->key = ft_strdup("PWD");
+	env_t->value = getcwd(NULL, 0);
+	env_t->index = i;
+	env_t->next = malloc(sizeof(t_env));
+	if (!env_t->next)
+		return ;
+	env_t = env_t->next;
+	i++;
+	env_t->key = ft_strdup("SHLVL");
+	env_t->value = ft_strdup("1");
+	env_t->index = i;
+	env_t->next = malloc(sizeof(t_env));
+	if (!env_t->next)
+		return ;
+	env_t = env_t->next;
+	i++;
+	env_t->key = ft_strdup("_");
+	env_t->value = ft_strdup("/usr/bin/env");
+	env_t->index = i;
+	i++;
+	env_t->key = ft_strdup("PATH");
+	env_t->value = ft_strdup("/bin:/usr/bin");
+	env_t->index = i;
+	env_t->next = NULL;
+}
+
 int	init_env(char **env, t_env *env_t)
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	if (!env[0])
+		no_env_init(env_t, i);
 	while (env[i])
 	{
 		env_t->key = get_env_key(env, i);

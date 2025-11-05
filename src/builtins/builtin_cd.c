@@ -3,32 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:54:11 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/25 23:45:15 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:13:43 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	builtin_cd(t_data *data)
+static int	handle_cd_error(t_data *data, char *path)
 {
-	char	*path;
+	if (data->cmd->args && data->cmd->args[0]
+		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+	else
+		ft_putendl_fd("cd: HOME not set", 2);
+	return (1);
+}
+
+static int	execute_cd(t_data *data, char *path)
+{
 	char	*oldpwd;
 	char	*newpwd;
 
-	if (!data || !data->cmd)
-		return (1);
-	path = get_cd_path(data->cmd, data->env);
-	if (!path)
-	{
-		if (!data->cmd->args || count_args(data->cmd->args) <= 1)
-			ft_putendl_fd("cd: HOME not set", 2);
-		else if (ft_strcmp2(data->cmd->args[0], "-") == 0)
-			ft_putendl_fd("cd: OLDPWD not set", 2);
-		return (1);
-	}
+	if (data->cmd->args && data->cmd->args[0]
+		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
+		ft_putendl_fd(path, 1);
 	oldpwd = getcwd(NULL, 0);
 	if (chdir(path) == -1)
 	{
@@ -39,8 +40,22 @@ int	builtin_cd(t_data *data)
 	}
 	newpwd = getcwd(NULL, 0);
 	update_env_pwd(data, oldpwd, newpwd);
-	if (data->cmd->args && data->cmd->args[0] 
-		&& ft_strcmp2(data->cmd->args[0], "-") == 0)
-		ft_putendl_fd(get_env_value_from_list(data->env, "PWD"), 1);
 	return (0);
+}
+
+int	builtin_cd(t_data *data)
+{
+	char	*path;
+
+	if (!data || !data->cmd)
+		return (1);
+	if (count_args(data->cmd->args) > 1)
+	{
+		ft_putendl_fd("cd: too many arguments", 2);
+		return (1);
+	}
+	path = get_cd_path(data->cmd, data->env);
+	if (!path)
+		return (handle_cd_error(data, path));
+	return (execute_cd(data, path));
 }

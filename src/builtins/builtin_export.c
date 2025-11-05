@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 20:30:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/22 22:02:42 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:14:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	export_without_args(t_env *env)
 		if (current->key)
 		{
 			if (current->value)
-				ft_printf("declare -x %s=\"%s\"\n", current->key, current->value);
+				ft_printf("declare -x %s=\"%s\"\n",
+					current->key, current->value);
 			else
 				ft_printf("declare -x %s\n", current->key);
 		}
@@ -52,6 +53,13 @@ static int	process_export_arg(t_data *data, char *arg)
 	char	*value;
 	int		status;
 
+	if (!arg || arg[0] == '=')
+	{
+		ft_putstr_fd("export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return (1);
+	}
 	parse_export_arg(arg, &key, &value);
 	if (!key)
 		return (1);

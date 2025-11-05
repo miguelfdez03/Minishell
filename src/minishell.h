@@ -107,6 +107,9 @@ int				ft_word_length(char *line, int i);
 //--PIPES--
 int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
 int				process_pipes(t_data *data);
+int				execute_pipeline(t_data *data);
+int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
+					int output_fd);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
@@ -148,6 +151,7 @@ int				builtin_env(t_data *data);
 int				builtin_echo(t_data *data);
 int				builtin_cd(t_data *data);
 int				builtin_export(t_data *data);
+int				builtin_unset(t_data *data);
 
 //--CD UTILS--
 int				count_args(char **args);
@@ -160,6 +164,8 @@ int				is_valid_identifier(char *name);
 void			parse_export_arg(char *arg, char **key, char **value);
 //--LEXER--
 int				lexer(char *line, t_data **data);
+void			process_first_cmd_args(t_token **tmp, t_data **data);
+int				check_and_exp(t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
 int				handle_args(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);
@@ -167,7 +173,7 @@ char			check_unclosed_quotes(char *line);
 int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
 int				handle_quotes_and_symbols(char *line, int i, t_data **data,
-	int has_space);
+					int has_space);
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);
@@ -187,12 +193,15 @@ void			init_first_env_node(t_env **env_head, char *dup_key,
 void			add_env_node(t_env *last, char *dup_key, char *dup_val);
 void			set_env_new_node(t_env **env_head, char *dup_key,
 					char *dup_val);
+void			unset_env_var(t_env **env_head, const char *key);
+int				execute_external_command(t_data *data);
 
-//--TEST EXECUTOR--
-int				test_simple_command(char *cmd_path, char **args);
-int				test_simple_command_with_path(char *cmd, char **args);
+int				count_env_vars(t_env *env);
+char			**env_list_to_array(t_env *env);
+char			**build_args_array(t_cmd *cmd);
+char			*check_absolute_path(char *cmd);
+char			*find_cmd_in_path(char *cmd, t_env *env);
 
-//--PATH UTILS--
 char			*find_command_path(char *cmd, char **envp);
 char			*search_in_path_dirs(char *path_copy, char *cmd);
 char			*get_env_value(char *var_name, char **envp);

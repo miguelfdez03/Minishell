@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/01 15:59:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:20:10 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,18 @@ int	handle_args(char *line, int i, t_data **data)
 {
 	int		last;
 	char	*str;
-
-	while (is_space(line[i]) == EXIT_SUCCESS)
-		return (-1);
-	last = ft_word_length(line, i);
+	
+	if (is_space(line[i]) == EXIT_SUCCESS)
+		last = i;
+	else
+		last = ft_word_length(line, i);
 	str = ft_substr(line, i - 1, last - i + 1);
 	if (!str)
 		return (-1);
-	add_to_token(&((*data)->tokens), ARGS, str);
+	if (last == i)
+		add_to_token(&((*data)->tokens), WORD, str);
+	else
+		add_to_token(&((*data)->tokens), ARGS, str);
 	return (last);
 }
 

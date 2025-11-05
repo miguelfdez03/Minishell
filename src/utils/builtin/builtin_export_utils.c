@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 20:30:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/28 11:15:06 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:14:12 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ void	parse_export_arg(char *arg, char **key, char **value)
 	equal_pos = ft_strchr(arg, '=');
 	if (equal_pos)
 	{
+		if (equal_pos == arg)
+		{
+			*key = ft_strdup("=");
+			*value = NULL;
+			return ;
+		}
 		*key = extract_key(arg, equal_pos);
 		*value = extract_value(equal_pos);
 	}

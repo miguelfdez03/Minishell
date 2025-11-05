@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:07:45 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/10/25 19:37:27 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/05 09:40:22 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	ft_word_length(char *line, int i)
 {
-	while ((ft_isalpha(line[i]) == 1 || line[i] == 46
-			|| line[i] == '$' || line[i] == '_' || ft_isdigit(line[i]) == 1
-			|| line[i] == '?' || line[i] == '{' || line[i] == '}'
-			|| line[i] == '/' || line[i] == '=')
-		&& is_space(line[i]) != EXIT_SUCCESS)
+	while (line[i] && is_space(line[i]) != EXIT_SUCCESS
+		&& line[i] != '|' && line[i] != '<' && line[i] != '>'
+		&& line[i] != '\'' && line[i] != '"')
 		i++;
 	return (i);
 }
