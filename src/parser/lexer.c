@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 21:28:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/05 11:00:39 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:14:34 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int	lexer(char *line, t_data **data)
 			return (EXIT_FAILURE);
 		if (i == -2)
 			break ;
+	}
+	if (!check_syntax(data))
+	{
+		(*data)->exit_status = 2;
+		return (-1);
 	}
 	check_and_exp(data);
 	return (i);

@@ -166,6 +166,7 @@ void			parse_export_arg(char *arg, char **key, char **value);
 int				lexer(char *line, t_data **data);
 void			process_first_cmd_args(t_token **tmp, t_data **data);
 int				check_and_exp(t_data **data);
+int				check_syntax(t_data **data);
 int				handle_quotes(char *line, int i, t_data **data);
 int				handle_args(char *line, int i, t_data **data);
 int				check_for_closed(char *line, int i, char quote);

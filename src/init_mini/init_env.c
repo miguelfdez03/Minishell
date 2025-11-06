@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:25 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/05 14:23:20 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:04:19 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ static void	no_env_init(t_env *env_t, int i)
 		return ;
 	env_t = env_t->next;
 	i++;
-	env_t->key = ft_strdup("_");
-	env_t->value = ft_strdup("/usr/bin/env");
-	env_t->index = i;
-	i++;
 	env_t->key = ft_strdup("PATH");
 	env_t->value = ft_strdup("/bin:/usr/bin");
+	env_t->index = i;
+	i++;
+	env_t->key = ft_strdup("_");
+	env_t->value = ft_strdup("/usr/bin/env");
 	env_t->index = i;
 	env_t->next = NULL;
 }
