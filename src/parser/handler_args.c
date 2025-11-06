@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:27:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/05 11:20:10 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:43:40 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_args(char *line, int i, t_data **data)
 {
 	int		last;
 	char	*str;
-	
+
 	if (is_space(line[i]) == EXIT_SUCCESS)
 		last = i;
 	else

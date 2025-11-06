@@ -13,7 +13,6 @@ minishell
 *.su
 *.idb
 *.pdb
-
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -22,7 +21,6 @@ minishell
 .Trashes
 ehthumbs.db
 Thumbs.db
-
 # Minishell tester
-minishell_tester/
 tester_mini/
+minishell_tester/
