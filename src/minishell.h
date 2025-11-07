@@ -112,7 +112,7 @@ int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
 					int output_fd);
 void			setup_child_fds(int input_fd, int output_fd);
 void			exec_cmd_in_child(t_data *data, t_cmd *cmd);
-void			handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
+int				handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
