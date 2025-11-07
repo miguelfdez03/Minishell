@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:06:29 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/04 23:12:39 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:20:36 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
 	int		exit_status;
+	int		saved_stdin;
+	int		saved_stdout;
 
 	cmd = data->cmd;
 	if (cmd->next)
@@ -26,12 +28,18 @@ int	execute_command(t_data *data)
 		data->exit_status = exit_status;
 		return (exit_status);
 	}
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (apply_redirections(cmd) == -1)
+		exit_status = 1;
 	else
-	{
 		exit_status = execute_builtin_by_id(data);
-		data->exit_status = exit_status;
-		return (exit_status);
-	}
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	data->exit_status = exit_status;
+	return (exit_status);
 }
 
 static int	handle_basic_builtins(t_data *data)

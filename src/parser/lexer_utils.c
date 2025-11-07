@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 22:50:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/04 22:50:25 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:46:00 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,16 @@ void	process_first_cmd_args(t_token **tmp, t_data **data)
 {
 	while (*tmp && (*tmp)->type != PIPE)
 	{
-		if ((*tmp)->value && ((*tmp)->type == WORD || (*tmp)->type == STRING
-				|| (*tmp)->type == ARGS || (*tmp)->type == SIMPLE_Q))
+		if ((*tmp)->type == REDIR_IN || (*tmp)->type == REDIR_OUT
+			|| (*tmp)->type == REDIR_APPEND || (*tmp)->type == HEREDOC)
+		{
+			if ((*tmp)->value)
+				add_redir(&((*data)->cmd->redirections), (*tmp)->type,
+					ft_strdup((*tmp)->value));
+		}
+		else if ((*tmp)->value && ((*tmp)->type == WORD
+				|| (*tmp)->type == STRING || (*tmp)->type == ARGS
+				|| (*tmp)->type == SIMPLE_Q))
 			add_cmd_arg((*data)->cmd, (*tmp)->value);
 		*tmp = (*tmp)->next;
 	}

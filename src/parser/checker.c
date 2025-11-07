@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:39 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/04 18:16:58 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:45:59 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 	}
 	if (len > 0)
 	{
-		if (!(*data)->cmd)
-			return (i);
-		add_redir(&((*data)->cmd->redirections), type,
-			ft_substr(line, start, len));
+		add_to_token(&((*data)->tokens), type, ft_substr(line, start, len));
 	}
 	return (i);
 }
