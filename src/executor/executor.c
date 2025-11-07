@@ -6,14 +6,22 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 19:00:00 by miguel-f          #+#    #+#             */
-/*   Updated: 2025/11/03 22:29:19 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:46:00 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	exec_child_process(char *cmd_path, char **args, char **env_array)
+static void	exec_child_process(t_cmd *cmd, char *cmd_path,
+		char **args, char **env_array)
 {
+	if (apply_redirections(cmd) == -1)
+	{
+		free(cmd_path);
+		free(args);
+		free_string_array(env_array);
+		exit(1);
+	}
 	if (execve(cmd_path, args, env_array) == -1)
 	{
 		perror("minishell: execve");
@@ -102,6 +110,6 @@ int	execute_external_command(t_data *data)
 		return (1);
 	}
 	if (pid == 0)
-		exec_child_process(cmd_path, args, env_array);
+		exec_child_process(data->cmd, cmd_path, args, env_array);
 	return (wait_and_cleanup(pid, cmd_path, args, env_array));
 }

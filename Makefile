@@ -19,6 +19,7 @@ SRCS = src/main.c \
 		src/utils/env/env_utils.c\
 		src/utils/env/env_utils2.c\
 		src/utils/redir_utils.c\
+		src/utils/redir_utils2.c\
 		src/expander/expand_vars.c\
 		src/expander/expand_vars_2.c\
 		src/expander/expand_vars_3.c\
@@ -37,9 +38,10 @@ SRCS = src/main.c \
 		src/builtins/builtin_cd.c\
 		src/builtins/builtin_export.c\
 		src/builtins/builtin_unset.c\
-		src/pipes/pipes.c\
-		src/pipes/pipes_utils.c\
-		src/concatenate/concatenate.c\
+	src/pipes/pipes.c\
+	src/pipes/pipes_utils.c\
+	src/pipes/pipes_utils2.c\
+	src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
 
