@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                           */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 20:12:56 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/10/02 13:20:36 by miguel-f         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
@@ -112,7 +100,7 @@ int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
 					int output_fd);
 void			setup_child_fds(int input_fd, int output_fd);
 void			exec_cmd_in_child(t_data *data, t_cmd *cmd);
-void			handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
+int				handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
