@@ -2,24 +2,30 @@
 
 int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 {
-	int	start;
-	int	len;
+	int		start;
+	char	quote;
 
 	i++;
 	while (is_space(line[i]) == EXIT_SUCCESS)
 		i++;
 	start = i;
-	len = 0;
-	while (line[i] && is_space(line[i]) == EXIT_FAILURE
-		&& is_symbols(line[i]) == EXIT_FAILURE)
+	while (line[i] && is_symbols(line[i]) == EXIT_FAILURE)
 	{
-		len++;
-		i++;
+		if (line[i] == '"' || line[i] == '\'')
+		{
+			quote = line[i++];
+			while (line[i] && line[i] != quote)
+				i++;
+			if (line[i] == quote)
+				i++;
+		}
+		else if (is_space(line[i]) == EXIT_SUCCESS)
+			break ;
+		else
+			i++;
 	}
-	if (len > 0)
-	{
-		add_to_token(&((*data)->tokens), type, ft_substr(line, start, len));
-	}
+	if (i > start)
+		add_to_token(&((*data)->tokens), type, ft_substr(line, start, i - start));
 	return (i);
 }
 
