@@ -1,3 +1,5 @@
+#include "../../minishell.h"
+
 static int	check_pipe_syntax(t_token *current)
 {
 	if (!current->next)
