@@ -2,10 +2,15 @@
 
 static int	wait_all_processes(int *exit_status)
 {
-	int	status;
+	int		status;
+	pid_t	last_pid;
 
-	while (waitpid(-1, &status, 0) > 0)
+	last_pid = -1;
+	while (1)
 	{
+		last_pid = waitpid(-1, &status, 0);
+		if (last_pid <= 0)
+			break ;
 		if (WIFEXITED(status))
 			*exit_status = WEXITSTATUS(status);
 	}
