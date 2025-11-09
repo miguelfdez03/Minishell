@@ -14,6 +14,7 @@ SRCS = src/main.c \
 		src/parser/lexer_utils.c\
 		src/parser/handler_args.c\
 		src/parser/handle_quotes.c\
+		src/parser/syntax/syntax_check.c\
 		src/utils/utils.c\
 		src/utils/utils_2.c\
 		src/utils/env/env_utils.c\

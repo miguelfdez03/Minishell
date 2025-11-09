@@ -20,13 +20,17 @@ int	handle_args(char *line, int i, t_data **data)
 	int		last;
 	char	*str;
 
-	while (is_space(line[i]) == EXIT_SUCCESS)
-		return (-1);
-	last = ft_word_length(line, i);
+	if (is_space(line[i]) == EXIT_SUCCESS)
+		last = i;
+	else
+		last = ft_word_length(line, i);
 	str = ft_substr(line, i - 1, last - i + 1);
 	if (!str)
 		return (-1);
-	add_to_token(&((*data)->tokens), ARGS, str);
+	if (last == i)
+		add_to_token(&((*data)->tokens), WORD, str);
+	else
+		add_to_token(&((*data)->tokens), ARGS, str);
 	return (last);
 }
 

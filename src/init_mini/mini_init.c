@@ -84,5 +84,5 @@ int	main_loop(int argc, char **argv, t_data **data)
 		process_input(input, data);
 		free(input);
 	}
-	return (0);
+	return ((*data)->exit_status);
 }

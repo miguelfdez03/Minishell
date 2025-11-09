@@ -65,6 +65,11 @@ int	lexer(char *line, t_data **data)
 		if (i == -2)
 			break ;
 	}
+	if (!check_syntax(data))
+	{
+		(*data)->exit_status = 2;
+		return (-1);
+	}
 	check_and_exp(data);
 	return (i);
 }

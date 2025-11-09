@@ -20,12 +20,3 @@ int	ft_strcmp2(char *str1, char *str2)
 		i++;
 	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }
-
-int	had_space_before(char *line, int i)
-{
-	if (i == 0)
-		return (0);
-	if (i > 0 && is_space(line[i - 1]) == EXIT_SUCCESS)
-		return (1);
-	return (0);
-}
