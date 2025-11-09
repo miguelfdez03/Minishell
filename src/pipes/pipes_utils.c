@@ -15,13 +15,6 @@ int	execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
 	return (pid);
 }
 
-static void	close_pipe_fds(int input_fd, int pipe_write_fd)
-{
-	close(pipe_write_fd);
-	if (input_fd != STDIN_FILENO)
-		close(input_fd);
-}
-
 int	handle_pipe_cmd(t_data *data, t_cmd *current, int *input_fd)
 {
 	int		pipe_fd[2];
@@ -29,8 +22,12 @@ int	handle_pipe_cmd(t_data *data, t_cmd *current, int *input_fd)
 
 	if (pipe(pipe_fd) == -1)
 		return (-1);
+	fcntl(pipe_fd[0], F_SETFD, FD_CLOEXEC);
+	fcntl(pipe_fd[1], F_SETFD, FD_CLOEXEC);
 	pid = execute_single_cmd(data, current, *input_fd, pipe_fd[1]);
-	close_pipe_fds(*input_fd, pipe_fd[1]);
+	close(pipe_fd[1]);
+	if (*input_fd != STDIN_FILENO)
+		close(*input_fd);
 	*input_fd = pipe_fd[0];
 	return (pid);
 }

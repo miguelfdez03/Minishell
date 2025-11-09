@@ -16,6 +16,11 @@ void	setup_child_fds(int input_fd, int output_fd)
 
 void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
 {
+	int	fd;
+
+	fd = 3;
+	while (fd < 1024)
+		close(fd++);
 	if (apply_redirections(cmd) == -1)
 		exit(1);
 	data->cmd = cmd;
