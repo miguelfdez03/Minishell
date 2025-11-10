@@ -1,17 +1,17 @@
 #include "../../minishell.h"
 
-static int	is_redir_token(t_token_type type)
+int	is_redir_token(t_token_type type)
 {
 	return (type == REDIR_IN || type == REDIR_OUT
 		|| type == REDIR_APPEND || type == HEREDOC);
 }
 
-static int	is_operator_token(t_token_type type)
+int	is_operator_token(t_token_type type)
 {
 	return (type == PIPE || is_redir_token(type));
 }
 
-static void	print_redir_error(t_token_type type)
+void	print_redir_error(t_token_type type)
 {
 	if (type == PIPE)
 		ft_putendl_fd("minishell: syntax error near unexpected "
@@ -30,7 +30,7 @@ static void	print_redir_error(t_token_type type)
 			"token `<<'", 2);
 }
 
-static int	check_pipe_syntax(t_token *current)
+int	check_pipe_syntax(t_token *current)
 {
 	if (!current->next)
 	{

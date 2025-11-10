@@ -1,5 +1,44 @@
 #include "../minishell.h"
 
+void	close_all_fds(void)
+{
+	int	fd;
+
+	fd = 3;
+	while (fd < 1024)
+		close(fd++);
+}
+
+void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
+{
+	data->cmd = original_cmd;
+	rl_clear_history();
+	free_data(data);
+	exit(code);
+}
+
+void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
+{
+	char	*cmd_path;
+	char	**args;
+	char	**env_array;
+
+	cmd_path = find_cmd_in_path(cmd->name, data->env);
+	if (!cmd_path)
+	{
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putendl_fd(cmd->name, 2);
+		cleanup_and_exit(data, original_cmd, 127);
+	}
+	args = build_args_array(cmd);
+	env_array = env_list_to_array(data->env);
+	if (!args || !env_array)
+		cleanup_and_exit(data, original_cmd, 1);
+	execve(cmd_path, args, env_array);
+	perror("minishell: execve");
+	cleanup_and_exit(data, original_cmd, 127);
+}
+
 static int	wait_all_processes(int *exit_status)
 {
 	int		status;
@@ -60,16 +99,4 @@ void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
 		cleanup_and_exit(data, original_cmd, exit_code);
 	}
 	exec_external_cmd(data, cmd, original_cmd);
-}
-
-int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)
-{
-	next_cmd->name = ft_strdup(tmp->value);
-	if (!next_cmd->name)
-	{
-		free(next_cmd);
-		return (-1);
-	}
-	next_cmd->builtin_id = identify_builtin(tmp->value);
-	return (0);
 }

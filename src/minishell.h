@@ -104,6 +104,9 @@ int				handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
 void			process_cmd_args(t_cmd *cmd, t_token **tokens);
 int				init_next_cmd(t_cmd *current_cmd, t_token **tokens);
 int				init_next_cmd_name(t_cmd *next_cmd, t_token *tmp);
+void			close_all_fds(void);
+void			cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code);
+void			exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
@@ -172,6 +175,10 @@ int				handle_quotes_and_symbols(char *line, int i, t_data **data,
 int				check_redir_syntax(t_token *current);
 int				check_first_token(t_token *current);
 int				check_tokens_loop(t_token *current);
+int				is_redir_token(t_token_type type);
+int				is_operator_token(t_token_type type);
+void			print_redir_error(t_token_type type);
+int				check_pipe_syntax(t_token *current);
 
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);

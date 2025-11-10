@@ -9,13 +9,14 @@ SRCS = src/main.c \
 	src/executor/path_utils.c\
 	src/executor/executor.c\
 	src/executor/executor_utils.c\
-		src/parser/checker.c\
-		src/parser/lexer.c\
-		src/parser/lexer_utils.c\
-		src/parser/handler_args.c\
-		src/parser/handle_quotes.c\
-		src/parser/syntax/syntax_check.c\
-		src/utils/utils.c\
+	src/parser/checker.c\
+	src/parser/lexer.c\
+	src/parser/lexer_utils.c\
+	src/parser/handler_args.c\
+	src/parser/handle_quotes.c\
+	src/parser/syntax/syntax_check.c\
+	src/parser/syntax/syntax_utils.c\
+	src/utils/utils.c\
 		src/utils/utils_2.c\
 		src/utils/signals.c\
 		src/utils/env/env_utils.c\
