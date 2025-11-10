@@ -31,12 +31,35 @@ static void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
 	exit(code);
 }
 
+static void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
+{
+	char	*cmd_path;
+	char	**args;
+	char	**env_array;
+
+	cmd_path = find_cmd_in_path(cmd->name, data->env);
+	if (!cmd_path)
+	{
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putendl_fd(cmd->name, 2);
+		cleanup_and_exit(data, original_cmd, 127);
+	}
+	args = build_args_array(cmd);
+	env_array = env_list_to_array(data->env);
+	if (!args || !env_array)
+		cleanup_and_exit(data, original_cmd, 1);
+	execve(cmd_path, args, env_array);
+	perror("minishell: execve");
+	cleanup_and_exit(data, original_cmd, 127);
+}
+
 void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
 {
 	int		exit_code;
 	t_cmd	*original_cmd;
 
 	original_cmd = data->cmd;
+	setup_signals_child();
 	close_all_fds();
 	if (apply_redirections(cmd) == -1)
 		cleanup_and_exit(data, original_cmd, 1);
@@ -46,11 +69,7 @@ void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
 		exit_code = execute_builtin_by_id(data);
 		cleanup_and_exit(data, original_cmd, exit_code);
 	}
-	else
-	{
-		exit_code = execute_external_command(data);
-		exit(exit_code);
-	}
+	exec_external_cmd(data, cmd, original_cmd);
 }
 
 static int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)

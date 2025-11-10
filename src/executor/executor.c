@@ -3,6 +3,7 @@
 static void	exec_child_process(t_cmd *cmd, char *cmd_path,
 		char **args, char **env_array)
 {
+	setup_signals_child();
 	if (apply_redirections(cmd) == -1)
 	{
 		free(cmd_path);

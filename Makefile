@@ -17,6 +17,7 @@ SRCS = src/main.c \
 		src/parser/syntax/syntax_check.c\
 		src/utils/utils.c\
 		src/utils/utils_2.c\
+		src/utils/signals.c\
 		src/utils/env/env_utils.c\
 		src/utils/env/env_utils2.c\
 		src/utils/redir_utils.c\

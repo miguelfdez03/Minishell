@@ -45,7 +45,12 @@ static char	*read_multiline(char *input)
 
 static void	process_input(char *input, t_data **data)
 {
-	if (ft_strlen(input) > 0)
+	int	i;
+
+	i = 0;
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+		i++;
+	if (ft_strlen(input) > 0 && input[i] != '#' && input[i] != '\0')
 	{
 		if (lexer(input, data) >= 0)
 		{
@@ -77,6 +82,11 @@ int	main_loop(int argc, char **argv, t_data **data)
 		{
 			ft_printf("exit\n");
 			break ;
+		}
+		if (g_signal_received)
+		{
+			(*data)->exit_status = g_signal_received;
+			g_signal_received = 0;
 		}
 		input = read_multiline(input);
 		if (!input)

@@ -6,6 +6,7 @@ int	main(int argc, char **argv, char **env)
 	t_data	*data;
 	int		exit_code;
 
+	setup_signals_interactive();
 	if (init_data(&data, env, env_t) == -1)
 	{
 		ft_printf("Error: Failed to initialize data\n");
