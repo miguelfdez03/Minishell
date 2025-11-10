@@ -1,4 +1,4 @@
-gitNAME = minishell
+NAME = minishell
 CC = cc
 FLAGS = -Werror -Wextra -Wall
 
