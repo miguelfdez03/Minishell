@@ -50,18 +50,19 @@ static void	process_input(char *input, t_data **data)
 		if (lexer(input, data) >= 0)
 		{
 			execute_command(*data);
-			if ((*data)->tokens)
-			{
-				free_tokens((*data)->tokens);
-				(*data)->tokens = NULL;
-			}
+		}
+		if ((*data)->tokens)
+		{
+			free_tokens((*data)->tokens);
+			(*data)->tokens = NULL;
 		}
 		if ((*data)->cmd)
 		{
 			free_cmd((*data)->cmd);
 			(*data)->cmd = NULL;
 		}
-		init_cmd_data(data);
+		if (init_cmd_data(data) == -1)
+			return ;
 	}
 }
 

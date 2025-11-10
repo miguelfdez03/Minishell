@@ -14,20 +14,55 @@ void	setup_child_fds(int input_fd, int output_fd)
 	}
 }
 
-void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
+static void	close_all_fds(void)
 {
 	int	fd;
 
 	fd = 3;
 	while (fd < 1024)
 		close(fd++);
+}
+
+static void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
+{
+	data->cmd = original_cmd;
+	rl_clear_history();
+	free_data(data);
+	exit(code);
+}
+
+void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
+{
+	int		exit_code;
+	t_cmd	*original_cmd;
+
+	original_cmd = data->cmd;
+	close_all_fds();
 	if (apply_redirections(cmd) == -1)
-		exit(1);
+		cleanup_and_exit(data, original_cmd, 1);
 	data->cmd = cmd;
 	if (cmd->builtin_id != BUILTIN_NONE)
-		exit(execute_builtin_by_id(data));
+	{
+		exit_code = execute_builtin_by_id(data);
+		cleanup_and_exit(data, original_cmd, exit_code);
+	}
 	else
-		exit(execute_external_command(data));
+	{
+		exit_code = execute_external_command(data);
+		exit(exit_code);
+	}
+}
+
+static int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)
+{
+	next_cmd->name = ft_strdup(tmp->value);
+	if (!next_cmd->name)
+	{
+		free(next_cmd);
+		return (-1);
+	}
+	next_cmd->builtin_id = identify_builtin(tmp->value);
+	return (0);
 }
 
 static int	init_next_cmd(t_cmd *current_cmd, t_token **tokens)
@@ -43,14 +78,11 @@ static int	init_next_cmd(t_cmd *current_cmd, t_token **tokens)
 	tmp = *tokens;
 	if (tmp && tmp->value && (tmp->type == WORD || tmp->type == STRING))
 	{
-		current_cmd->next->name = ft_strdup(tmp->value);
-		if (!current_cmd->next->name)
+		if (init_next_cmd_name(current_cmd->next, tmp) == -1)
 		{
-			free(current_cmd->next);
 			current_cmd->next = NULL;
 			return (-1);
 		}
-		current_cmd->next->builtin_id = identify_builtin(tmp->value);
 		*tokens = (*tokens)->next;
 	}
 	return (0);
