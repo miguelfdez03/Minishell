@@ -12,6 +12,7 @@ int	main(int argc, char **argv, char **env)
 		return (-1);
 	}
 	exit_code = main_loop(argc, argv, &data);
+	rl_clear_history();
 	free_data(data);
 	return (exit_code);
 }
