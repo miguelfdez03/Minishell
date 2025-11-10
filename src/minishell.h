@@ -101,6 +101,9 @@ int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
 void			setup_child_fds(int input_fd, int output_fd);
 void			exec_cmd_in_child(t_data *data, t_cmd *cmd);
 int				handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
+void			process_cmd_args(t_cmd *cmd, t_token **tokens);
+int				init_next_cmd(t_cmd *current_cmd, t_token **tokens);
+int				init_next_cmd_name(t_cmd *next_cmd, t_token *tmp);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 
@@ -166,6 +169,10 @@ int				check_redir(char *line, int i, t_data **data);
 int				handle_words(char *line, int i, t_data **data);
 int				handle_quotes_and_symbols(char *line, int i, t_data **data,
 					int has_space);
+int				check_redir_syntax(t_token *current);
+int				check_first_token(t_token *current);
+int				check_tokens_loop(t_token *current);
+
 //--MINI_INIT--
 int				main_loop(int argc, char **argv, t_data **data);
 void			init_tokens(t_token *token);

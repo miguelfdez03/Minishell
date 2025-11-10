@@ -42,3 +42,34 @@ int	execute_pipeline(t_data *data)
 	data->exit_status = exit_status;
 	return (exit_status);
 }
+
+void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
+{
+	int		exit_code;
+	t_cmd	*original_cmd;
+
+	original_cmd = data->cmd;
+	setup_signals_child();
+	close_all_fds();
+	if (apply_redirections(cmd) == -1)
+		cleanup_and_exit(data, original_cmd, 1);
+	data->cmd = cmd;
+	if (cmd->builtin_id != BUILTIN_NONE)
+	{
+		exit_code = execute_builtin_by_id(data);
+		cleanup_and_exit(data, original_cmd, exit_code);
+	}
+	exec_external_cmd(data, cmd, original_cmd);
+}
+
+int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)
+{
+	next_cmd->name = ft_strdup(tmp->value);
+	if (!next_cmd->name)
+	{
+		free(next_cmd);
+		return (-1);
+	}
+	next_cmd->builtin_id = identify_builtin(tmp->value);
+	return (0);
+}
