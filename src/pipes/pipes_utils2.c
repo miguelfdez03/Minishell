@@ -65,6 +65,7 @@ int	execute_pipeline(t_data *data)
 	current = data->cmd;
 	input_fd = STDIN_FILENO;
 	exit_status = 0;
+	setup_signals_executing();
 	while (current)
 	{
 		if (current->next)
@@ -78,6 +79,7 @@ int	execute_pipeline(t_data *data)
 		current = current->next;
 	}
 	wait_all_processes(&exit_status);
+	setup_signals_interactive();
 	data->exit_status = exit_status;
 	return (exit_status);
 }

@@ -220,5 +220,6 @@ void			handle_sigint(int sig);
 void			setup_signals_interactive(void);
 void			setup_signals_child(void);
 void			setup_signals_heredoc(void);
+void			setup_signals_executing(void);
 
 #endif

@@ -89,6 +89,7 @@ int	execute_external_command(t_data *data)
 	ret = prepare_execution(data, &cmd_path, &args, &env_array);
 	if (ret != 0)
 		return (ret);
+	setup_signals_executing();
 	pid = fork();
 	if (pid == -1)
 	{
@@ -96,9 +97,12 @@ int	execute_external_command(t_data *data)
 		free(cmd_path);
 		free(args);
 		free_string_array(env_array);
+		setup_signals_interactive();
 		return (1);
 	}
 	if (pid == 0)
 		exec_child_process(data->cmd, cmd_path, args, env_array);
-	return (wait_and_cleanup(pid, cmd_path, args, env_array));
+	ret = wait_and_cleanup(pid, cmd_path, args, env_array);
+	setup_signals_interactive();
+	return (ret);
 }

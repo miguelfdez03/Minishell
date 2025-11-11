@@ -29,3 +29,9 @@ void	setup_signals_heredoc(void)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 }
+
+void	setup_signals_executing(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
