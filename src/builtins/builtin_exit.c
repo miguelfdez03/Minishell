@@ -57,7 +57,7 @@ int	builtin_exit(t_data *data)
 	if (exit_status == -1)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		return (1);
+		return (2);
 	}
 	free_data(data);
 	exit(exit_status);

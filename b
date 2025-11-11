@@ -1,0 +1,10 @@
+A
+b
+C
+Docs_Tests
+libft
+Makefile
+minishell
+README.md
+src
+tester_mini
