@@ -3,14 +3,16 @@
 int	execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
 {
 	pid_t	pid;
+	int		is_last_cmd;
 
+	is_last_cmd = (cmd->next == NULL);
 	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
 	{
 		setup_child_fds(input_fd, output_fd);
-		exec_cmd_in_child(data, cmd);
+		exec_cmd_in_child(data, cmd, is_last_cmd);
 	}
 	return (pid);
 }
@@ -98,16 +100,4 @@ void	process_cmd_args(t_cmd *cmd, t_token **tokens)
 		tmp = tmp->next;
 		*tokens = tmp;
 	}
-}
-
-int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)
-{
-	next_cmd->name = ft_strdup(tmp->value);
-	if (!next_cmd->name)
-	{
-		free(next_cmd);
-		return (-1);
-	}
-	next_cmd->builtin_id = identify_builtin(tmp->value);
-	return (0);
 }

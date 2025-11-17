@@ -1,11 +1,21 @@
 #include "../minishell.h"
 
+static void	copy_quoted_content(char *str, char *result, int *i, int *j)
+{
+	char	quote;
+
+	quote = str[(*i)++];
+	while (str[*i] && str[*i] != quote)
+		result[(*j)++] = str[(*i)++];
+	if (str[*i] == quote)
+		(*i)++;
+}
+
 static char	*process_quotes_in_path(char *str)
 {
 	char	*result;
 	int		i;
 	int		j;
-	char	quote;
 
 	if (!str)
 		return (NULL);
@@ -17,13 +27,7 @@ static char	*process_quotes_in_path(char *str)
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				result[j++] = str[i++];
-			if (str[i] == quote)
-				i++;
-		}
+			copy_quoted_content(str, result, &i, &j);
 		else
 			result[j++] = str[i++];
 	}
@@ -55,7 +59,10 @@ void	add_redir(t_redir **redir, t_token_type type, char *value)
 	if (!new_redir)
 		return ;
 	new_redir->type = type;
-	new_redir->file = process_quotes_in_path(value);
+	if (type == HEREDOC)
+		new_redir->file = value;
+	else
+		new_redir->file = process_quotes_in_path(value);
 	new_redir->next = NULL;
 	if (!*redir)
 	{
