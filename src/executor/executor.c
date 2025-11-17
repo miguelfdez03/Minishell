@@ -3,6 +3,7 @@
 static void	exec_child_process(t_cmd *cmd, char *cmd_path,
 		char **args, char **env_array)
 {
+	setup_signals_child();
 	if (apply_redirections(cmd) == -1)
 	{
 		free(cmd_path);
@@ -38,6 +39,8 @@ static int	prepare_execution(t_data *data, char **cmd_path, char ***args,
 		char ***env_array)
 {
 	*cmd_path = find_cmd_in_path(data->cmd->name, data->env);
+	if (*cmd_path == (char *)-1)
+		return (126);
 	if (!*cmd_path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
@@ -77,6 +80,16 @@ char	*find_cmd_in_path(char *cmd, t_env *env)
 	return (cmd_path);
 }
 
+static int	handle_fork_error(char *cmd_path, char **args, char **env_array)
+{
+	perror("minishell: fork");
+	free(cmd_path);
+	free(args);
+	free_string_array(env_array);
+	setup_signals_interactive();
+	return (1);
+}
+
 int	execute_external_command(t_data *data)
 {
 	pid_t	pid;
@@ -88,16 +101,13 @@ int	execute_external_command(t_data *data)
 	ret = prepare_execution(data, &cmd_path, &args, &env_array);
 	if (ret != 0)
 		return (ret);
+	setup_signals_executing();
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("minishell: fork");
-		free(cmd_path);
-		free(args);
-		free_string_array(env_array);
-		return (1);
-	}
+		return (handle_fork_error(cmd_path, args, env_array));
 	if (pid == 0)
 		exec_child_process(data->cmd, cmd_path, args, env_array);
-	return (wait_and_cleanup(pid, cmd_path, args, env_array));
+	ret = wait_and_cleanup(pid, cmd_path, args, env_array);
+	setup_signals_interactive();
+	return (ret);
 }

@@ -9,14 +9,16 @@ SRCS = src/main.c \
 	src/executor/path_utils.c\
 	src/executor/executor.c\
 	src/executor/executor_utils.c\
-		src/parser/checker.c\
-		src/parser/lexer.c\
-		src/parser/lexer_utils.c\
-		src/parser/handler_args.c\
-		src/parser/handle_quotes.c\
-		src/parser/syntax/syntax_check.c\
-		src/utils/utils.c\
+	src/parser/checker.c\
+	src/parser/lexer.c\
+	src/parser/lexer_utils.c\
+	src/parser/handler_args.c\
+	src/parser/handle_quotes.c\
+	src/parser/syntax/syntax_check.c\
+	src/parser/syntax/syntax_utils.c\
+	src/utils/utils.c\
 		src/utils/utils_2.c\
+		src/utils/signals.c\
 		src/utils/env/env_utils.c\
 		src/utils/env/env_utils2.c\
 		src/utils/redir_utils.c\
@@ -39,10 +41,10 @@ SRCS = src/main.c \
 		src/builtins/builtin_cd.c\
 		src/builtins/builtin_export.c\
 		src/builtins/builtin_unset.c\
-	src/pipes/pipes.c\
-	src/pipes/pipes_utils.c\
-	src/pipes/pipes_utils2.c\
-	src/concatenate/concatenate.c\
+		src/pipes/pipes.c\
+		src/pipes/pipes_utils.c\
+		src/pipes/pipes_utils2.c\
+		src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
 
@@ -173,3 +175,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re head
+$(LIBFT):

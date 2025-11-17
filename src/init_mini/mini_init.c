@@ -45,23 +45,29 @@ static char	*read_multiline(char *input)
 
 static void	process_input(char *input, t_data **data)
 {
-	if (ft_strlen(input) > 0)
+	int	i;
+
+	i = 0;
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+		i++;
+	if (ft_strlen(input) > 0 && input[i] != '#' && input[i] != '\0')
 	{
 		if (lexer(input, data) >= 0)
 		{
 			execute_command(*data);
-			if ((*data)->tokens)
-			{
-				free_tokens((*data)->tokens);
-				(*data)->tokens = NULL;
-			}
+		}
+		if ((*data)->tokens)
+		{
+			free_tokens((*data)->tokens);
+			(*data)->tokens = NULL;
 		}
 		if ((*data)->cmd)
 		{
 			free_cmd((*data)->cmd);
 			(*data)->cmd = NULL;
 		}
-		init_cmd_data(data);
+		if (init_cmd_data(data) == -1)
+			return ;
 	}
 }
 
@@ -76,6 +82,11 @@ int	main_loop(int argc, char **argv, t_data **data)
 		{
 			ft_printf("exit\n");
 			break ;
+		}
+		if (g_signal_received)
+		{
+			(*data)->exit_status = g_signal_received;
+			g_signal_received = 0;
 		}
 		input = read_multiline(input);
 		if (!input)

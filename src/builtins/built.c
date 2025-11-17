@@ -8,6 +8,13 @@ int	execute_command(t_data *data)
 	int		saved_stdout;
 
 	cmd = data->cmd;
+	if (!cmd->name || cmd->name[0] == '\0')
+	{
+		if (!cmd->args || !cmd->args[0])
+			return (0);
+		cmd->name = ft_strdup(cmd->args[0]);
+		cmd->builtin_id = identify_builtin(cmd->name);
+	}
 	if (cmd->next)
 		return (execute_pipeline(data));
 	if (cmd->builtin_id == BUILTIN_NONE)

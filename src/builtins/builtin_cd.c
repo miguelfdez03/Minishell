@@ -40,7 +40,7 @@ int	builtin_cd(t_data *data)
 	if (count_args(data->cmd->args) > 1)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
-		return (1);
+		return (2);
 	}
 	path = get_cd_path(data->cmd, data->env);
 	if (!path)

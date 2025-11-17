@@ -36,24 +36,25 @@ static void	no_env_init(t_env *env_t, int i)
 {
 	env_t->key = ft_strdup("PWD");
 	env_t->value = getcwd(NULL, 0);
-	env_t->index = i;
+	env_t->index = i++;
 	env_t->next = malloc(sizeof(t_env));
 	if (!env_t->next)
 		return ;
 	env_t = env_t->next;
-	i++;
 	env_t->key = ft_strdup("SHLVL");
 	env_t->value = ft_strdup("1");
-	env_t->index = i;
+	env_t->index = i++;
 	env_t->next = malloc(sizeof(t_env));
 	if (!env_t->next)
 		return ;
 	env_t = env_t->next;
-	i++;
 	env_t->key = ft_strdup("PATH");
 	env_t->value = ft_strdup("/bin:/usr/bin");
-	env_t->index = i;
-	i++;
+	env_t->index = i++;
+	env_t->next = malloc(sizeof(t_env));
+	if (!env_t->next)
+		return ;
+	env_t = env_t->next;
 	env_t->key = ft_strdup("_");
 	env_t->value = ft_strdup("/usr/bin/env");
 	env_t->index = i;

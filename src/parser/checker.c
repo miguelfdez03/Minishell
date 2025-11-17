@@ -24,8 +24,7 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 		else
 			i++;
 	}
-	if (i > start)
-		add_to_token(&((*data)->tokens), type, ft_substr(line, start, i - start));
+	add_to_token(&((*data)->tokens), type, ft_substr(line, start, i - start));
 	return (i);
 }
 

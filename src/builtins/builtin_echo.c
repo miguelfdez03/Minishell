@@ -18,39 +18,30 @@ static int	is_valid_n_flag(char *arg)
 	return (1);
 }
 
-static void	print_tokens_echo(t_token *tok, int *first)
-{
-	while (tok && tok->type != PIPE)
-	{
-		if (tok->type == WORD || tok->type == STRING
-			|| tok->type == ARGS || tok->type == SIMPLE_Q)
-		{
-			if (!(*first) && tok->space)
-				ft_putchar_fd(' ', 1);
-			ft_putstr_fd(tok->value, 1);
-			*first = 0;
-		}
-		tok = tok->next;
-	}
-}
-
 int	builtin_echo(t_data *data)
 {
-	t_token	*tok;
+	int		i;
 	int		print_newline;
-	int		first;
+	int		start;
 
-	tok = data->tokens;
+	if (!data || !data->cmd)
+		return (1);
 	print_newline = 1;
-	first = 1;
-	if (tok && (ft_strcmp2(tok->value, "echo") == 0))
-		tok = tok->next;
-	while (tok && is_valid_n_flag(tok->value))
+	i = 0;
+	while (data->cmd->args && data->cmd->args[i]
+		&& is_valid_n_flag(data->cmd->args[i]))
 	{
 		print_newline = 0;
-		tok = tok->next;
+		i++;
 	}
-	print_tokens_echo(tok, &first);
+	start = i;
+	while (data->cmd->args && data->cmd->args[i])
+	{
+		ft_putstr_fd(data->cmd->args[i], 1);
+		if (data->cmd->args[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
 	if (print_newline)
 		ft_putchar_fd('\n', 1);
 	return (0);
