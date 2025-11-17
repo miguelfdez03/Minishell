@@ -21,6 +21,7 @@ SRCS = src/main.c \
 		src/utils/signals.c\
 		src/utils/env/env_utils.c\
 		src/utils/env/env_utils2.c\
+		src/utils/env/env_utils3.c\
 		src/utils/redir_utils.c\
 		src/utils/redir_utils2.c\
 		src/expander/expand_vars.c\

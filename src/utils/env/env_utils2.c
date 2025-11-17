@@ -1,71 +1,79 @@
 #include "../../minishell.h"
 
-void	init_first_env_node(t_env **env_head, char *dup_key, char *dup_val)
+static void	update_indices(t_env *start)
 {
-	*env_head = malloc(sizeof(t_env));
-	if (!*env_head)
-		return ;
-	(*env_head)->key = dup_key;
-	(*env_head)->value = dup_val;
-	(*env_head)->index = 0;
-	(*env_head)->next = NULL;
+	t_env	*current;
+
+	current = start;
+	while (current)
+	{
+		current->index++;
+		current = current->next;
+	}
 }
 
-void	add_env_node(t_env *last, char *dup_key, char *dup_val)
+static t_env	*create_env_node(char *dup_key, char *dup_val)
 {
-	last->next = malloc(sizeof(t_env));
-	if (!last->next)
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
 	{
 		free(dup_key);
 		if (dup_val)
 			free(dup_val);
-		return ;
+		return (NULL);
 	}
-	last->next->key = dup_key;
-	last->next->value = dup_val;
-	last->next->index = last->index + 1;
-	last->next->next = NULL;
+	new_node->key = dup_key;
+	new_node->value = dup_val;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+static void	insert_at_head(t_env **env_head, t_env *new_node)
+{
+	t_env	*current;
+
+	new_node->next = *env_head;
+	new_node->index = 0;
+	*env_head = new_node;
+	current = new_node->next;
+	update_indices(current);
+}
+
+static void	insert_after_prev(t_env *prev, t_env *new_node)
+{
+	new_node->next = prev->next;
+	prev->next = new_node;
+	new_node->index = prev->index + 1;
+	update_indices(new_node->next);
 }
 
 void	set_env_new_node(t_env **env_head, char *dup_key, char *dup_val)
 {
-	t_env	*last;
+	t_env	*current;
+	t_env	*prev;
+	t_env	*new_node;
 
 	if (!*env_head)
 	{
-		init_first_env_node(env_head, dup_key, dup_val);
+		*env_head = create_env_node(dup_key, dup_val);
+		if (*env_head)
+			(*env_head)->index = 0;
 		return ;
 	}
-	last = *env_head;
-	while (last->next)
-		last = last->next;
-	add_env_node(last, dup_key, dup_val);
-}
-
-void	unset_env_var(t_env **env_head, const char *key)
-{
-	t_env	*current;
-	t_env	*prev;
-
-	if (!env_head || !*env_head || !key)
+	new_node = create_env_node(dup_key, dup_val);
+	if (!new_node)
 		return ;
 	current = *env_head;
 	prev = NULL;
-	while (current)
+	while (current && ft_strcmp2(dup_key, current->key) > 0)
 	{
-		if (ft_strcmp2(current->key, (char *)key) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				*env_head = current->next;
-			free(current->key);
-			if (current->value)
-				free(current->value);
-			free(current);
-			return ;
-		}
 		prev = current;
 		current = current->next;
 	}
+	if (!prev)
+		insert_at_head(env_head, new_node);
+	else
+		insert_after_prev(prev, new_node);
 }

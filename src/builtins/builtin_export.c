@@ -1,11 +1,51 @@
 #include "../minishell.h"
 
+static void	swap_env_nodes(t_env *a, t_env *b)
+{
+	char	*temp_key;
+	char	*temp_value;
+
+	temp_key = a->key;
+	temp_value = a->value;
+	a->key = b->key;
+	a->value = b->value;
+	b->key = temp_key;
+	b->value = temp_value;
+}
+
+static void	sort_env_list(t_env *env)
+{
+	t_env	*current;
+	t_env	*next;
+	int		swapped;
+
+	if (!env)
+		return ;
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		current = env;
+		while (current && current->next)
+		{
+			next = current->next;
+			if (ft_strcmp2(current->key, next->key) > 0)
+			{
+				swap_env_nodes(current, next);
+				swapped = 1;
+			}
+			current = current->next;
+		}
+	}
+}
+
 static int	export_without_args(t_env *env)
 {
 	t_env	*current;
 
 	if (!env)
 		return (0);
+	sort_env_list(env);
 	current = env;
 	while (current)
 	{
