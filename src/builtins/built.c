@@ -1,11 +1,28 @@
 #include "../minishell.h"
 
+static int	execute_builtin_with_redir(t_data *data)
+{
+	int	exit_status;
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (apply_redirections(data) == -1)
+		exit_status = 1;
+	else
+		exit_status = execute_builtin_by_id(data);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	return (exit_status);
+}
+
 int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
 	int		exit_status;
-	int		saved_stdin;
-	int		saved_stdout;
 
 	cmd = data->cmd;
 	if (!cmd->name || cmd->name[0] == '\0')
@@ -23,16 +40,7 @@ int	execute_command(t_data *data)
 		data->exit_status = exit_status;
 		return (exit_status);
 	}
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (apply_redirections(cmd) == -1)
-		exit_status = 1;
-	else
-		exit_status = execute_builtin_by_id(data);
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
+	exit_status = execute_builtin_with_redir(data);
 	data->exit_status = exit_status;
 	return (exit_status);
 }
@@ -79,20 +87,4 @@ int	execute_builtin_by_id(t_data *data)
 		return (result);
 	printf("\nUnknown builtin\n");
 	return (1);
-}
-
-int	builtin_pwd(t_data *data)
-{
-	char	*pwd;
-
-	(void)data;
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-	{
-		ft_putendl_fd("pwd: error getting current directory", 2);
-		return (1);
-	}
-	ft_putendl_fd(pwd, 1);
-	free(pwd);
-	return (0);
 }

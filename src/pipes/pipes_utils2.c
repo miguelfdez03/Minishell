@@ -1,14 +1,5 @@
 #include "../minishell.h"
 
-void	close_all_fds(void)
-{
-	int	fd;
-
-	fd = 3;
-	while (fd < 1024)
-		close(fd++);
-}
-
 void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
 {
 	data->cmd = original_cmd;
@@ -91,7 +82,7 @@ int	execute_pipeline(t_data *data)
 	return (exit_status);
 }
 
-void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
+void	exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd)
 {
 	int		exit_code;
 	t_cmd	*original_cmd;
@@ -99,9 +90,14 @@ void	exec_cmd_in_child(t_data *data, t_cmd *cmd)
 	original_cmd = data->cmd;
 	setup_signals_child();
 	close_all_fds();
-	if (apply_redirections(cmd) == -1)
-		cleanup_and_exit(data, original_cmd, 1);
 	data->cmd = cmd;
+	if (apply_redirections(data) == -1)
+	{
+		if (is_last_cmd)
+			cleanup_and_exit(data, original_cmd, 1);
+		else
+			cleanup_and_exit(data, original_cmd, 0);
+	}
 	if (cmd->builtin_id != BUILTIN_NONE)
 	{
 		exit_code = execute_builtin_by_id(data);

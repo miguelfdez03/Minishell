@@ -47,30 +47,49 @@ static int	handle_output_redir(char *file, int append)
 	return (0);
 }
 
-int	apply_redirections(t_cmd *cmd)
+static int	process_single_redir(t_redir *redir, t_data *data)
+{
+	int	result;
+
+	if (redir->type == REDIR_IN)
+	{
+		if (handle_input_redir(redir->file) == -1)
+			return (-1);
+	}
+	else if (redir->type == REDIR_OUT)
+	{
+		if (handle_output_redir(redir->file, 0) == -1)
+			return (-1);
+	}
+	else if (redir->type == REDIR_APPEND)
+	{
+		if (handle_output_redir(redir->file, 1) == -1)
+			return (-1);
+	}
+	else if (redir->type == HEREDOC)
+	{
+		result = handle_heredoc(redir->file, data);
+		if (result == -1 || result == -2)
+			return (result);
+	}
+	return (0);
+}
+
+int	apply_redirections(t_data *data)
 {
 	t_redir	*redir;
+	int		result;
+	t_cmd	*cmd;
 
+	cmd = data->cmd;
 	if (!cmd)
 		return (0);
 	redir = cmd->redirections;
 	while (redir)
 	{
-		if (redir->type == REDIR_IN)
-		{
-			if (handle_input_redir(redir->file) == -1)
-				return (-1);
-		}
-		else if (redir->type == REDIR_OUT)
-		{
-			if (handle_output_redir(redir->file, 0) == -1)
-				return (-1);
-		}
-		else if (redir->type == REDIR_APPEND)
-		{
-			if (handle_output_redir(redir->file, 1) == -1)
-				return (-1);
-		}
+		result = process_single_redir(redir, data);
+		if (result != 0)
+			return (result);
 		redir = redir->next;
 	}
 	return (0);

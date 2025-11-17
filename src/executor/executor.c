@@ -1,10 +1,19 @@
 #include "../minishell.h"
 
-static void	exec_child_process(t_cmd *cmd, char *cmd_path,
+static void	handle_exec_failure(char *cmd_path, char **args, char **env_array)
+{
+	perror("minishell: execve");
+	free(cmd_path);
+	free(args);
+	free_string_array(env_array);
+	exit(127);
+}
+
+static void	exec_child_process(t_data *data, char *cmd_path,
 		char **args, char **env_array)
 {
 	setup_signals_child();
-	if (apply_redirections(cmd) == -1)
+	if (apply_redirections(data) == -1)
 	{
 		free(cmd_path);
 		free(args);
@@ -12,27 +21,7 @@ static void	exec_child_process(t_cmd *cmd, char *cmd_path,
 		exit(1);
 	}
 	if (execve(cmd_path, args, env_array) == -1)
-	{
-		perror("minishell: execve");
-		free(cmd_path);
-		free(args);
-		free_string_array(env_array);
-		exit(127);
-	}
-}
-
-static int	wait_and_cleanup(pid_t pid, char *cmd_path, char **args,
-		char **env_array)
-{
-	int	status;
-
-	waitpid(pid, &status, 0);
-	free(cmd_path);
-	free(args);
-	free_string_array(env_array);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+		handle_exec_failure(cmd_path, args, env_array);
 }
 
 static int	prepare_execution(t_data *data, char **cmd_path, char ***args,
@@ -80,16 +69,6 @@ char	*find_cmd_in_path(char *cmd, t_env *env)
 	return (cmd_path);
 }
 
-static int	handle_fork_error(char *cmd_path, char **args, char **env_array)
-{
-	perror("minishell: fork");
-	free(cmd_path);
-	free(args);
-	free_string_array(env_array);
-	setup_signals_interactive();
-	return (1);
-}
-
 int	execute_external_command(t_data *data)
 {
 	pid_t	pid;
@@ -106,7 +85,7 @@ int	execute_external_command(t_data *data)
 	if (pid == -1)
 		return (handle_fork_error(cmd_path, args, env_array));
 	if (pid == 0)
-		exec_child_process(data->cmd, cmd_path, args, env_array);
+		exec_child_process(data, cmd_path, args, env_array);
 	ret = wait_and_cleanup(pid, cmd_path, args, env_array);
 	setup_signals_interactive();
 	return (ret);

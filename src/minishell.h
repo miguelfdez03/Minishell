@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -99,7 +100,7 @@ int				execute_pipeline(t_data *data);
 int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
 					int output_fd);
 void			setup_child_fds(int input_fd, int output_fd);
-void			exec_cmd_in_child(t_data *data, t_cmd *cmd);
+void			exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd);
 int				handle_pipe_cmd(t_data *data, t_cmd *cmd, int *prev_fd);
 void			process_cmd_args(t_cmd *cmd, t_token **tokens);
 int				init_next_cmd(t_cmd *current_cmd, t_token **tokens);
@@ -137,7 +138,14 @@ int				init_first_cmd(t_data **data, t_token **tmp);
 t_redir			*create_redir(t_token_type type, char *file);
 void			add_redir(t_redir **redir, t_token_type type, char *value);
 void			free_redirs(t_redir *redir);
-int				apply_redirections(t_cmd *cmd);
+int				apply_redirections(t_data *data);
+int				handle_heredoc(char *delimiter, t_data *data);
+char			*remove_quotes_from_delimiter(char *delimiter);
+int				should_expand_heredoc(char *original_delimiter);
+void			write_heredoc_interactive(int fd, char *clean_delim, int expand,
+					t_data *data);
+void			write_heredoc_pipe(int fd, char *clean_delim, int expand,
+					t_data *data);
 
 //--BUILT-INS--
 int				execute_command(t_data *data);
@@ -159,6 +167,7 @@ void			update_env_pwd(t_data *data, char *oldpwd, char *newpwd);
 //--EXPORT UTILS--
 int				is_valid_identifier(char *name);
 void			parse_export_arg(char *arg, char **key, char **value);
+void			swap_env_nodes(t_env *a, t_env *b);
 //--LEXER--
 int				lexer(char *line, t_data **data);
 void			process_first_cmd_args(t_token **tmp, t_data **data);
@@ -207,6 +216,10 @@ char			**env_list_to_array(t_env *env);
 char			**build_args_array(t_cmd *cmd);
 char			*check_absolute_path(char *cmd);
 char			*find_cmd_in_path(char *cmd, t_env *env);
+int				handle_fork_error(char *cmd_path, char **args,
+					char **env_array);
+int				wait_and_cleanup(pid_t pid, char *cmd_path, char **args,
+					char **env_array);
 
 char			*find_command_path(char *cmd, char **envp);
 char			*search_in_path_dirs(char *path_copy, char *cmd);

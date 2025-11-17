@@ -1,5 +1,18 @@
 #include "../../minishell.h"
 
+void	swap_env_nodes(t_env *a, t_env *b)
+{
+	char	*temp_key;
+	char	*temp_value;
+
+	temp_key = a->key;
+	temp_value = a->value;
+	a->key = b->key;
+	a->value = b->value;
+	b->key = temp_key;
+	b->value = temp_value;
+}
+
 int	is_valid_identifier(char *name)
 {
 	int	i;

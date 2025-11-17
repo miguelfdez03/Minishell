@@ -1,5 +1,4 @@
 #include "../minishell.h"
-#include <sys/stat.h>
 
 int	count_env_vars(t_env *env)
 {
