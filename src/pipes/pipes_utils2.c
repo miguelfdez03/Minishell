@@ -23,7 +23,14 @@ void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
 	char	**args;
 	char	**env_array;
 
+	if (!cmd->name || cmd->name[0] == '\0')
+	{
+		ft_putendl_fd(": command not found", 2);
+		cleanup_and_exit(data, original_cmd, 127);
+	}
 	cmd_path = find_cmd_in_path(cmd->name, data->env);
+	if (cmd_path == (char *)-1)
+		cleanup_and_exit(data, original_cmd, 126);
 	if (!cmd_path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
