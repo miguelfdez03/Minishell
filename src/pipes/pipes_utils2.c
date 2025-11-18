@@ -48,8 +48,6 @@ static int	wait_all_processes(int *exit_status)
 		last_pid = waitpid(-1, &status, 0);
 		if (last_pid <= 0)
 			break ;
-		if (WIFEXITED(status))
-			*exit_status = WEXITSTATUS(status);
 		else if ((status & 0x7f) != 0)
 			*exit_status = 128 + (status & 0x7f);
 	}
