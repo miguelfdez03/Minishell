@@ -53,10 +53,13 @@ void	write_heredoc_interactive(int fd, char *clean_delim, int expand,
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp2(line, clean_delim) == 0)
+		if (!line)
 		{
-			if (!line)
-				ft_putstr_fd("minishell: warning: heredoc EOF\n", 2);
+			ft_putstr_fd("minishell: warning: heredoc EOF\n", 2);
+			break ;
+		}
+		if (ft_strcmp2(line, clean_delim) == 0)
+		{
 			free(line);
 			break ;
 		}
@@ -71,8 +74,11 @@ static void	process_buffer_line(int fd, char *buffer, int expand, t_data *data)
 	if (expand)
 	{
 		expanded = expand_string(buffer, data->env, data->exit_status);
-		write(fd, expanded, ft_strlen(expanded));
-		free(expanded);
+		if (expanded)
+		{
+			write(fd, expanded, ft_strlen(expanded));
+			free(expanded);
+		}
 	}
 	else
 		write(fd, buffer, ft_strlen(buffer));
@@ -86,19 +92,23 @@ void	write_heredoc_pipe(int fd, char *clean_delim, int expand, t_data *data)
 	int		i;
 
 	i = 0;
-	bytes_read = read(STDIN_FILENO, buffer + i, 1);
-	while (bytes_read > 0)
+	while (1)
 	{
+		bytes_read = read(STDIN_FILENO, buffer + i, 1);
+		if (bytes_read <= 0)
+			break ;
+		if (i >= 9999)
+			break ;
 		if (buffer[i] == '\n')
 		{
 			buffer[i] = '\0';
 			if (ft_strcmp2(buffer, clean_delim) == 0)
 				break ;
 			process_buffer_line(fd, buffer, expand, data);
+			ft_memset(buffer, 0, i + 1);
 			i = 0;
 		}
 		else
 			i++;
-		bytes_read = read(STDIN_FILENO, buffer + i, 1);
 	}
 }

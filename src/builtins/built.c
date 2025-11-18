@@ -19,6 +19,23 @@ static int	execute_builtin_with_redir(t_data *data)
 	return (exit_status);
 }
 
+static int	handle_empty_cmd(t_cmd *cmd, t_data *data)
+{
+	if (!cmd->args || !cmd->args[0])
+	{
+		if (cmd->next || cmd->redirections)
+		{
+			ft_putendl_fd(": command not found", 2);
+			data->exit_status = 127;
+			return (data->exit_status);
+		}
+		return (0);
+	}
+	cmd->name = ft_strdup(cmd->args[0]);
+	cmd->builtin_id = identify_builtin(cmd->name);
+	return (-1);
+}
+
 int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
@@ -27,10 +44,9 @@ int	execute_command(t_data *data)
 	cmd = data->cmd;
 	if (!cmd->name || cmd->name[0] == '\0')
 	{
-		if (!cmd->args || !cmd->args[0])
-			return (0);
-		cmd->name = ft_strdup(cmd->args[0]);
-		cmd->builtin_id = identify_builtin(cmd->name);
+		exit_status = handle_empty_cmd(cmd, data);
+		if (exit_status != -1)
+			return (exit_status);
 	}
 	if (cmd->next)
 		return (execute_pipeline(data));
@@ -45,7 +61,7 @@ int	execute_command(t_data *data)
 	return (exit_status);
 }
 
-static int	handle_basic_builtins(t_data *data)
+int	execute_builtin_by_id(t_data *data)
 {
 	t_builtin_type	type;
 
@@ -58,33 +74,12 @@ static int	handle_basic_builtins(t_data *data)
 		return (builtin_exit(data));
 	if (type == BUILTIN_ECHO)
 		return (builtin_echo(data));
-	return (-1);
-}
-
-static int	handle_env_builtins(t_data *data)
-{
-	t_builtin_type	type;
-
-	type = data->cmd->builtin_id;
 	if (type == BUILTIN_ENV)
 		return (builtin_env(data));
 	if (type == BUILTIN_EXPORT)
 		return (builtin_export(data));
 	if (type == BUILTIN_UNSET)
 		return (builtin_unset(data));
-	return (-1);
-}
-
-int	execute_builtin_by_id(t_data *data)
-{
-	int	result;
-
-	result = handle_basic_builtins(data);
-	if (result != -1)
-		return (result);
-	result = handle_env_builtins(data);
-	if (result != -1)
-		return (result);
 	printf("\nUnknown builtin\n");
 	return (1);
 }
