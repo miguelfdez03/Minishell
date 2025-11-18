@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
+int	exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
 {
 	pid_t	pid;
 	int		is_last_cmd;
@@ -26,7 +26,7 @@ int	handle_pipe_cmd(t_data *data, t_cmd *current, int *input_fd)
 		return (-1);
 	fcntl(pipe_fd[0], F_SETFD, FD_CLOEXEC);
 	fcntl(pipe_fd[1], F_SETFD, FD_CLOEXEC);
-	pid = execute_single_cmd(data, current, *input_fd, pipe_fd[1]);
+	pid = exec_sig_cmd(data, current, *input_fd, pipe_fd[1]);
 	close(pipe_fd[1]);
 	if (*input_fd != STDIN_FILENO)
 		close(*input_fd);

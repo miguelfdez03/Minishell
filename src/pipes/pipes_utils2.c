@@ -76,7 +76,7 @@ int	execute_pipeline(t_data *data)
 			handle_pipe_cmd(data, current, &input_fd);
 		else
 		{
-			last_cmd_pid = execute_single_cmd(data, current, input_fd, STDOUT_FILENO);
+			last_cmd_pid = exec_sig_cmd(data, current, input_fd, STDOUT_FILENO);
 			if (input_fd != STDIN_FILENO)
 				close(input_fd);
 		}

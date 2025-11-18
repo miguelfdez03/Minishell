@@ -73,7 +73,7 @@ La implementación original esperaba (`waitpid`) a cada comando inmediatamente d
 
 ```c
 // ANTES - Implementación errónea
-static int execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
+static int exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
 {
     pid = fork();
     if (pid == 0)
@@ -142,7 +142,7 @@ int ft_word_length(char *line, int i)
 **Implementación:**
 ```c
 // DESPUÉS - Pipeline correcto
-static int execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
+static int exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd)
 {
     pid_t pid;
     
@@ -163,7 +163,7 @@ int execute_pipeline(t_data *data)
         if (current->next)
         {
             pipe(pipe_fd);
-            execute_single_cmd(data, current, input_fd, pipe_fd[1]);
+            exec_sig_cmd(data, current, input_fd, pipe_fd[1]);
             close(pipe_fd[1]);  // ✅ Cerrar inmediatamente
             if (input_fd != STDIN_FILENO)
                 close(input_fd);
@@ -171,7 +171,7 @@ int execute_pipeline(t_data *data)
         }
         else
         {
-            execute_single_cmd(data, current, input_fd, STDOUT_FILENO);
+            exec_sig_cmd(data, current, input_fd, STDOUT_FILENO);
             if (input_fd != STDIN_FILENO)
                 close(input_fd);
         }
@@ -232,7 +232,7 @@ static int handle_words_and_args(char *line, int i, t_data **data, int has_space
 **Propósito:** Separar lógica de ejecución de pipes (norminette compliance)
 
 **Funciones:**
-- `execute_single_cmd()` - Fork y configuración de FDs para un comando
+- `exec_sig_cmd()` - Fork y configuración de FDs para un comando
 - `close_pipe_fds()` - Cierre ordenado de file descriptors
 - `wait_all_processes()` - Espera y recolección de exit status
 - `handle_pipe_cmd()` - Gestión de comandos intermedios en pipeline
@@ -302,7 +302,7 @@ if (cmd->next)
 ```c
 // Pipes
 int execute_pipeline(t_data *data);
-int execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd);
+int exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd, int output_fd);
 
 // Lexer
 void process_first_cmd_args(t_token **tmp, t_data **data);
