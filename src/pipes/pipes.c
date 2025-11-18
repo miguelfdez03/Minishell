@@ -16,16 +16,20 @@ void	setup_child_fds(int input_fd, int output_fd)
 
 int	handle_pipe(t_cmd *current_cmd, t_token **tokens)
 {
+	t_token	*segment_start;
+
 	if (!current_cmd || !tokens || !*tokens)
 		return (-1);
 	*tokens = (*tokens)->next;
 	if (!*tokens)
 	{
-		ft_printf("syntax error near unexpected token `|'\n");
+		ft_printf("syntax error near unexpected token `|'\\n");
 		return (-1);
 	}
+	segment_start = *tokens;
 	if (init_next_cmd(current_cmd, tokens) == -1)
 		return (-1);
-	process_cmd_args(current_cmd->next, tokens);
+	process_cmd_args(current_cmd->next, &segment_start);
+	*tokens = segment_start;
 	return (0);
 }

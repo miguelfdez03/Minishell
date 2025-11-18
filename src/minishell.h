@@ -97,7 +97,7 @@ int				ft_word_length(char *line, int i);
 int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
 int				process_pipes(t_data *data);
 int				execute_pipeline(t_data *data);
-int				execute_single_cmd(t_data *data, t_cmd *cmd, int input_fd,
+int				exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd,
 					int output_fd);
 void			setup_child_fds(int input_fd, int output_fd);
 void			exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd);
@@ -108,6 +108,8 @@ int				init_next_cmd_name(t_cmd *next_cmd, t_token *tmp);
 void			close_all_fds(void);
 void			cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code);
 void			exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original);
+void			process_pipeline_cmd(t_data *data, t_cmd **current,
+					int *input_fd, pid_t *last_cmd_pid);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 

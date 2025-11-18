@@ -19,13 +19,10 @@ int	check_redir_syntax(t_token *current)
 
 int	check_first_token(t_token *current)
 {
-	if (is_operator_token(current->type))
+	if (current->type == PIPE)
 	{
-		if (current->type == PIPE)
-			ft_putendl_fd("minishell: syntax error near unexpected "
-				"token `|'", 2);
-		else
-			print_redir_error(current->type);
+		ft_putendl_fd("minishell: syntax error near unexpected "
+			"token `|'", 2);
 		return (0);
 	}
 	return (1);
