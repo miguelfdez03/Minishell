@@ -108,6 +108,8 @@ int				init_next_cmd_name(t_cmd *next_cmd, t_token *tmp);
 void			close_all_fds(void);
 void			cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code);
 void			exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original);
+void			process_pipeline_cmd(t_data *data, t_cmd **current,
+					int *input_fd, pid_t *last_cmd_pid);
 //--CONCATENATE--
 void			concatenate_tokens(t_token **tokens);
 

@@ -50,6 +50,7 @@ SRCS = src/main.c \
 		src/pipes/pipes_utils.c\
 		src/pipes/pipes_utils2.c\
 		src/pipes/pipes_utils3.c\
+		src/pipes/pipes_utils4.c\
 		src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)

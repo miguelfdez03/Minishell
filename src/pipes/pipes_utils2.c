@@ -71,17 +71,7 @@ int	execute_pipeline(t_data *data)
 	last_cmd_pid = -1;
 	setup_signals_executing();
 	while (current)
-	{
-		if (current->next)
-			handle_pipe_cmd(data, current, &input_fd);
-		else
-		{
-			last_cmd_pid = exec_sig_cmd(data, current, input_fd, STDOUT_FILENO);
-			if (input_fd != STDIN_FILENO)
-				close(input_fd);
-		}
-		current = current->next;
-	}
+		process_pipeline_cmd(data, &current, &input_fd, &last_cmd_pid);
 	wait_all_processes(&exit_status, last_cmd_pid);
 	setup_signals_interactive();
 	data->exit_status = exit_status;

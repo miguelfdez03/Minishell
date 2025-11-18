@@ -17,7 +17,7 @@ void	free_data(t_data *data)
 	free(data);
 }
 
-static char	*read_multiline(char *input)
+static char	*read_multiline(char *input, t_data **data)
 {
 	char	quote;
 	char	*cont;
@@ -29,7 +29,8 @@ static char	*read_multiline(char *input)
 		cont = readline("> ");
 		if (!cont)
 		{
-			ft_printf("syntax error: unexpected end of file\n");
+			ft_putendl_fd("syntax error: unexpected end of file", 2);
+			(*data)->exit_status = 2;
 			free(input);
 			return (NULL);
 		}
@@ -88,7 +89,7 @@ int	main_loop(int argc, char **argv, t_data **data)
 			(*data)->exit_status = g_signal_received;
 			g_signal_received = 0;
 		}
-		input = read_multiline(input);
+		input = read_multiline(input, data);
 		if (!input)
 			continue ;
 		add_history(input);
