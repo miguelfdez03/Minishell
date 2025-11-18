@@ -41,12 +41,16 @@ static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 {
 	int		status;
 	pid_t	current_pid;
+	int		sigint_received;
 
+	sigint_received = 0;
 	while (1)
 	{
 		current_pid = waitpid(-1, &status, 0);
 		if (current_pid <= 0)
 			break ;
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			sigint_received = 1;
 		if (current_pid == last_cmd_pid)
 		{
 			if (WIFEXITED(status))
@@ -55,6 +59,8 @@ static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 				*exit_status = 128 + WTERMSIG(status);
 		}
 	}
+	if (sigint_received)
+		write(1, "\n", 1);
 	return (*exit_status);
 }
 

@@ -22,6 +22,10 @@ int	wait_and_cleanup(pid_t pid, char *cmd_path, char **args,
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
 		return (128 + WTERMSIG(status));
+	}
 	return (1);
 }
