@@ -80,25 +80,26 @@ char	*check_absolute_path(char *cmd)
 {
 	struct stat	path_stat;
 
-	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
+	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/') 
+		|| ft_strcmp2(cmd, ".") == 0 || ft_strcmp2(cmd, "..") == 0)
 	{
-		if (stat(cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+		if (stat(cmd, &path_stat) != 0)
+			return (NULL);
+		if (S_ISDIR(path_stat.st_mode))
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd, 2);
 			ft_putendl_fd(": Is a directory", 2);
 			return ((char *)-1);
 		}
-		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
+		if (access(cmd, X_OK) != 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd, 2);
 			ft_putendl_fd(": Permission denied", 2);
 			return ((char *)-1);
 		}
-		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
+		return (ft_strdup(cmd));
 	}
 	return (NULL);
 }
