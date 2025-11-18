@@ -50,8 +50,8 @@ static int	wait_all_processes(int *exit_status)
 			break ;
 		if (WIFEXITED(status))
 			*exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			*exit_status = 128 + WTERMSIG(status);
+		else if ((status & 0x7f) != 0)
+			*exit_status = 128 + (status & 0x7f);
 	}
 	return (*exit_status);
 }
