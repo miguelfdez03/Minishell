@@ -37,19 +37,23 @@ void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
 	cleanup_and_exit(data, original_cmd, 127);
 }
 
-static int	wait_all_processes(int *exit_status)
+static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 {
 	int		status;
-	pid_t	last_pid;
+	pid_t	current_pid;
 
-	last_pid = -1;
 	while (1)
 	{
-		last_pid = waitpid(-1, &status, 0);
-		if (last_pid <= 0)
+		current_pid = waitpid(-1, &status, 0);
+		if (current_pid <= 0)
 			break ;
-		else if ((status & 0x7f) != 0)
-			*exit_status = 128 + (status & 0x7f);
+		if (current_pid == last_cmd_pid)
+		{
+			if (WIFEXITED(status))
+				*exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				*exit_status = 128 + WTERMSIG(status);
+		}
 	}
 	return (*exit_status);
 }
@@ -59,10 +63,12 @@ int	execute_pipeline(t_data *data)
 	t_cmd	*current;
 	int		input_fd;
 	int		exit_status;
+	pid_t	last_cmd_pid;
 
 	current = data->cmd;
 	input_fd = STDIN_FILENO;
 	exit_status = 0;
+	last_cmd_pid = -1;
 	setup_signals_executing();
 	while (current)
 	{
@@ -70,13 +76,13 @@ int	execute_pipeline(t_data *data)
 			handle_pipe_cmd(data, current, &input_fd);
 		else
 		{
-			execute_single_cmd(data, current, input_fd, STDOUT_FILENO);
+			last_cmd_pid = execute_single_cmd(data, current, input_fd, STDOUT_FILENO);
 			if (input_fd != STDIN_FILENO)
 				close(input_fd);
 		}
 		current = current->next;
 	}
-	wait_all_processes(&exit_status);
+	wait_all_processes(&exit_status, last_cmd_pid);
 	setup_signals_interactive();
 	data->exit_status = exit_status;
 	return (exit_status);
@@ -92,12 +98,7 @@ void	exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd)
 	close_all_fds();
 	data->cmd = cmd;
 	if (apply_redirections(data) == -1)
-	{
-		if (is_last_cmd)
-			cleanup_and_exit(data, original_cmd, 1);
-		else
-			cleanup_and_exit(data, original_cmd, 0);
-	}
+		cleanup_and_exit(data, original_cmd, 1);
 	if (cmd->builtin_id != BUILTIN_NONE)
 	{
 		exit_code = execute_builtin_by_id(data);

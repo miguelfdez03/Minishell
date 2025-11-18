@@ -68,16 +68,29 @@ int	init_next_cmd(t_cmd *current_cmd, t_token **tokens)
 		return (-1);
 	init_cmd(current_cmd->next);
 	tmp = *tokens;
-	if (tmp && tmp->value && (tmp->type == WORD || tmp->type == STRING))
+	while (tmp && tmp->type != PIPE)
 	{
-		if (init_next_cmd_name(current_cmd->next, tmp) == -1)
+		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT
+			|| tmp->type == REDIR_APPEND || tmp->type == HEREDOC)
 		{
-			current_cmd->next = NULL;
-			return (-1);
+			tmp = tmp->next;
 		}
-		*tokens = (*tokens)->next;
+		else if (tmp->value && (tmp->type == WORD || tmp->type == STRING
+				|| tmp->type == ARGS))
+		{
+			if (init_next_cmd_name(current_cmd->next, tmp) == -1)
+			{
+				current_cmd->next = NULL;
+				return (-1);
+			}
+			tmp->type = EMPTY;
+			*tokens = tmp->next;
+			return (0);
+		}
+		else
+			tmp = tmp->next;
 	}
-	return (0);
+	return (-1);
 }
 
 void	process_cmd_args(t_cmd *cmd, t_token **tokens)
@@ -94,8 +107,9 @@ void	process_cmd_args(t_cmd *cmd, t_token **tokens)
 				add_redir(&(cmd->redirections), tmp->type,
 					ft_strdup(tmp->value));
 		}
-		else if (tmp->value && (tmp->type == WORD || tmp->type == STRING
-				|| tmp->type == ARGS || tmp->type == SIMPLE_Q))
+		else if (tmp->type != EMPTY && tmp->value && (tmp->type == WORD
+				|| tmp->type == STRING || tmp->type == ARGS
+				|| tmp->type == SIMPLE_Q))
 			add_cmd_arg(cmd, tmp->value);
 		tmp = tmp->next;
 		*tokens = tmp;
