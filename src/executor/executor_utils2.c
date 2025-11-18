@@ -21,5 +21,7 @@ int	wait_and_cleanup(pid_t pid, char *cmd_path, char **args,
 	free_string_array(env_array);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (1);
 }
