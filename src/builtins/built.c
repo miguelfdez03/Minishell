@@ -23,12 +23,29 @@ int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
 	int		exit_status;
+	int		saved_stdin;
+	int		saved_stdout;
 
 	cmd = data->cmd;
+	if ((!cmd->name || cmd->name[0] == '\0') && (!cmd->args || !cmd->args[0]))
+	{
+		if (cmd->redirections)
+		{
+			saved_stdin = dup(STDIN_FILENO);
+			saved_stdout = dup(STDOUT_FILENO);
+			exit_status = apply_redirections(data);
+			dup2(saved_stdin, STDIN_FILENO);
+			dup2(saved_stdout, STDOUT_FILENO);
+			close(saved_stdin);
+			close(saved_stdout);
+			if (exit_status == -1)
+				return (1);
+			return (0);
+		}
+		return (0);
+	}
 	if (!cmd->name || cmd->name[0] == '\0')
 	{
-		if (!cmd->args || !cmd->args[0])
-			return (0);
 		cmd->name = ft_strdup(cmd->args[0]);
 		cmd->builtin_id = identify_builtin(cmd->name);
 	}
