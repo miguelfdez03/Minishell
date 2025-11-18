@@ -19,7 +19,7 @@ int	wait_and_cleanup(pid_t pid, char *cmd_path, char **args,
 	free(cmd_path);
 	free(args);
 	free_string_array(env_array);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+	if ((status & 0x7f) != 0)
+		return (128 + (status & 0x7f));
 	return (1);
 }
