@@ -38,11 +38,17 @@ static void	process_heredoc_line_interactive(int fd, char *line, int expand,
 	{
 		expanded = expand_string(line, data->env, data->exit_status);
 		free(line);
-		line = expanded;
+		if (expanded)
+			line = expanded;
+		else
+			line = ft_strdup("");
 	}
-	write(fd, line, ft_strlen(line));
-	write(fd, "\n", 1);
-	free(line);
+	if (line)
+	{
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
 }
 
 void	write_heredoc_interactive(int fd, char *clean_delim, int expand,

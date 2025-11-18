@@ -69,10 +69,16 @@ int	handle_heredoc(char *delimiter, t_data *data)
 	expand = should_expand_heredoc(delimiter);
 	setup_signals_heredoc();
 	if (open_and_write_heredoc(tmp_file, clean_delimiter, expand, data) == -1)
+	{
+		setup_signals_interactive();
 		return (-1);
+	}
 	free(clean_delimiter);
 	if (redirect_heredoc_to_stdin(tmp_file) == -1)
+	{
+		setup_signals_interactive();
 		return (-1);
+	}
 	setup_signals_interactive();
 	return (0);
 }
