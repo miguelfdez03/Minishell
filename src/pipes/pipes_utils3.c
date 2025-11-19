@@ -6,7 +6,11 @@ void	close_all_fds(void)
 
 	fd = 3;
 	while (fd < 1024)
-		close(fd++);
+	{
+		if (fcntl(fd, F_GETFD) != -1)
+			close(fd);
+		fd++;
+	}
 }
 
 int	init_next_cmd_name(t_cmd *next_cmd, t_token *tmp)

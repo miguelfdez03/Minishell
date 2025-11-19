@@ -50,6 +50,7 @@ int	builtin_exit(t_data *data)
 {
 	t_cmd	*cmd;
 	int		exit_status;
+	int		fd;
 
 	cmd = data->cmd;
 	ft_putendl_fd("exit", 2);
@@ -60,5 +61,12 @@ int	builtin_exit(t_data *data)
 		return (2);
 	}
 	free_data(data);
+	fd = 3;
+	while (fd < 1024)
+	{
+		if (fcntl(fd, F_GETFD) != -1)
+			close(fd);
+		fd++;
+	}
 	exit(exit_status);
 }
