@@ -78,6 +78,8 @@ typedef struct s_cmd
 	char			*name;
 	char			**args;
 	t_builtin_type	builtin_id;
+	//int	infile
+	//int	outfile
 	t_redir			*redirections;
 	struct s_cmd	*next;
 }	t_cmd;

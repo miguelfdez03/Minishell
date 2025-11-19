@@ -39,7 +39,8 @@ static void	process_heredoc_line_interactive(t_heredoc_s *here_s, char *line)
 
 	if (here_s->expand)
 	{
-		expanded = expand_string(line, here_s->data->env, here_s->data->exit_status);
+		expanded = expand_string(line, here_s->data->env,
+				here_s->data->exit_status);
 		free(line);
 		if (expanded)
 			line = expanded;
