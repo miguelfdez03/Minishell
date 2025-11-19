@@ -63,10 +63,6 @@ int	builtin_exit(t_data *data)
 	free_data(data);
 	fd = 3;
 	while (fd < 1024)
-	{
-		if (fcntl(fd, F_GETFD) != -1)
-			close(fd);
-		fd++;
-	}
+		close(fd++);
 	exit(exit_status);
 }

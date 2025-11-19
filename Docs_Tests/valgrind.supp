@@ -49,6 +49,30 @@
 }
 
 {
+   fcntl_on_nonexistent_fd
+   Memcheck:Param
+   fcntl(cmd)
+   fun:__fcntl*
+   ...
+}
+
+{
+   fcntl_fd_check  
+   Memcheck:Param
+   fcntl(arg)
+   fun:fcntl
+   ...
+}
+
+{
+   fd_was_never_created
+   Memcheck:Param
+   fcntl(fd)
+   fun:__fcntl*
+   ...
+}
+
+{
    dl_leak
    Memcheck:Leak
    ...

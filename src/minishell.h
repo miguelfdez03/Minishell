@@ -150,6 +150,7 @@ int				init_first_cmd(t_data **data, t_token **tmp);
 t_redir			*create_redir(t_token_type type, char *file);
 void			add_redir(t_redir **redir, t_token_type type, char *value);
 void			free_redirs(t_redir *redir);
+int				process_all_heredocs(t_data *data);
 int				apply_redirections(t_data *data);
 int				handle_heredoc(char *delimiter, t_data *data);
 char			*remove_quotes_from_delimiter(char *delimiter);

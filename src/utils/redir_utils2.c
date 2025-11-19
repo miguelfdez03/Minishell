@@ -82,6 +82,31 @@ static int	process_single_redir(t_redir *redir, t_data *data)
 	return (0);
 }
 
+int	process_all_heredocs(t_data *data)
+{
+	t_cmd	*cmd;
+	t_redir	*redir;
+	int		result;
+
+	cmd = data->cmd;
+	while (cmd)
+	{
+		redir = cmd->redirections;
+		while (redir)
+		{
+			if (redir->type == HEREDOC)
+			{
+				result = handle_heredoc(redir->file, data);
+				if (result == -1 || result == -2)
+					return (result);
+			}
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+	return (0);
+}
+
 int	apply_redirections(t_data *data)
 {
 	t_redir	*redir;
@@ -94,9 +119,18 @@ int	apply_redirections(t_data *data)
 	redir = cmd->redirections;
 	while (redir)
 	{
-		result = process_single_redir(redir, data);
-		if (result != 0)
-			return (result);
+		if (redir->type == HEREDOC)
+		{
+			if (handle_input_redir("/tmp/.minishell_heredoc") == -1)
+				return (-1);
+			unlink("/tmp/.minishell_heredoc");
+		}
+		else
+		{
+			result = process_single_redir(redir, data);
+			if (result != 0)
+				return (result);
+		}
 		redir = redir->next;
 	}
 	return (0);

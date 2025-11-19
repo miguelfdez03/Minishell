@@ -58,6 +58,8 @@ static int	execute_single_command(t_data *data, t_cmd *cmd)
 {
 	int	exit_status;
 
+	if (process_all_heredocs(data) != 0)
+		return (data->exit_status);
 	if (cmd->builtin_id == BUILTIN_NONE)
 	{
 		exit_status = execute_external_command(data);
