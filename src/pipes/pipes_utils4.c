@@ -51,4 +51,3 @@ void	process_pipeline_cmd(t_data *data, t_cmd **current, int *input_fd,
 	}
 	*current = (*current)->next;
 }
-
