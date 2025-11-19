@@ -17,10 +17,16 @@ int	should_expand_heredoc(char *original_delimiter)
 static void	write_heredoc_content(int fd, char *clean_delim, int expand,
 		t_data *data)
 {
+	t_heredoc_s	here_s;
+
+	here_s.fd = fd;
+	here_s.clean_delim = clean_delim;
+	here_s.expand = expand;
+	here_s.data = data;
 	if (isatty(STDIN_FILENO))
-		write_heredoc_interactive(fd, clean_delim, expand, data);
+		write_heredoc_interactive(&here_s);
 	else
-		write_heredoc_pipe(fd, clean_delim, expand, data);
+		write_heredoc_pipe(&here_s);
 }
 
 static int	open_and_write_heredoc(char *tmp_file, char *clean_delimiter,

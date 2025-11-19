@@ -2,7 +2,7 @@
 
 volatile sig_atomic_t	g_signal_received = 0;
 
-void	handle_sigint(int sig)
+static void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_signal_received = 130;
@@ -12,18 +12,6 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	setup_signals_interactive(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	setup_signals_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
 static void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
@@ -31,14 +19,14 @@ static void	handle_sigint_heredoc(int sig)
 	write(1, "\n", 1);
 }
 
-void	setup_signals_heredoc(void)
+void	setup_signals_interactive(void)
 {
-	signal(SIGINT, handle_sigint_heredoc);
+	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setup_signals_executing(void)
+void	setup_signals_heredoc(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

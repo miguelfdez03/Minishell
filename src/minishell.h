@@ -82,6 +82,14 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_heredoc_s
+{
+	int			fd;
+	char		*clean_delim;
+	int			expand;
+	t_data		*data;
+}	t_heredoc_s;
+
 //--UTILS--
 int				is_space(char c);
 int				is_quotes(char c);
@@ -144,10 +152,8 @@ int				apply_redirections(t_data *data);
 int				handle_heredoc(char *delimiter, t_data *data);
 char			*remove_quotes_from_delimiter(char *delimiter);
 int				should_expand_heredoc(char *original_delimiter);
-void			write_heredoc_interactive(int fd, char *clean_delim, int expand,
-					t_data *data);
-void			write_heredoc_pipe(int fd, char *clean_delim, int expand,
-					t_data *data);
+void			write_heredoc_interactive(t_heredoc_s *here_s);
+void			write_heredoc_pipe(t_heredoc_s *here_s);
 
 //--BUILT-INS--
 int				execute_command(t_data *data);
@@ -231,7 +237,6 @@ void			free_string_array(char **array);
 
 //--SIGNALS--
 extern volatile sig_atomic_t	g_signal_received;
-void			handle_sigint(int sig);
 void			setup_signals_interactive(void);
 void			setup_signals_child(void);
 void			setup_signals_heredoc(void);

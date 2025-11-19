@@ -18,40 +18,41 @@ SRCS = src/main.c \
 	src/parser/syntax/syntax_check.c\
 	src/parser/syntax/syntax_utils.c\
 	src/utils/utils.c\
-		src/utils/utils_2.c\
-		src/utils/signals.c\
-		src/utils/env/env_utils.c\
-		src/utils/env/env_utils2.c\
-		src/utils/env/env_utils3.c\
-		src/utils/redir_utils.c\
-		src/utils/redir_utils2.c\
-		src/utils/heredoc.c\
-		src/utils/heredoc_utils.c\
-		src/expander/expand_vars.c\
-		src/expander/expand_vars_2.c\
-		src/expander/expand_vars_3.c\
-		src/utils/builtin/builtin_cd_utils.c\
-		src/utils/builtin/builtin_export_utils.c\
-		src/init_mini/mini_init.c\
-		src/init_mini/init_struct.c\
-		src/init_mini/init_env.c\
-		src/builtins/built.c\
-		src/builtins/builtin_exit.c\
-		src/utils/cmd/cmd_utils.c\
-		src/utils/cmd/cmd_utils2.c\
-		src/utils/free.c\
-		src/builtins/builtin_env.c\
-		src/builtins/builtin_echo.c\
-		src/builtins/builtin_cd.c\
-		src/builtins/builtin_pwd.c\
-		src/builtins/builtin_export.c\
-		src/builtins/builtin_unset.c\
-		src/pipes/pipes.c\
-		src/pipes/pipes_utils.c\
-		src/pipes/pipes_utils2.c\
-		src/pipes/pipes_utils3.c\
-		src/pipes/pipes_utils4.c\
-		src/concatenate/concatenate.c\
+	src/utils/utils_2.c\
+	src/utils/signals.c\
+	src/utils/signals_setup.c\
+	src/utils/env/env_utils.c\
+	src/utils/env/env_utils2.c\
+	src/utils/env/env_utils3.c\
+	src/utils/redir_utils.c\
+	src/utils/redir_utils2.c\
+	src/utils/heredoc.c\
+	src/utils/heredoc_utils.c\
+	src/expander/expand_vars.c\
+	src/expander/expand_vars_2.c\
+	src/expander/expand_vars_3.c\
+	src/utils/builtin/builtin_cd_utils.c\
+	src/utils/builtin/builtin_export_utils.c\
+	src/init_mini/mini_init.c\
+	src/init_mini/init_struct.c\
+	src/init_mini/init_env.c\
+	src/builtins/built.c\
+	src/builtins/builtin_exit.c\
+	src/utils/cmd/cmd_utils.c\
+	src/utils/cmd/cmd_utils2.c\
+	src/utils/free.c\
+	src/builtins/builtin_env.c\
+	src/builtins/builtin_echo.c\
+	src/builtins/builtin_cd.c\
+	src/builtins/builtin_pwd.c\
+	src/builtins/builtin_export.c\
+	src/builtins/builtin_unset.c\
+	src/pipes/pipes.c\
+	src/pipes/pipes_utils.c\
+	src/pipes/pipes_utils2.c\
+	src/pipes/pipes_utils3.c\
+	src/pipes/pipes_utils4.c\
+	src/concatenate/concatenate.c\
 
 OBJS = $(SRCS:.c=.o)
 

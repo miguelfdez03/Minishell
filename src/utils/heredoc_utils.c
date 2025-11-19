@@ -33,14 +33,13 @@ char	*remove_quotes_from_delimiter(char *delimiter)
 	return (result);
 }
 
-static void	process_heredoc_line_interactive(int fd, char *line, int expand,
-		t_data *data)
+static void	process_heredoc_line_interactive(t_heredoc_s *here_s, char *line)
 {
 	char	*expanded;
 
-	if (expand)
+	if (here_s->expand)
 	{
-		expanded = expand_string(line, data->env, data->exit_status);
+		expanded = expand_string(line, here_s->data->env, here_s->data->exit_status);
 		free(line);
 		if (expanded)
 			line = expanded;
@@ -49,8 +48,8 @@ static void	process_heredoc_line_interactive(int fd, char *line, int expand,
 	}
 	if (line)
 	{
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		write(here_s->fd, line, ft_strlen(line));
+		write(here_s->fd, "\n", 1);
 		free(line);
 	}
 }
@@ -83,8 +82,7 @@ static void	setup_heredoc_io(int *saved_stdout)
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 }
 
-void	write_heredoc_interactive(int fd, char *clean_delim, int expand,
-		t_data *data)
+void	write_heredoc_interactive(t_heredoc_s *here_s)
 {
 	char	*line;
 	int		saved_stdout;
@@ -93,43 +91,43 @@ void	write_heredoc_interactive(int fd, char *clean_delim, int expand,
 	while (1)
 	{
 		line = readline("> ");
-		if (check_heredoc_exit(line, clean_delim))
+		if (check_heredoc_exit(line, here_s->clean_delim))
 			break ;
-		process_heredoc_line_interactive(fd, line, expand, data);
+		process_heredoc_line_interactive(here_s, line);
 	}
 	rl_catch_signals = 1;
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
 }
 
-static void	process_buffer_line(int fd, char *buffer, int expand, t_data *data)
+static void	process_buffer_line(t_heredoc_s *here_s, char *buffer)
 {
 	char	*expanded;
 
-	if (expand)
+	if (here_s->expand)
 	{
-		expanded = expand_string(buffer, data->env, data->exit_status);
+		expanded = expand_string(buffer, here_s->data->env,
+				here_s->data->exit_status);
 		if (expanded)
 		{
-			write(fd, expanded, ft_strlen(expanded));
+			write(here_s->fd, expanded, ft_strlen(expanded));
 			free(expanded);
 		}
 	}
 	else
-		write(fd, buffer, ft_strlen(buffer));
-	write(fd, "\n", 1);
+		write(here_s->fd, buffer, ft_strlen(buffer));
+	write(here_s->fd, "\n", 1);
 }
 
-static int	process_pipe_newline(int fd, char *buffer, char *clean_delim,
-			int expand, t_data *data)
+static int	process_pipe_newline(t_heredoc_s *here_s, char *buffer)
 {
-	if (ft_strcmp2(buffer, clean_delim) == 0)
+	if (ft_strcmp2(buffer, here_s->clean_delim) == 0)
 		return (1);
-	process_buffer_line(fd, buffer, expand, data);
+	process_buffer_line(here_s, buffer);
 	return (0);
 }
 
-void	write_heredoc_pipe(int fd, char *clean_delim, int expand, t_data *data)
+void	write_heredoc_pipe(t_heredoc_s *here_s)
 {
 	char	buffer[10000];
 	ssize_t	bytes_read;
@@ -144,7 +142,7 @@ void	write_heredoc_pipe(int fd, char *clean_delim, int expand, t_data *data)
 		if (buffer[i] == '\n')
 		{
 			buffer[i] = '\0';
-			if (process_pipe_newline(fd, buffer, clean_delim, expand, data))
+			if (process_pipe_newline(here_s, buffer))
 				break ;
 			ft_memset(buffer, 0, i + 1);
 			i = 0;

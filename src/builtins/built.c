@@ -19,6 +19,24 @@ static int	execute_builtin_with_redir(t_data *data)
 	return (exit_status);
 }
 
+static int	process_redirections_only(t_data *data)
+{
+	int	exit_status;
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	exit_status = apply_redirections(data);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	if (exit_status == -1)
+		return (1);
+	return (0);
+}
+
 static int	handle_empty_cmd(t_cmd *cmd, t_data *data)
 {
 	if (!cmd->args || !cmd->args[0])
@@ -36,29 +54,31 @@ static int	handle_empty_cmd(t_cmd *cmd, t_data *data)
 	return (-1);
 }
 
+static int	execute_single_command(t_data *data, t_cmd *cmd)
+{
+	int	exit_status;
+
+	if (cmd->builtin_id == BUILTIN_NONE)
+	{
+		exit_status = execute_external_command(data);
+		data->exit_status = exit_status;
+		return (exit_status);
+	}
+	exit_status = execute_builtin_with_redir(data);
+	data->exit_status = exit_status;
+	return (exit_status);
+}
+
 int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
 	int		exit_status;
-	int		saved_stdin;
-	int		saved_stdout;
 
 	cmd = data->cmd;
 	if ((!cmd->name || cmd->name[0] == '\0') && (!cmd->args || !cmd->args[0]))
 	{
 		if (cmd->redirections)
-		{
-			saved_stdin = dup(STDIN_FILENO);
-			saved_stdout = dup(STDOUT_FILENO);
-			exit_status = apply_redirections(data);
-			dup2(saved_stdin, STDIN_FILENO);
-			dup2(saved_stdout, STDOUT_FILENO);
-			close(saved_stdin);
-			close(saved_stdout);
-			if (exit_status == -1)
-				return (1);
-			return (0);
-		}
+			return (process_redirections_only(data));
 		return (0);
 	}
 	if (!cmd->name || cmd->name[0] == '\0')
@@ -69,15 +89,7 @@ int	execute_command(t_data *data)
 	}
 	if (cmd->next)
 		return (execute_pipeline(data));
-	if (cmd->builtin_id == BUILTIN_NONE)
-	{
-		exit_status = execute_external_command(data);
-		data->exit_status = exit_status;
-		return (exit_status);
-	}
-	exit_status = execute_builtin_with_redir(data);
-	data->exit_status = exit_status;
-	return (exit_status);
+	return (execute_single_command(data, cmd));
 }
 
 int	execute_builtin_by_id(t_data *data)
