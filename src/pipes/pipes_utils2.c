@@ -41,26 +41,29 @@ static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 {
 	int		status;
 	pid_t	current_pid;
-	int		sigint_received;
+	int		last_signal;
 
-	sigint_received = 0;
+	last_signal = 0;
 	while (1)
 	{
 		current_pid = waitpid(-1, &status, 0);
 		if (current_pid <= 0)
 			break ;
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			sigint_received = 1;
 		if (current_pid == last_cmd_pid)
 		{
 			if (WIFEXITED(status))
 				*exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
 				*exit_status = 128 + WTERMSIG(status);
+				last_signal = WTERMSIG(status);
+			}
 		}
 	}
-	if (sigint_received)
+	if (last_signal == SIGINT)
 		write(1, "\n", 1);
+	else if (last_signal == SIGQUIT)
+		write(2, "Quit (core dumped)\n", 19);
 	return (*exit_status);
 }
 

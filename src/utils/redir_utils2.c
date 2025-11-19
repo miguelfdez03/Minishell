@@ -94,9 +94,23 @@ int	apply_redirections(t_data *data)
 	redir = cmd->redirections;
 	while (redir)
 	{
-		result = process_single_redir(redir, data);
-		if (result != 0)
-			return (result);
+		if (redir->type == HEREDOC)
+		{
+			result = process_heredoc_redir(redir->file, data);
+			if (result != 0)
+				return (result);
+		}
+		redir = redir->next;
+	}
+	redir = cmd->redirections;
+	while (redir)
+	{
+		if (redir->type != HEREDOC)
+		{
+			result = process_single_redir(redir, data);
+			if (result != 0)
+				return (result);
+		}
 		redir = redir->next;
 	}
 	return (0);
