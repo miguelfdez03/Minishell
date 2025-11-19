@@ -55,13 +55,23 @@ void	write_heredoc_interactive(int fd, char *clean_delim, int expand,
 		t_data *data)
 {
 	char	*line;
+	int		saved_stdout;
+	extern volatile sig_atomic_t	g_signal_received;
+	extern int	rl_catch_signals;
 
+	signal(SIGPIPE, SIG_IGN);
+	rl_catch_signals = 0;
+	saved_stdout = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
+		if (!line || g_signal_received)
 		{
-			ft_putstr_fd("minishell: warning: heredoc EOF\n", 2);
+			if (!g_signal_received)
+				ft_putstr_fd("minishell: warning: heredoc EOF\n", 2);
+			if (line)
+				free(line);
 			break ;
 		}
 		if (ft_strcmp2(line, clean_delim) == 0)
@@ -71,6 +81,9 @@ void	write_heredoc_interactive(int fd, char *clean_delim, int expand,
 		}
 		process_heredoc_line_interactive(fd, line, expand, data);
 	}
+	rl_catch_signals = 1;
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
 }
 
 static void	process_buffer_line(int fd, char *buffer, int expand, t_data *data)

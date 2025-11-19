@@ -71,6 +71,9 @@ static int	process_single_redir(t_redir *redir, t_data *data)
 		result = handle_heredoc(redir->file, data);
 		if (result == -1 || result == -2)
 			return (result);
+		if (handle_input_redir("/tmp/.minishell_heredoc") == -1)
+			return (-1);
+		unlink("/tmp/.minishell_heredoc");
 	}
 	return (0);
 }

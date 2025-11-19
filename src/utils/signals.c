@@ -24,9 +24,16 @@ void	setup_signals_child(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
+static void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	g_signal_received = 130;
+	write(1, "\n", 1);
+}
+
 void	setup_signals_heredoc(void)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }
 

@@ -56,6 +56,26 @@ static int	redirect_heredoc_to_stdin(char *tmp_file)
 	return (0);
 }
 
+static int	process_heredoc_file(char *tmp_file, char *clean_delim, int expand,
+		t_data *data)
+{
+	extern volatile sig_atomic_t	g_signal_received;
+
+	g_signal_received = 0;
+	setup_signals_heredoc();
+	if (open_and_write_heredoc(tmp_file, clean_delim, expand, data) == -1)
+	{
+		free(clean_delim);
+		setup_signals_interactive();
+		return (-1);
+	}
+	free(clean_delim);
+	setup_signals_interactive();
+	if (g_signal_received)
+		return (-2);
+	return (0);
+}
+
 int	handle_heredoc(char *delimiter, t_data *data)
 {
 	char	*clean_delimiter;
@@ -67,18 +87,5 @@ int	handle_heredoc(char *delimiter, t_data *data)
 	if (!clean_delimiter)
 		return (-1);
 	expand = should_expand_heredoc(delimiter);
-	setup_signals_heredoc();
-	if (open_and_write_heredoc(tmp_file, clean_delimiter, expand, data) == -1)
-	{
-		setup_signals_interactive();
-		return (-1);
-	}
-	free(clean_delimiter);
-	if (redirect_heredoc_to_stdin(tmp_file) == -1)
-	{
-		setup_signals_interactive();
-		return (-1);
-	}
-	setup_signals_interactive();
-	return (0);
+	return (process_heredoc_file(tmp_file, clean_delimiter, expand, data));
 }
