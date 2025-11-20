@@ -1,5 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define _POSIX_C_SOURCE 200809L
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -241,7 +242,10 @@ void			free_string_array(char **array);
 //--SIGNALS--
 extern volatile sig_atomic_t	g_signal_received;
 void			setup_signals_interactive(void);
+void			setup_signals_child(void);
+void			setup_signals_executing(void);
 void			setup_signals_heredoc(void);
+void 			setup_heredoc_signals(void);
 void			setup_signals_child(void);
 void			setup_signals_executing(void);
 
