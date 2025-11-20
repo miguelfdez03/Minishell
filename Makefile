@@ -26,6 +26,7 @@ SRCS = src/main.c \
 	src/utils/env/env_utils3.c\
 	src/utils/redir_utils.c\
 	src/utils/redir_utils2.c\
+	src/utils/redir_utils3.c\
 	src/utils/heredoc.c\
 	src/utils/heredoc2.c\
 	src/utils/heredoc_utils.c\
