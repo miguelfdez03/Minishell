@@ -242,6 +242,8 @@ void			free_string_array(char **array);
 extern volatile sig_atomic_t	g_signal_received;
 void			setup_signals_interactive(void);
 void			setup_signals_heredoc(void);
+void			setup_signals_child(void);
+void			setup_signals_executing(void);
 
 
 #endif
