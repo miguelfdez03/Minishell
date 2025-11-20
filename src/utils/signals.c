@@ -34,6 +34,12 @@ void	setup_signals_heredoc(void)
 
 void	setup_signals_interactive(void)
 {
-	signal(SIGINT, handle_sigint);
+	struct sigaction	sa;
+
+	g_signal_received = 0;
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
