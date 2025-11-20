@@ -88,6 +88,30 @@ int	init_env(char **env, t_env *env_t)
 	return (0);
 }
 
+void	increment_shlvl(t_env **env_head)
+{
+	t_env	*shlvl_node;
+	int		current_level;
+	char	*new_level;
+
+	shlvl_node = find_env(*env_head, "SHLVL");
+	if (shlvl_node && shlvl_node->value)
+	{
+		current_level = ft_atoi(shlvl_node->value);
+		current_level++;
+		new_level = ft_itoa(current_level);
+		if (new_level)
+		{
+			free(shlvl_node->value);
+			shlvl_node->value = new_level;
+		}
+	}
+	else
+	{
+		set_env_value(env_head, "SHLVL", "1");
+	}
+}
+
 void	free_env(t_env *env)
 {
 	t_env	*tmp;

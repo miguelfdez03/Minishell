@@ -38,6 +38,7 @@ static int	init_env_struct(t_data **data, char **env, t_env **env_t)
 		free(*data);
 		return (-1);
 	}
+	increment_shlvl(&(*data)->env);
 	return (0);
 }
 

@@ -223,6 +223,7 @@ void			free_data(t_data *data);
 //--ENV--
 int				init_env(char **env, t_env *env_t);
 void			free_env(t_env *env);
+void			increment_shlvl(t_env **env_head);
 t_env			*find_env(t_env *env, const char *key);
 char			*get_env_value_from_list(t_env *env, char *key);
 void			set_env_value(t_env **env_head, const char *key,
