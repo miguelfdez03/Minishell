@@ -1,5 +1,4 @@
 # 🚀 Minishell
----
 
 ## 🐚 Descripción
 
@@ -258,14 +257,6 @@ make re
 valgrind --leak-check=full --show-leak-kinds=all \
          --suppressions=Docs_Tests/valgrind.supp ./minishell
 ```
-
----
-
-## 📚 Recursos y Referencias
-
-- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/)
-- [Writing Your Own Shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/)
-- [Unix Pipes and Filters](https://en.wikipedia.org/wiki/Pipeline_(Unix))
 
 ---
 
