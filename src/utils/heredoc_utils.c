@@ -89,24 +89,23 @@ void	write_heredoc_interactive(t_heredoc_s *here_s)
 {
 	char	*line;
 	int		saved_stdout;
+	int		stdin_backup;
 
-	setup_signals_heredoc();	
+	stdin_backup = dup(STDIN_FILENO);
+	setup_signals_heredoc();
 	setup_heredoc_io(&saved_stdout);
-	while (1 && g_signal_received != 130)
+	while (1)
 	{
-		setup_signals_heredoc();
-		if (g_signal_received != 130)
-			line = readline("> ");
-		if (g_signal_received == 130)
-			break;
+		line = readline("> ");
 		if (check_heredoc_exit(line, here_s->clean_delim))
 			break ;
 		process_heredoc_line_interactive(here_s, line);
 	}
-	rl_done = 1;
 	rl_catch_signals = 1;
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
+	dup2(stdin_backup, STDIN_FILENO);
+	close(stdin_backup);
 }
 
 static void	process_buffer_line(t_heredoc_s *here_s, char *buffer)

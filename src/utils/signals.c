@@ -17,14 +17,18 @@ static void	handle_sigheredoc(int sig)
 	(void)sig;
 	g_signal_received = 130;
 	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	close(STDIN_FILENO);
 }
 
 void	setup_signals_heredoc(void)
 {
-	signal(SIGINT, handle_sigint);
+	struct sigaction	sa;
+
+	g_signal_received = 0;
+	sa.sa_handler = handle_sigheredoc;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
 
