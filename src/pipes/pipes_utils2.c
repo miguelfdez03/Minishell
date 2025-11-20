@@ -37,13 +37,13 @@ void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
 	cleanup_and_exit(data, original_cmd, 127);
 }
 
-static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
+static void	collect_children(
+	pid_t last_cmd_pid, int *exit_status, int *last_signal)
 {
 	int		status;
 	pid_t	current_pid;
-	int		last_signal;
 
-	last_signal = 0;
+	*last_signal = 0;
 	while (1)
 	{
 		current_pid = waitpid(-1, &status, 0);
@@ -56,39 +56,22 @@ static int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 			else if (WIFSIGNALED(status))
 			{
 				*exit_status = 128 + WTERMSIG(status);
-				last_signal = WTERMSIG(status);
+				*last_signal = WTERMSIG(status);
 			}
 		}
 	}
+}
+
+int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
+{
+	int	last_signal;
+
+	collect_children(last_cmd_pid, exit_status, &last_signal);
 	if (last_signal == SIGINT)
 		write(1, "\n", 1);
 	else if (last_signal == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);
 	return (*exit_status);
-}
-
-int	execute_pipeline(t_data *data)
-{
-	t_cmd	*current;
-	int		input_fd;
-	int		exit_status;
-	pid_t	last_cmd_pid;
-
-	if (process_all_heredocs(data) != 0)
-		return (data->exit_status);
-	current = data->cmd;
-	input_fd = STDIN_FILENO;
-	exit_status = 0;
-	last_cmd_pid = -1;
-	setup_signals_executing();
-	while (current)
-		process_pipeline_cmd(data, &current, &input_fd, &last_cmd_pid);
-	wait_all_processes(&exit_status, last_cmd_pid);
-	setup_signals_interactive();
-	data->exit_status = exit_status;
-	if (input_fd != STDIN_FILENO)
-		close(input_fd);
-	return (exit_status);
 }
 
 void	exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd)

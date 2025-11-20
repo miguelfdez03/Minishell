@@ -51,3 +51,19 @@ void	set_env_value(t_env **env_head, const char *key, const char *value)
 	dup_key = ft_strdup(key);
 	set_env_new_node(env_head, dup_key, dup_val);
 }
+
+void	free_env(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		if (env->key)
+			free(env->key);
+		if (env->value)
+			free(env->value);
+		free(env);
+		env = tmp;
+	}
+}

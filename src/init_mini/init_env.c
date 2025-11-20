@@ -111,19 +111,3 @@ void	increment_shlvl(t_env **env_head)
 		set_env_value(env_head, "SHLVL", "1");
 	}
 }
-
-void	free_env(t_env *env)
-{
-	t_env	*tmp;
-
-	while (env)
-	{
-		tmp = env->next;
-		if (env->key)
-			free(env->key);
-		if (env->value)
-			free(env->value);
-		free(env);
-		env = tmp;
-	}
-}

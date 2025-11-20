@@ -51,3 +51,27 @@ void	process_pipeline_cmd(t_data *data, t_cmd **current, int *input_fd,
 	}
 	*current = (*current)->next;
 }
+
+int	execute_pipeline(t_data *data)
+{
+	t_cmd	*current;
+	int		input_fd;
+	int		exit_status;
+	pid_t	last_cmd_pid;
+
+	if (process_all_heredocs(data) != 0)
+		return (data->exit_status);
+	current = data->cmd;
+	input_fd = STDIN_FILENO;
+	exit_status = 0;
+	last_cmd_pid = -1;
+	setup_signals_executing();
+	while (current)
+		process_pipeline_cmd(data, &current, &input_fd, &last_cmd_pid);
+	wait_all_processes(&exit_status, last_cmd_pid);
+	setup_signals_interactive();
+	data->exit_status = exit_status;
+	if (input_fd != STDIN_FILENO)
+		close(input_fd);
+	return (exit_status);
+}

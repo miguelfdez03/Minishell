@@ -108,6 +108,7 @@ int				ft_word_length(char *line, int i);
 int				handle_pipe(t_cmd *current_cmd, t_token **tokens);
 int				process_pipes(t_data *data);
 int				execute_pipeline(t_data *data);
+int				wait_all_processes(int *exit_status, pid_t last_cmd_pid);
 int				exec_sig_cmd(t_data *data, t_cmd *cmd, int input_fd,
 					int output_fd);
 void			setup_child_fds(int input_fd, int output_fd);
@@ -177,6 +178,9 @@ void			process_heredoc_line_interactive(t_heredoc_s *here_s,
 //--BUILT-INS--
 int				execute_command(t_data *data);
 int				execute_builtin_by_id(t_data *data);
+int				process_redirections_only(t_data *data);
+int				handle_empty_cmd(t_cmd *cmd, t_data *data);
+int				execute_single_command(t_data *data, t_cmd *cmd);
 int				builtin_exit(t_data *data);
 int				builtin_pwd(t_data *data);
 int				builtin_env(t_data *data);
