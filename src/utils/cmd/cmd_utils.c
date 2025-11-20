@@ -1,6 +1,5 @@
 #include "../../minishell.h"
 
-// Initialize a command structure with default values
 void	init_cmd(t_cmd *cmd)
 {
 	if (!cmd)
@@ -33,7 +32,6 @@ t_builtin_type	identify_builtin(char *cmd)
 	return (BUILTIN_NONE);
 }
 
-// Crear nueva estructura de comando
 int	create_cmd(char *cmd_name, t_cmd *cmd)
 {
 	t_builtin_type	builtin_id;
@@ -55,8 +53,6 @@ int	create_cmd(char *cmd_name, t_cmd *cmd)
 	return (1);
 }
 
-// Añadir argumentos al comando
-// Cuenta los argumentos actuales en cmd->args
 int	count_cmd_args(t_cmd *cmd)
 {
 	int	count;

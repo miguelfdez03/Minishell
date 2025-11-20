@@ -30,7 +30,7 @@ int	init_next_cmd(t_cmd *current_cmd, t_token **tokens)
 			|| tmp->type == REDIR_APPEND || tmp->type == HEREDOC)
 			tmp = tmp->next;
 		else if (tmp->value && (tmp->type == WORD || tmp->type == STRING
-				|| tmp->type == ARGS))
+				|| tmp->type == ARGS || tmp->type == SIMPLE_Q))
 			return (process_next_cmd_token(current_cmd, tmp, tokens));
 		else
 			tmp = tmp->next;

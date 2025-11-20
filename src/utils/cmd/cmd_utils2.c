@@ -25,7 +25,8 @@ int	init_first_cmd(t_data **data, t_token **tmp)
 			current = current->next;
 		}
 		else if (current->value && (current->type == WORD
-				|| current->type == STRING || current->type == ARGS))
+				|| current->type == STRING || current->type == ARGS
+				|| current->type == SIMPLE_Q))
 			return (process_cmd_token(current, data, tmp));
 		else
 			current = current->next;
