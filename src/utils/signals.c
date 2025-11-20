@@ -12,21 +12,24 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	handle_sigint_heredoc(int sig)
+static void	handle_sigheredoc(int sig)
 {
 	(void)sig;
 	g_signal_received = 130;
 	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	setup_signals_interactive(void)
+void	setup_signals_heredoc(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setup_signals_heredoc(void)
+void	setup_signals_interactive(void)
 {
-	signal(SIGINT, handle_sigint_heredoc);
+	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }

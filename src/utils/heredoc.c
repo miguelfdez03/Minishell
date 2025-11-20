@@ -70,7 +70,7 @@ static int	process_heredoc_file(char *tmp_file, char *clean_delim, int expand,
 	extern volatile sig_atomic_t	g_signal_received;
 
 	g_signal_received = 0;
-	setup_signals_heredoc();
+	setup_signals_interactive();
 	if (open_and_write_heredoc(tmp_file, clean_delim, expand, data) == -1)
 	{
 		free(clean_delim);

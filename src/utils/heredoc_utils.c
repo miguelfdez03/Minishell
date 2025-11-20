@@ -59,6 +59,8 @@ static int	check_heredoc_exit(char *line, char *clean_delim)
 {
 	extern volatile sig_atomic_t	g_signal_received;
 
+	if (g_signal_received == 130)
+		return (1);
 	if (!line || g_signal_received)
 	{
 		if (!g_signal_received)
@@ -88,14 +90,20 @@ void	write_heredoc_interactive(t_heredoc_s *here_s)
 	char	*line;
 	int		saved_stdout;
 
+	setup_signals_heredoc();	
 	setup_heredoc_io(&saved_stdout);
-	while (1)
+	while (1 && g_signal_received != 130)
 	{
-		line = readline("> ");
+		setup_signals_heredoc();
+		if (g_signal_received != 130)
+			line = readline("> ");
+		if (g_signal_received == 130)
+			break;
 		if (check_heredoc_exit(line, here_s->clean_delim))
 			break ;
 		process_heredoc_line_interactive(here_s, line);
 	}
+	rl_done = 1;
 	rl_catch_signals = 1;
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
