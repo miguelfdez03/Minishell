@@ -83,11 +83,11 @@ int	execute_pipeline(t_data *data)
 	setup_signals_executing();
 	while (current)
 		process_pipeline_cmd(data, &current, &input_fd, &last_cmd_pid);
-		wait_all_processes(&exit_status, last_cmd_pid);
-		setup_signals_interactive();
-		data->exit_status = exit_status;
+	wait_all_processes(&exit_status, last_cmd_pid);
+	setup_signals_interactive();
+	data->exit_status = exit_status;
 	if (input_fd != STDIN_FILENO)
-			close(input_fd);
+		close(input_fd);
 	return (exit_status);
 }
 

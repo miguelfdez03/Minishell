@@ -27,7 +27,9 @@ SRCS = src/main.c \
 	src/utils/redir_utils.c\
 	src/utils/redir_utils2.c\
 	src/utils/heredoc.c\
+	src/utils/heredoc2.c\
 	src/utils/heredoc_utils.c\
+	src/utils/heredoc_utils2.c\
 	src/expander/expand_vars.c\
 	src/expander/expand_vars_2.c\
 	src/expander/expand_vars_3.c\

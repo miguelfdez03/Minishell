@@ -158,6 +158,18 @@ char			*remove_quotes_from_delimiter(char *delimiter);
 int				should_expand_heredoc(char *original_delimiter);
 void			write_heredoc_interactive(t_heredoc_s *here_s);
 void			write_heredoc_pipe(t_heredoc_s *here_s);
+int				process_heredoc_file(char *tmp_file,
+					char *clean_delim, int expand, t_data *data);
+void			setup_heredoc_io(int *saved_stdout);
+void			write_heredoc_interactive(t_heredoc_s *here_s);
+void			process_buffer_line(t_heredoc_s *here_s, char *buffer);
+int				process_pipe_newline(t_heredoc_s *here_s, char *buffer);
+void			write_heredoc_pipe(t_heredoc_s *here_s);
+void			write_heredoc_content(int fd, char *clean_delim, int expand,
+					t_data *data);
+int				check_heredoc_exit(char *line, char *clean_delim);
+void			process_heredoc_line_interactive(t_heredoc_s *here_s,
+					char *line);
 
 //--BUILT-INS--
 int				execute_command(t_data *data);
@@ -245,7 +257,6 @@ void			setup_signals_interactive(void);
 void			setup_signals_child(void);
 void			setup_signals_executing(void);
 void			setup_signals_heredoc(void);
-void 			setup_heredoc_signals(void);
-
+void			setup_heredoc_signals(void);
 
 #endif
