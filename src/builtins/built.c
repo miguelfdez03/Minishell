@@ -6,6 +6,8 @@ static int	execute_builtin_with_redir(t_data *data)
 	int	saved_stdin;
 	int	saved_stdout;
 
+	if (process_all_heredocs(data) != 0)
+		return (data->exit_status);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (apply_redirections(data) == -1)
@@ -25,6 +27,8 @@ static int	process_redirections_only(t_data *data)
 	int	saved_stdin;
 	int	saved_stdout;
 
+	if (process_all_heredocs(data) != 0)
+		return (data->exit_status);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	exit_status = apply_redirections(data);
@@ -58,8 +62,6 @@ static int	execute_single_command(t_data *data, t_cmd *cmd)
 {
 	int	exit_status;
 
-	if (process_all_heredocs(data) != 0)
-		return (data->exit_status);
 	if (cmd->builtin_id == BUILTIN_NONE)
 	{
 		exit_status = execute_external_command(data);

@@ -77,6 +77,8 @@ int	execute_external_command(t_data *data)
 	char	**env_array;
 	int		ret;
 
+	if (process_all_heredocs(data) != 0)
+		return (data->exit_status);
 	ret = prepare_execution(data, &cmd_path, &args, &env_array);
 	if (ret != 0)
 		return (ret);

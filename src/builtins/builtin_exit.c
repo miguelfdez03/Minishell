@@ -63,6 +63,9 @@ int	builtin_exit(t_data *data)
 	free_data(data);
 	fd = 3;
 	while (fd < 1024)
-		close(fd++);
+	{
+		close(fd);
+		fd++;
+	}
 	exit(exit_status);
 }

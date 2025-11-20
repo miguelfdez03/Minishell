@@ -98,10 +98,10 @@ void	exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd)
 
 	original_cmd = data->cmd;
 	setup_signals_child();
-	close_all_fds();
 	data->cmd = cmd;
 	if (apply_redirections(data) == -1)
 		cleanup_and_exit(data, original_cmd, 1);
+	close_all_fds();
 	if (cmd->builtin_id != BUILTIN_NONE)
 	{
 		exit_code = execute_builtin_by_id(data);

@@ -40,6 +40,7 @@ static int	open_and_write_heredoc(char *tmp_file, char *clean_delimiter,
 		free(clean_delimiter);
 		return (-1);
 	}
+	fcntl(fd, F_SETFD, FD_CLOEXEC);
 	write_heredoc_content(fd, clean_delimiter, expand, data);
 	close(fd);
 	return (0);
@@ -52,6 +53,7 @@ static int	redirect_heredoc_to_stdin(char *tmp_file)
 	fd = open(tmp_file, O_RDONLY);
 	if (fd < 0)
 		return (-1);
+	fcntl(fd, F_SETFD, FD_CLOEXEC);
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		close(fd);
