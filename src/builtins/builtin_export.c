@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:12 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:13 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:25:52 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	process_export_arg(t_data *data, char *arg)
 		return (1);
 	}
 	parse_export_arg(arg, &key, &value);
-	if (!key)
+	if (!key || !value)
 		return (1);
 	status = export_with_assignment(data, key, value);
 	free(key);

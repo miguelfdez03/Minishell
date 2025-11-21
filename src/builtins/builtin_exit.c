@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:06 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:07 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 08:56:56 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	builtin_exit(t_data *data)
 	if (exit_status == -1)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		return (2);
+		return (1);
 	}
 	free_data(data);
 	fd = 3;

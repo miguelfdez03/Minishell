@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:21 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:22 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 09:08:37 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	count_cmd_args(t_cmd *cmd)
 	return (count);
 }
 
-// Añade un argumento al comando
 void	add_cmd_arg(t_cmd *cmd, char *arg)
 {
 	int		i;

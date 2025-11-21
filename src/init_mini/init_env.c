@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:46 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:47 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:55:33 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_env_value_2(char **env, int i)
 		value = ft_substr(env[i], j, len);
 	}
 	else
-		value = NULL;
+		value = " ";
 	return (value);
 }
 
