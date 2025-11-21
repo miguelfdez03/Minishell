@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:49:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 16:52:04 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:37:40 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	handle_sigheredoc(int sig)
 {
 	(void)sig;
 	g_signal_received = 130;
-	write(1, "\n", 1); 
+	write(1, "\n", 1);
 	close(STDIN_FILENO);
 }
 

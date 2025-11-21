@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:19 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 18:25:32 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:37:27 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*extract_key(char *arg, char *equal_pos)
 static char	*extract_value(char *equal_pos)
 {
 	char	*value;
-	
+
 	value = ft_strdup(equal_pos + 1);
 	return (value);
 }
