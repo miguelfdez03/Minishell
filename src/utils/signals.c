@@ -24,7 +24,6 @@ void	setup_signals_heredoc(void)
 {
 	struct sigaction	sa;
 
-	g_signal_received = 0;
 	sa.sa_handler = handle_sigheredoc;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

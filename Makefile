@@ -174,7 +174,7 @@ $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline $(HEAD)
 
 clean:
 	rm -f $(OBJS)

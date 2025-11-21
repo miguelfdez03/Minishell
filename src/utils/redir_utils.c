@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/21 08:42:31 by lruiz-to          #+#    #+#             */
+/*   Updated: 2025/11/21 08:44:39 by lruiz-to         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static void	copy_quoted_content(char *str, char *result, int *i, int *j)
@@ -34,20 +46,6 @@ static char	*process_quotes_in_path(char *str)
 	result[j] = '\0';
 	free(str);
 	return (result);
-}
-
-int	ft_redir_length(char *line, int i, t_token_type type)
-{
-	if (type == 2 || type == 3 || type == 4)
-		i++;
-	else if (type == 5 || type == 6)
-		i = i + 2;
-	else
-		return (-1);
-	while ((ft_isalpha(line[i]) == 1
-			|| line[i] == 46) && is_space(line[i]) != EXIT_SUCCESS)
-		i++;
-	return (i);
 }
 
 void	add_redir(t_redir **redir, t_token_type type, char *value)

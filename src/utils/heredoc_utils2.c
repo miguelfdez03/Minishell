@@ -2,8 +2,6 @@
 
 void	setup_heredoc_io(int *saved_stdout)
 {
-	signal(SIGPIPE, SIG_IGN);
-	rl_catch_signals = 0;
 	*saved_stdout = dup(STDOUT_FILENO);
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 }
@@ -24,7 +22,6 @@ void	write_heredoc_interactive(t_heredoc_s *here_s)
 			break ;
 		process_heredoc_line_interactive(here_s, line);
 	}
-	rl_catch_signals = 1;
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
 	dup2(stdin_backup, STDIN_FILENO);
