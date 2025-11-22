@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:43 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:44 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:43:49 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	expand_variables(t_token *tokens, t_env *env, int exit_status)
 			{
 				free(current->value);
 				current->value = expanded;
+				if (expanded[0] == '\0')
+					current->type = EMPTY;
 			}
 		}
 		current = current->next;
