@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:29 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:45:29 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,12 @@ int	process_heredoc_file(char *tmp_file, char *clean_delim, int expand,
 	extern volatile sig_atomic_t	g_signal_received;
 
 	g_signal_received = 0;
-	setup_signals_heredoc();
 	if (open_and_write_heredoc(tmp_file, clean_delim, expand, data) == -1)
 	{
 		free(clean_delim);
-		setup_signals_heredoc();
 		return (-1);
 	}
 	free(clean_delim);
-	setup_signals_heredoc();
 	if (g_signal_received)
 	{
 		unlink(tmp_file);

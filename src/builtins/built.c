@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:40:44 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:40:45 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:46:41 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	execute_single_command(t_data *data, t_cmd *cmd)
 		return (exit_status);
 	}
 	exit_status = execute_builtin_with_redir(data);
+	g_signal_received = 0;
 	data->exit_status = exit_status;
 	return (exit_status);
 }

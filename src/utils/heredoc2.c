@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:29 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:30 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/22 18:14:25 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	handle_heredoc(char *delimiter, t_data *data)
 		return (-1);
 	expand = should_expand_heredoc(delimiter);
 	result = process_heredoc_file(tmp_file, clean_delimiter, expand, data);
+	g_signal_received = 0;
+	setup_signals_interactive();
 	if (result == -2)
 	{
 		data->exit_status = 130;

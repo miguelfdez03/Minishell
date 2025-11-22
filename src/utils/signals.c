@@ -6,7 +6,7 @@
 /*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:49:38 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 18:37:40 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:39:26 by lruiz-to         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	setup_signals_heredoc(void)
 {
 	struct sigaction	sa;
 
+	g_signal_received = 0;
 	sa.sa_handler = handle_sigheredoc;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
