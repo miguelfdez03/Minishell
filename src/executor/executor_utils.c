@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:28 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:31 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/11/23 18:45:37 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,14 @@ char	**env_list_to_array(t_env *env)
 	i = 0;
 	while (env)
 	{
-		temp = ft_strjoin(env->key, "=");
-		env_array[i] = ft_strjoin(temp, env->value);
-		free(temp);
+		if (env->value)
+		{
+			temp = ft_strjoin(env->key, "=");
+			env_array[i] = ft_strjoin(temp, env->value);
+			free(temp);
+			i++;
+		}
 		env = env->next;
-		i++;
 	}
 	env_array[i] = NULL;
 	return (env_array);

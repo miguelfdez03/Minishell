@@ -6,7 +6,7 @@
 /*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:12 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/22 11:39:55 by miguel-f         ###   ########.fr       */
+/*   Updated: 2025/11/23 18:45:26 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	export_without_args(t_env *env)
 				ft_printf("declare -x %s=\"%s\"\n",
 					current->key, current->value);
 			else
-				ft_printf("declare -x %s=\"\"\n", current->key);
+				ft_printf("declare -x %s\n", current->key);
 		}
 		current = current->next;
 	}
@@ -88,7 +88,7 @@ static int	process_export_arg(t_data *data, char *arg)
 		return (1);
 	}
 	parse_export_arg(arg, &key, &value);
-	if (!key || !value)
+	if (!key)
 		return (1);
 	status = export_with_assignment(data, key, value);
 	free(key);
