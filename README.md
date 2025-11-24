@@ -1,5 +1,14 @@
 # 🚀 Minishell
 
+<h3 align="center">Recrear bash en C</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Lenguaje-C-blue" alt="Lenguaje">
+  <img src="https://img.shields.io/badge/Proyecto-42-lightgrey" alt="Proyecto">
+  <img src="https://img.shields.io/badge/Estado-Completado-success" alt="Estado">
+</p>
+
+---
 ## 🐚 Descripción
 
 **Minishell** es una implementación simplificada de una shell inspirada en bash. Su objetivo es recrear un entorno interactivo donde el usuario pueda ejecutar comandos, usar pipes, redirecciones, y gestionar variables de entorno, todo desde cero.
