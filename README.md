@@ -1,6 +1,6 @@
 # 🚀 Minishell
 
-<h3 align="center">Recrear bash en C</h3>
+<h3 align="center">Recrear una terminal en C</h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Lenguaje-C-blue" alt="Lenguaje">
