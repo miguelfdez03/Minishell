@@ -3,15 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:00 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:01 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:27:29 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: check_for_closed
+ * ------------------------
+ * Busca la comilla de cierre correspondiente.
+ * 
+ * Avanza desde la posición actual buscando la comilla que cierra.
+ * 
+ * line: Línea de entrada
+ * i: Posición de la comilla de apertura
+ * quote: Tipo de comilla a buscar (' o ")
+ * 
+ * Retorna: Posición de la comilla de cierre o -1 si no se encuentra
+ */
 int	check_for_closed(char *line, int i, char quote)
 {
 	i++;
@@ -22,6 +35,22 @@ int	check_for_closed(char *line, int i, char quote)
 	return (i);
 }
 
+/*
+ * Función: check_unclosed_quotes
+ * -----------------------------
+ * Verifica si hay comillas sin cerrar en la línea.
+ * 
+ * Recorre toda la línea:
+ * 1. Cuando encuentra comilla (' o "): busca su cierre
+ * 2. Si no encuentra cierre: retorna el tipo de comilla sin cerrar
+ * 3. Si todas están cerradas: retorna 0
+ * 
+ * Se usa para detectar si se necesita leer más líneas.
+ * 
+ * line: Línea a verificar
+ * 
+ * Retorna: Tipo de comilla sin cerrar (' o ") o 0 si todo está cerrado
+ */
 char	check_unclosed_quotes(char *line)
 {
 	int		i;
@@ -46,6 +75,28 @@ char	check_unclosed_quotes(char *line)
 	return (0);
 }
 
+/*
+ * Función: handle_quotes
+ * ---------------------
+ * Procesa texto entre comillas y crea token.
+ * 
+ * Proceso:
+ * 1. Busca la comilla de cierre
+ * 2. Si no hay cierre: retorna -2 (error)
+ * 3. Extrae el contenido entre comillas (sin incluir las comillas)
+ * 4. Crea token según el tipo:
+ *    - Comillas simples ('): tipo SIMPLE_Q (no se expanden variables)
+ *    - Comillas dobles ("): tipo STRING (sí se expanden variables)
+ * 
+ * Ejemplo: "'hola'" -> token tipo SIMPLE_Q con value "hola"
+ *          "\"mundo\"" -> token tipo STRING con value "mundo"
+ * 
+ * line: Línea de entrada
+ * i: Posición de la comilla de apertura
+ * data: Estructura para añadir tokens
+ * 
+ * Retorna: Posición después de la comilla de cierre, -1 si falla malloc, -2 si no cierra
+ */
 int	handle_quotes(char *line, int i, t_data **data)
 {
 	char	*str;

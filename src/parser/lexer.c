@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:04 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:05 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:27:29 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: had_space_before
+ * ------------------------
+ * Verifica si había un espacio antes de la posición actual.
+ * 
+ * Casos:
+ * - Si i=0: no hay nada antes, retorna 0
+ * - Si el carácter anterior es espacio: retorna 1
+ * - Si no: retorna 0
+ * 
+ * Esto ayuda a determinar si los tokens deben concatenarse.
+ * 
+ * line: Línea de entrada
+ * i: Posición actual
+ * 
+ * Retorna: 1 si había espacio antes, 0 si no
+ */
 static int	had_space_before(char *line, int i)
 {
 	if (i == 0)
@@ -21,6 +38,26 @@ static int	had_space_before(char *line, int i)
 	return (0);
 }
 
+/*
+ * Función: handle_words_and_args
+ * -----------------------------
+ * Procesa palabras y argumentos especiales.
+ * 
+ * Casos especiales:
+ * 1. '=' solo: crea token WORD con "="
+ * 2. '-' : procesa como argumento (ej: -la, -n)
+ * 3. '+' seguido de número o comillas: procesa como argumento
+ * 4. Otros: procesa como palabra normal
+ * 
+ * Siempre marca si había espacio antes del token.
+ * 
+ * line: Línea de entrada
+ * i: Posición actual
+ * data: Estructura para añadir tokens
+ * has_space: 1 si había espacio antes, 0 si no
+ * 
+ * Retorna: Nueva posición después de procesar
+ */
 static int	handle_words_and_args(char *line, int i, t_data **data,
 		int has_space)
 {
@@ -47,6 +84,24 @@ static int	handle_words_and_args(char *line, int i, t_data **data,
 	return (result);
 }
 
+/*
+ * Función: handle_lexer_char
+ * -------------------------
+ * Procesa un solo carácter de la línea de entrada.
+ * 
+ * Flujo:
+ * 1. Si es espacio: salta
+ * 2. Verifica si había espacio antes
+ * 3. Intenta procesar como comilla o símbolo
+ * 4. Si no: intenta procesar como palabra o argumento
+ * 5. Si nada funciona: avanza 1 posición
+ * 
+ * line: Línea de entrada
+ * i: Posición actual
+ * data: Estructura para añadir tokens
+ * 
+ * Retorna: Nueva posición después de procesar
+ */
 static int	handle_lexer_char(char *line, int i, t_data **data)
 {
 	int	result;
@@ -64,6 +119,26 @@ static int	handle_lexer_char(char *line, int i, t_data **data)
 	return (i + 1);
 }
 
+/*
+ * Función: lexer
+ * -------------
+ * Tokeniza la línea de entrada completa.
+ * 
+ * Proceso completo:
+ * 1. Recorre la línea carácter por carácter
+ * 2. Crea tokens con handle_lexer_char()
+ * 3. Si encuentra error (-1) o comillas sin cerrar (-2): para
+ * 4. Verifica sintaxis con check_syntax()
+ * 5. Si sintaxis correcta: expande variables y concatena tokens
+ * 
+ * Esta es la función principal del parser que convierte
+ * texto plano en lista de tokens.
+ * 
+ * line: Línea a tokenizar
+ * data: Estructura para almacenar tokens
+ * 
+ * Retorna: Posición final o -1 si hay error de sintaxis
+ */
 int	lexer(char *line, t_data **data)
 {
 	int	i;

@@ -3,15 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:57 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:58 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:27:29 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: handle_redir
+ * --------------------
+ * Procesa una redirección y extrae su archivo destino.
+ * 
+ * Proceso:
+ * 1. Salta el símbolo de redirección (<, >, <<, >>)
+ * 2. Salta espacios en blanco
+ * 3. Extrae el nombre del archivo:
+ *    - Puede estar entre comillas (maneja " y ')
+ *    - Termina en espacio o símbolo especial
+ * 4. Añade token con el tipo de redirección y el archivo
+ * 
+ * Ejemplo: "< infile" -> tipo=REDIR_IN, value="infile"
+ *          ">> 'out file'" -> tipo=REDIR_APPEND, value="'out file'"
+ * 
+ * line: Línea de entrada
+ * i: Posición del segundo carácter de redirección
+ * data: Estructura para añadir tokens
+ * type: Tipo de redirección (REDIR_IN, REDIR_OUT, etc.)
+ * 
+ * Retorna: Nueva posición después de procesar
+ */
 int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 {
 	int		start;
@@ -40,6 +63,29 @@ int	handle_redir(char *line, int i, t_data **data, t_token_type type)
 	return (i);
 }
 
+/*
+ * Función: check_redir
+ * -------------------
+ * Identifica y procesa símbolos de redirección y pipes.
+ * 
+ * Reconoce:
+ * - << : heredoc
+ * - >> : append (añadir al final)
+ * - > : redirección de salida
+ * - < : redirección de entrada
+ * - | : pipe
+ * 
+ * Para cada símbolo:
+ * 1. Identifica el tipo
+ * 2. Llama a handle_redir() para extraer el archivo (excepto pipe)
+ * 3. Retorna cuántos caracteres avanzar
+ * 
+ * line: Línea de entrada
+ * i: Posición actual
+ * data: Estructura para añadir tokens
+ * 
+ * Retorna: Número de caracteres procesados (0 si no es redirección)
+ */
 int	check_redir(char *line, int i, t_data **data)
 {
 	if (line[i] == '<' && line[i + 1] == '<')

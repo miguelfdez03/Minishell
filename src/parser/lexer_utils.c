@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:03 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:04 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:27:29 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: process_first_cmd_args
+ * ------------------------------
+ * Procesa tokens del primer comando hasta encontrar pipe.
+ * 
+ * Recorre tokens y:
+ * 1. Si es redirección (<, >, <<, >>):
+ *    - Añade a la lista de redirections del comando
+ * 2. Si es WORD, STRING, ARGS o SIMPLE_Q:
+ *    - Añade a los argumentos del comando
+ * 3. Si encuentra PIPE: para y actualiza puntero
+ * 
+ * Ignora tokens EMPTY.
+ * 
+ * tmp: Puntero a token actual (se actualiza al pipe o NULL)
+ * data: Estructura con el comando a procesar
+ */
 void	process_first_cmd_args(t_token **tmp, t_data **data)
 {
 	t_token	*current;
@@ -35,6 +52,25 @@ void	process_first_cmd_args(t_token **tmp, t_data **data)
 	*tmp = current;
 }
 
+/*
+ * Función: check_and_exp
+ * ---------------------
+ * Procesa tokens: expande variables, concatena y crea comandos.
+ * 
+ * Flujo completo:
+ * 1. Expande variables ($VAR, $?, $$) en todos los tokens
+ * 2. Concatena tokens pegados (sin espacio entre ellos)
+ * 3. Inicializa el primer comando
+ * 4. Procesa argumentos y redirecciones del primer comando
+ * 5. Si hay pipes: procesa comandos adicionales
+ * 
+ * Esta función transforma la lista de tokens en estructura
+ * de comandos lista para ejecutar.
+ * 
+ * data: Estructura con tokens a procesar
+ * 
+ * Retorna: EXIT_SUCCESS si éxito, EXIT_FAILURE si error
+ */
 int	check_and_exp(t_data **data)
 {
 	t_token	*tmp;
