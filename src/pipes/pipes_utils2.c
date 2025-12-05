@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:09 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:42:10 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:32:34 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: cleanup_and_exit
+ * -------------------------
+ * Limpia memoria y sale del proceso hijo.
+ * 
+ * Usado en procesos hijo de pipeline para salir limpiamente:
+ * 1. Restaura puntero al comando original
+ * 2. Limpia historial de readline
+ * 3. Libera toda la memoria de data
+ * 4. Sale con el código especificado
+ * 
+ * data: Estructura a liberar
+ * original_cmd: Comando original (para restaurar puntero)
+ * code: Código de salida
+ */
 void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
 {
 	data->cmd = original_cmd;
@@ -20,6 +35,25 @@ void	cleanup_and_exit(t_data *data, t_cmd *original_cmd, int code)
 	exit(code);
 }
 
+/*
+ * Función: exec_external_cmd
+ * -------------------------
+ * Ejecuta comando externo en proceso hijo de pipeline.
+ * 
+ * Proceso:
+ * 1. Verifica que haya nombre de comando
+ * 2. Busca comando en PATH
+ * 3. Si no existe o no es ejecutable: sale con error
+ * 4. Construye array de argumentos y env
+ * 5. Ejecuta con execve
+ * 6. Si execve falla: muestra error y sale
+ * 
+ * Siempre termina con exit(), nunca retorna.
+ * 
+ * data: Estructura del shell
+ * cmd: Comando a ejecutar
+ * original_cmd: Comando original (para cleanup)
+ */
 void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
 {
 	char	*cmd_path;
@@ -49,6 +83,24 @@ void	exec_external_cmd(t_data *data, t_cmd *cmd, t_cmd *original_cmd)
 	cleanup_and_exit(data, original_cmd, 127);
 }
 
+/*
+ * Función: collect_children
+ * ------------------------
+ * Espera a todos los procesos hijo del pipeline.
+ * 
+ * Proceso:
+ * 1. Espera cualquier proceso hijo con waitpid(-1)
+ * 2. Si es el último comando:
+ *    - Guarda su exit status
+ *    - Si terminó por señal: calcula 128 + número de señal
+ * 3. Continúa hasta que no queden hijos
+ * 
+ * Solo el exit status del último comando importa para el shell.
+ * 
+ * last_cmd_pid: PID del último comando en pipeline
+ * exit_status: Salida - código de salida del último comando
+ * last_signal: Salida - señal que terminó el último comando (0 si ninguna)
+ */
 static void	collect_children(
 	pid_t last_cmd_pid, int *exit_status, int *last_signal)
 {
@@ -74,6 +126,22 @@ static void	collect_children(
 	}
 }
 
+/*
+ * Función: wait_all_processes
+ * --------------------------
+ * Espera a todos los procesos y maneja señales.
+ * 
+ * Proceso:
+ * 1. Espera a todos los hijos con collect_children()
+ * 2. Si el último comando terminó con:
+ *    - SIGINT (Ctrl+C): imprime newline
+ *    - SIGQUIT (Ctrl+\): imprime "Quit (core dumped)"
+ * 
+ * exit_status: Puntero donde guardar exit status final
+ * last_cmd_pid: PID del último comando
+ * 
+ * Retorna: Exit status del último comando
+ */
 int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 {
 	int	last_signal;
@@ -86,6 +154,25 @@ int	wait_all_processes(int *exit_status, pid_t last_cmd_pid)
 	return (*exit_status);
 }
 
+/*
+ * Función: exec_cmd_in_child
+ * -------------------------
+ * Ejecuta comando en proceso hijo de pipeline.
+ * 
+ * Proceso:
+ * 1. Guarda comando original
+ * 2. Configura señales para proceso hijo
+ * 3. Aplica redirecciones del comando
+ * 4. Cierra todos los descriptores no necesarios
+ * 5. Si es builtin: ejecuta y sale
+ * 6. Si es externo: ejecuta con execve
+ * 
+ * Siempre termina con exit(), nunca retorna.
+ * 
+ * data: Estructura del shell
+ * cmd: Comando a ejecutar
+ * is_last_cmd: 1 si es el último comando del pipeline
+ */
 void	exec_cmd_in_child(t_data *data, t_cmd *cmd, int is_last_cmd)
 {
 	int		exit_code;
