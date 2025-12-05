@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:41:37 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:41:38 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:18:54 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: handle_exec_failure
+ * ---------------------------
+ * Maneja el fallo de execve en el proceso hijo.
+ * 
+ * Cuando execve falla:
+ * 1. Muestra el error con perror
+ * 2. Libera cmd_path, args y env_array
+ * 3. Sale del proceso hijo con código 127 (comando no encontrado)
+ * 
+ * cmd_path: Ruta del comando
+ * args: Array de argumentos
+ * env_array: Array de variables de entorno
+ */
 static void	handle_exec_failure(char *cmd_path, char **args, char **env_array)
 {
 	perror("minishell: execve");
@@ -21,6 +35,23 @@ static void	handle_exec_failure(char *cmd_path, char **args, char **env_array)
 	exit(127);
 }
 
+/*
+ * Función: exec_child_process
+ * --------------------------
+ * Ejecuta el comando en el proceso hijo.
+ * 
+ * Pasos:
+ * 1. Configura las señales para proceso hijo
+ * 2. Aplica las redirecciones (entrada/salida)
+ * 3. Si hay error en redirecciones: libera memoria y sale con código 1
+ * 4. Ejecuta el comando con execve
+ * 5. Si execve falla: maneja el error
+ * 
+ * data: Estructura con redirecciones
+ * cmd_path: Ruta completa del comando
+ * args: Array de argumentos
+ * env_array: Array de variables de entorno
+ */
 static void	exec_child_process(t_data *data, char *cmd_path,
 		char **args, char **env_array)
 {
@@ -36,6 +67,26 @@ static void	exec_child_process(t_data *data, char *cmd_path,
 		handle_exec_failure(cmd_path, args, env_array);
 }
 
+/*
+ * Función: prepare_execution
+ * -------------------------
+ * Prepara todo lo necesario para ejecutar un comando externo.
+ * 
+ * Pasos:
+ * 1. Busca el comando en PATH o verifica ruta absoluta
+ *    - Si es directorio: retorna 126
+ *    - Si no existe: muestra error y retorna 127
+ * 2. Construye array de argumentos
+ * 3. Convierte lista de env a array
+ * 4. Si falla malloc: libera memoria y retorna 1
+ * 
+ * data: Estructura con el comando
+ * cmd_path: Salida - ruta del comando
+ * args: Salida - array de argumentos
+ * env_array: Salida - array de variables de entorno
+ * 
+ * Retorna: 0 si éxito, código de error si falla
+ */
 static int	prepare_execution(t_data *data, char **cmd_path, char ***args,
 		char ***env_array)
 {
@@ -62,6 +113,22 @@ static int	prepare_execution(t_data *data, char **cmd_path, char ***args,
 	return (0);
 }
 
+/*
+ * Función: find_cmd_in_path
+ * ------------------------
+ * Busca el comando en PATH o valida ruta absoluta.
+ * 
+ * Proceso:
+ * 1. Verifica si es ruta absoluta o relativa (/, ./, ., ..)
+ * 2. Si no es absoluta: busca en directorios de PATH
+ * 3. Convierte lista de env a array para buscar PATH
+ * 
+ * cmd: Nombre del comando
+ * env: Lista de variables de entorno
+ * 
+ * Retorna: Ruta completa del comando, (char *)-1 si es directorio,
+ *          NULL si no se encuentra
+ */
 char	*find_cmd_in_path(char *cmd, t_env *env)
 {
 	char	**env_array;
@@ -81,6 +148,24 @@ char	*find_cmd_in_path(char *cmd, t_env *env)
 	return (cmd_path);
 }
 
+/*
+ * Función: execute_external_command
+ * --------------------------------
+ * Ejecuta un comando externo (no builtin).
+ * 
+ * Flujo completo:
+ * 1. Procesa heredocs primero
+ * 2. Prepara la ejecución (busca comando, construye args y env)
+ * 3. Configura señales para modo ejecución
+ * 4. Hace fork para crear proceso hijo
+ * 5. Proceso hijo: aplica redirecciones y ejecuta con execve
+ * 6. Proceso padre: espera al hijo y recoge exit status
+ * 7. Restaura señales a modo interactivo
+ * 
+ * data: Estructura con el comando y redirecciones
+ * 
+ * Retorna: Código de salida del comando ejecutado
+ */
 int	execute_external_command(t_data *data)
 {
 	pid_t	pid;
