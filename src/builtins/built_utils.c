@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   built_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:40:42 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/21 08:40:43 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:15:26 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: execute_command
+ * -----------------------
+ * Función principal para ejecutar cualquier comando.
+ * 
+ * Lógica de decisión:
+ * 1. Si no hay nombre ni args:
+ *    - Si hay redirecciones: las procesa sin comando
+ *    - Si no: retorna 0 (no hace nada)
+ * 2. Si no hay nombre:
+ *    - Maneja comando vacío (puede ser error o asignación)
+ * 3. Si hay pipes (cmd->next):
+ *    - Ejecuta pipeline completo
+ * 4. Si no:
+ *    - Ejecuta comando único
+ * 
+ * data: Estructura con el comando a ejecutar
+ * 
+ * Retorna: Código de salida de la ejecución
+ */
 int	execute_command(t_data *data)
 {
 	t_cmd	*cmd;
@@ -35,6 +55,23 @@ int	execute_command(t_data *data)
 	return (execute_single_command(data, cmd));
 }
 
+/*
+ * Función: execute_builtin_by_id
+ * -----------------------------
+ * Ejecuta el builtin correspondiente según su ID.
+ * 
+ * Switch/dispatcher que llama a la función correcta según
+ * el tipo de builtin identificado previamente.
+ * 
+ * Builtins soportados:
+ * - cd, pwd, exit, echo, env, export, unset
+ * 
+ * Si el ID no corresponde a ninguno, muestra error.
+ * 
+ * data: Estructura con el comando y el builtin_id
+ * 
+ * Retorna: Código de salida del builtin ejecutado
+ */
 int	execute_builtin_by_id(t_data *data)
 {
 	t_builtin_type	type;

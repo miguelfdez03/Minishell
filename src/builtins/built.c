@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   built.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:40:44 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/22 17:46:41 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:14:31 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: execute_builtin_with_redir
+ * -----------------------------------
+ * Ejecuta un comando builtin aplicando sus redirecciones.
+ * 
+ * Proceso:
+ * 1. Procesa todos los heredocs primero
+ * 2. Guarda los descriptores originales de stdin y stdout
+ * 3. Aplica las redirecciones
+ * 4. Ejecuta el builtin
+ * 5. Restaura los descriptores originales
+ * 6. Cierra los descriptores guardados
+ * 
+ * Esto permite que los builtins escriban/lean donde corresponda
+ * sin afectar al shell después de la ejecución.
+ * 
+ * data: Estructura con el comando y sus datos
+ * 
+ * Retorna: Código de salida del builtin
+ */
 static int	execute_builtin_with_redir(t_data *data)
 {
 	int	exit_status;
@@ -33,6 +53,24 @@ static int	execute_builtin_with_redir(t_data *data)
 	return (exit_status);
 }
 
+/*
+ * Función: process_redirections_only
+ * ----------------------------------
+ * Procesa redirecciones sin ejecutar ningún comando.
+ * 
+ * Usado cuando hay redirecciones pero no hay comando válido.
+ * 
+ * Proceso:
+ * 1. Procesa todos los heredocs
+ * 2. Guarda stdin/stdout originales
+ * 3. Aplica las redirecciones (abre archivos, verifica permisos)
+ * 4. Restaura stdin/stdout originales
+ * 5. Cierra descriptores guardados
+ * 
+ * data: Estructura con las redirecciones a procesar
+ * 
+ * Retorna: 0 si éxito, 1 si error en redirecciones
+ */
 int	process_redirections_only(t_data *data)
 {
 	int	exit_status;
@@ -53,6 +91,27 @@ int	process_redirections_only(t_data *data)
 	return (0);
 }
 
+/*
+ * Función: handle_empty_cmd
+ * -------------------------
+ * Maneja el caso de comando vacío o sin argumentos.
+ * 
+ * Casos:
+ * 1. Si no hay args y hay pipes o redirecciones:
+ *    - Muestra ": command not found"
+ *    - Retorna 127 (comando no encontrado)
+ * 2. Si no hay args ni pipes/redirecciones:
+ *    - No hace nada, retorna 0
+ * 3. Si hay args:
+ *    - Copia el primer argumento como nombre del comando
+ *    - Identifica si es un builtin
+ *    - Retorna -1 para indicar que hay que ejecutar
+ * 
+ * cmd: Comando a verificar
+ * data: Estructura para actualizar exit_status
+ * 
+ * Retorna: 0 si comando vacío, 127 si error, -1 si hay comando
+ */
 int	handle_empty_cmd(t_cmd *cmd, t_data *data)
 {
 	if (!cmd->args || !cmd->args[0])
@@ -70,6 +129,22 @@ int	handle_empty_cmd(t_cmd *cmd, t_data *data)
 	return (-1);
 }
 
+/*
+ * Función: execute_single_command
+ * ------------------------------
+ * Ejecuta un único comando (sin pipes).
+ * 
+ * Decide si el comando es:
+ * 1. Externo (ejecutable): ejecuta con execute_external_command()
+ * 2. Builtin: ejecuta con execute_builtin_with_redir()
+ * 
+ * Actualiza el exit_status en data y resetea g_signal_received.
+ * 
+ * data: Estructura con el comando
+ * cmd: Comando a ejecutar
+ * 
+ * Retorna: Código de salida del comando
+ */
 int	execute_single_command(t_data *data, t_cmd *cmd)
 {
 	int	exit_status;
