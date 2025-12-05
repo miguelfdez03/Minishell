@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lruiz-to <lruiz-to@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: miguel-f <miguel-f@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 08:42:29 by lruiz-to          #+#    #+#             */
-/*   Updated: 2025/11/22 18:16:02 by lruiz-to         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:41:15 by miguel-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
+ * Función: handle_heredoc
+ * ----------------------
+ * Maneja la ejecución completa de un heredoc.
+ * 
+ * Proceso:
+ * 1. Define archivo temporal /tmp/.minishell_heredoc
+ * 2. Elimina comillas del delimitador
+ * 3. Determina si debe expandir variables
+ * 4. Procesa el heredoc completo
+ * 5. Restaura señales interactivas
+ * 6. Si fue interrumpido (Ctrl+C): exit_status = 130
+ * 
+ * Es la función principal para heredocs.
+ * 
+ * delimiter: Delimitador del heredoc (puede tener comillas)
+ * data: Estructura del shell
+ * 
+ * Retorna: 0 si ok, -1 error, -2 interrumpido
+ */
 int	handle_heredoc(char *delimiter, t_data *data)
 {
 	char	*clean_delimiter;
