@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+/*
+ * Función: main
+ * -------------
+ * Punto de entrada del shell minishell.
+ * 
+ * Proceso:
+ * 1. Configura señales para modo interactivo
+ * 2. Inicializa estructura de datos del shell
+ * 3. Entra en el bucle principal (main_loop)
+ * 4. Al salir:
+ *    - Limpia historial de readline
+ *    - Libera toda la memoria
+ *    - Retorna código de salida
+ * 
+ * argc: Número de argumentos (no usado)
+ * argv: Array de argumentos (no usado)
+ * env: Variables de entorno del sistema
+ * 
+ * Retorna: Código de salida del shell
+ */
 int	main(int argc, char **argv, char **env)
 {
 	t_env	*env_t;
