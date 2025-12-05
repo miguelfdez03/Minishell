@@ -12,6 +12,22 @@
 
 #include "../minishell.h"
 
+/*
+ * Función: process_heredoc_redir
+ * -----------------------------
+ * Procesa una redirección de tipo heredoc.
+ * 
+ * Proceso:
+ * 1. Ejecuta handle_heredoc para crear archivo temporal
+ * 2. Si falla o se interrumpe: retorna error
+ * 3. Redirige archivo temporal a stdin
+ * 4. Elimina archivo temporal
+ * 
+ * file: Delimitador del heredoc
+ * data: Estructura del shell
+ * 
+ * Retorna: 0 si ok, -1 error, -2 interrumpido
+ */
 static int	process_heredoc_redir(char *file, t_data *data)
 {
 	int	result;
@@ -25,6 +41,22 @@ static int	process_heredoc_redir(char *file, t_data *data)
 	return (0);
 }
 
+/*
+ * Función: process_single_redir
+ * ----------------------------
+ * Procesa una única redirección según su tipo.
+ * 
+ * Tipos:
+ * - REDIR_IN (<): redirige entrada desde archivo
+ * - REDIR_OUT (>): redirige salida a archivo (trunca)
+ * - REDIR_APPEND (>>): redirige salida a archivo (append)
+ * - HEREDOC (<<): procesa heredoc
+ * 
+ * redir: Redirección a procesar
+ * data: Estructura del shell
+ * 
+ * Retorna: 0 si ok, -1 error, -2 interrumpido
+ */
 int	process_single_redir(t_redir *redir, t_data *data)
 {
 	if (redir->type == REDIR_IN)
@@ -47,6 +79,25 @@ int	process_single_redir(t_redir *redir, t_data *data)
 	return (0);
 }
 
+/*
+ * Función: process_all_heredocs
+ * ----------------------------
+ * Procesa todos los heredocs de todos los comandos.
+ * 
+ * Proceso:
+ * 1. Recorre todos los comandos
+ * 2. Para cada comando:
+ *    - Recorre sus redirecciones
+ *    - Si encuentra HEREDOC: lo procesa
+ *    - Si falla o se interrumpe: retorna error
+ * 
+ * Se llama antes de ejecutar pipeline para procesar
+ * todos los heredocs de una vez.
+ * 
+ * data: Estructura del shell
+ * 
+ * Retorna: 0 si ok, -1 error, -2 interrumpido
+ */
 int	process_all_heredocs(t_data *data)
 {
 	t_cmd	*cmd;

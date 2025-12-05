@@ -12,6 +12,24 @@
 
 #include "../minishell.h"
 
+/*
+ * Función: copy_quoted_content
+ * ----------------------------
+ * Copia contenido entre comillas sin incluir las comillas.
+ * 
+ * Proceso:
+ * 1. Guarda tipo de comilla (' o ")
+ * 2. Salta comilla de apertura
+ * 3. Copia caracteres hasta comilla de cierre
+ * 4. Salta comilla de cierre
+ * 
+ * Usado para limpiar paths de archivos en redirecciones.
+ * 
+ * str: String original
+ * result: String destino
+ * i: Índice en str (se modifica)
+ * j: Índice en result (se modifica)
+ */
 static void	copy_quoted_content(char *str, char *result, int *i, int *j)
 {
 	char	quote;
@@ -23,6 +41,25 @@ static void	copy_quoted_content(char *str, char *result, int *i, int *j)
 		(*i)++;
 }
 
+/*
+ * Función: process_quotes_in_path
+ * ------------------------------
+ * Elimina comillas de un path de redirección.
+ * 
+ * Proceso:
+ * 1. Reserva memoria para resultado
+ * 2. Recorre string:
+ *    - Si encuentra comilla: copia sin comillas
+ *    - Si no: copia normal
+ * 3. Libera string original
+ * 4. Retorna string limpio
+ * 
+ * Ejemplo: "file.txt" -> file.txt
+ * 
+ * str: Path con posibles comillas
+ * 
+ * Retorna: Path sin comillas
+ */
 static char	*process_quotes_in_path(char *str)
 {
 	char	*result;
@@ -48,6 +85,23 @@ static char	*process_quotes_in_path(char *str)
 	return (result);
 }
 
+/*
+ * Función: add_redir
+ * -----------------
+ * Añade una redirección a la lista de redirecciones.
+ * 
+ * Proceso:
+ * 1. Crea nuevo nodo de redirección
+ * 2. Asigna tipo de redirección
+ * 3. Si es HEREDOC: guarda value tal cual
+ *    Si no: procesa comillas del path
+ * 4. Si lista vacía: establece como primera
+ *    Si no: añade al final de la lista
+ * 
+ * redir: Puntero a lista de redirecciones
+ * type: Tipo (REDIR_IN, REDIR_OUT, REDIR_APPEND, HEREDOC)
+ * value: Archivo o delimitador
+ */
 void	add_redir(t_redir **redir, t_token_type type, char *value)
 {
 	t_redir	*new_redir;
@@ -73,6 +127,19 @@ void	add_redir(t_redir **redir, t_token_type type, char *value)
 	current->next = new_redir;
 }
 
+/*
+ * Función: free_redirs
+ * -------------------
+ * Libera toda la lista de redirecciones.
+ * 
+ * Proceso:
+ * 1. Recorre lista de redirecciones
+ * 2. Para cada nodo:
+ *    - Libera file/delimitador
+ *    - Libera nodo
+ * 
+ * redir: Lista de redirecciones a liberar
+ */
 void	free_redirs(t_redir *redir)
 {
 	t_redir	*tmp;
