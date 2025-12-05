@@ -12,12 +12,37 @@
 
 #include "../minishell.h"
 
+/*
+ * Función: setup_signals_child
+ * ---------------------------
+ * Configura señales para procesos hijo.
+ * 
+ * Proceso:
+ * 1. Restaura SIGINT a comportamiento por defecto
+ * 2. Restaura SIGQUIT a comportamiento por defecto
+ * 
+ * Se llama en procesos hijo para que Ctrl+C y Ctrl+\
+ * funcionen normalmente (terminan el proceso).
+ */
 void	setup_signals_child(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
 
+/*
+ * Función: setup_signals_executing
+ * -------------------------------
+ * Configura señales durante ejecución de comandos.
+ * 
+ * Proceso:
+ * 1. Ignora SIGINT (Ctrl+C)
+ * 2. Ignora SIGQUIT (Ctrl+\)
+ * 
+ * Se llama en el proceso padre antes de esperar
+ * a que terminen los hijos, para que las señales
+ * solo afecten a los procesos hijo.
+ */
 void	setup_signals_executing(void)
 {
 	signal(SIGINT, SIG_IGN);
